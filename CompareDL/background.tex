@@ -1,0 +1,85 @@
+\section{Deep Learning Background}
+We introduce two main reasons behind the success of deep learning to the rise of artificial intelligence
+as well as the implications of deep learning for network intrusion detection.
+
+In the supervised learning framework, given the feature representations and inference models,
+learning is an optimization process that minimizes a predefined loss function over the training examples.
+The most commonly-used optimization algorithm is back-propagation (BP)~\cite{Backpropagation} with gradient descent,
+because computing gradient is Hessian-free and memorization saves a significant amount of computation when propagating backward level by level.
+However, it is challenging to train deep neural networks with optimal weights only using BP.
+The first problem is that the cost function is usually non-convex, and
+optimizing algorithms only with the first-order gradient is likely to be stuck at a poor local minimum.
+Secondly, exploding and vanishing gradient makes back-propagation difficult to train models with many layers stacked together,
+such as deep recurrent neural networks.
+Even if we can tolerate the long training time and carefully deal with the gradient exploding and vanishing,
+the trained model is often over-fitted to the training dataset, and thus fails to generalize to the testing or future datasets.
+
+The emergence of many novel learning algorithms and training techniques enables us to train deep neural networks that achieve good suboptimal minimums.
+For example, stochastic gradient descent (SGD) with mini-batches can significantly increase the training speed comparing
+to normal gradient descent on the entire dataset.
+In each step of gradient descent, researchers have shown that momentum can
+prevent SGD from ``oscillating across but pushing along the shallow ravine"~\cite{Momentum}.
+Along with decaying learning rate, momentum-based optimization algorithms (e.g., Adam~\cite{Adam}) often find better local minimums.
+To prevent over-fitting, researchers have proposed dropout~\cite{Dropout} to average over an exponential number of neural networks.
+These general learning algorithms and training techniques would directly help neural networks to achieve better performance for the network intrusion detection problem.
+
+Another breakthrough in the deep learning area is that researchers have successfully trained a number of useful unsupervised generative models.
+Different from supervised models or discriminative models that aim to discover the relationship between
+input variables and target labels (or the conditional probability distribution of the targets given the inputs),
+these models aim to learn the joint probability distribution or the joint conditional distribution of all variables for one phenomenon from the given dataset.
+The resulting generative model is powerful in many ways.
+First, given the well-trained probability distribution, the model can synthesize meaningful data comparable to real examples in the training set.
+For example, Auxiliary-Classifier Generative Adversarial Nets (AC-GAN)~\cite{AC-GAN} can generate high-quality images after training on ImageNet dataset~\cite{ImageNet};
+both AC-GAN and deep brief nets~\cite{DeepBeliefNets} can synthesize handwritten digits after learning from the MNIST dataset.
+Second, the ability to generate high quality faked data indicates that
+the model has learned better feature representations from the unlabeled data.
+For example, the features extracted from the hidden units of sparse autoencoder can significantly improve the performance of support vector classifier~\cite{SparseAE}.
+Additionally, researchers have shown that it is an excellent strategy to initialize deep neural networks
+with the weights from a successfully trained generative model~\cite{DeepBeliefNets, Momentum}.
+
+In the area of network intrusion detection, the amount of network traffic data is massive,
+%e.g., in the order of terabytes per day in a large monitored network. In practice, the amount of data is 
+which makes it hard for security analysts to find malicious patterns and label anomalies.
+This situation makes the unsupervised generative model a promising solution
+to traffic classification. %since it can be trained unsupervised:
+First, it utilizes the vast amount of unlabeled data to learning useful and hierarchical features. Second, it effectively initializes the weights of the hidden layers in a deep neural network, which allows further fine-tuning towards a high-performance classifier.
+Among the various deep learning models we investigate in this paper, there are two types of generative models, i.e., restricted Boltzmann machine and autoencoders.
+
+%In addition to the sophisticated and efficient learning algorithms, abundant open data in the domain of image classification, natural language processing, or machine translation actually drive the novel and complex neural network models and make them successful.
+%Table~\ref{Tab:Datasets} lists the dimension and amount of the training dataset for various image classification tasks.
+
+\iffalse
+The most vivid example would be how ImageNet dataset~\cite{ImageNet} pushed a series of deep learning models,
+such as AlexNet, GoolgNet and ResNet, who greatly improved the performance of visual object recognition.
+ImageNet organizes a large amount of web images by synonym set, multiple words or word phrases
+describing a meaningful concept.
+On average each synonym set is illustrated by 1000 quality-controlled and human-annotated images.
+This project was first presented at 2009 Conference on Computer Vision and Pattern Recognition by researchers
+from the CS department at Princeton University, and ran as an annual software contest known as
+ImageNet Large Scale Visual Recognition Challenge (ILSVRC) since 2010.
+The state-of-the-art error rate of this competition was near 25\%,
+until in the year of 2012, a deep convolutional neural networks AlexNet~\cite{AlexNet} trained on GPU achieved a winning top-5 error rate of 15.3\%.
+From then on, deep neural networks with convolutional blocks start its showtime.
+GooLeNet~\cite{GoogLeNet} won the ILSVRC 2014 with top-5 error rate of 6.7\%.
+It has 22 layers and strayed from the simple design of stacking convolutional and pooling layers.
+One year later, residual block based ResNet~\cite{ResNet} pushed the error rate further down to 3.6\% with even deeper architecture.
+\fi
+
+%\begin{table*}[]
+%\centering
+%\caption{Popular Datasets used in Deep Learning v.s. Available Network Traffic Datasets}
+%\label{Tab:Datasets}
+%\begin{tabular}{c|c|c|c|c}
+%\multicolumn{1}{c|}{Domain}                          & Dataset Name  & \#Examples in Training Set & Feature Dimension            & Instance-Feature Ratio \\
+%\hline
+%\hline
+%\multirow{6}{*}{Image}                               & MNIST         & 60,000        & 784 (28$\times$28 gray images)            & 76.53    \\
+                                                     %& SVHN          & 600,000       & 3072 (32$\times$32 color images)          & 195.31   \\
+                                                     %& CIFAR-10      & 60,000        & 3072 (32$\times$32 color images)          & 19.53    \\
+                                                     %& Tiny          & 80 million    & 3072 (32$\times$32 color image            & 26041.67 \\
+                                                     %& ImageNet      & 1.2 million   & 196,608 (256$\times$256 color images)     & 18.31   \\
+%\hline
+%\multicolumn{1}{l|}{\multirow{2}{*}{Network Traffic}} & UNSW-NB15    & 175,341       & 42                                        & 4174.79 \\
+%\multicolumn{1}{l|}{}                                 & NSL-KDD      & 125,973       & 41                                        & 3072.51
+%\end{tabular}
+%\end{table*}

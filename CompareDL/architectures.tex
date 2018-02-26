@@ -1,0 +1,344 @@
+\section{Deep Learning Models for Network Intrusion Detection}
+\label{CDL:Sec:Architectures}
+
+We explore a bunch of deep learning models that are promising to the
+network intrusion detection problem, including multilayer perceptron, restricted boltzmann machine, sparse autoencoder, and wide and deep learning with embeddings. We develop a Python library, NetLearner~\cite{NetLearner}, which allows us to build and train those deep learning models using TensorFlow~\cite{TensorFlow}.
+
+\subsection{Multilayer Perceptron}
+\label{CDL:SubSec:MLP}
+Multilayer perceptron (MLP) is a fully connected feed-forward neural network with multiple hidden layers.
+Each layer consists of non-linear neural units.
+By introducing non-linear neural units (perceptrons), it can distinguish data that are not linearly separable.
+However, the non-linearity make it challenging to train a deep MLP of more than three layers even with the back-propagation learning algorithm~\cite{Backpropagation}.
+MLP-based models get revived recently because of various training techniques designed by the deep learning community, including Stochastic Gradient Descent (SGD), Adam optimizer~\cite{Adam},
+batch normalization~\cite{BatchNorm}, and Dropout~\cite{Dropout}.
+Besides the number of neurons in each layer and the number of layers,
+MPL can also be tuned with different activation functions or neural types.
+In this paper, we use the logistic function and rectifier linear unit.
+
+We build two dual-hidden-layer MLPs with 800 neurons in the first layer and 480 neurons in the second layer followed by a softmax classifier.
+One MLP is for the NSL-KDD task, and the other is for the UNSW-NB15 task.
+Both MLPs are trained with Adam optimizer~\cite{Adam} for 160 epochs with a batch size of 80.
+During the training, the learning rate decays from 0.1 exponentially with the base of 0.96.
+We do not include regularization in the model, but we apply dropout of probability 0.2 to prevent over-fitting.
+
+
+\subsection{Restricted Boltzmann Machine}
+Restricted Boltzmann machine (RBM)~\cite{DeepBeliefNets} is a type of energy-based models, which associate a scalar energy to each configuration vector of the variables in the network.
+In an energy-based model, learning is the process of configuring the network weights to minimize the average energy over the training data.
+Both Boltzmann machine and RBM consist of a layer of hidden units connected to a layer of visible units.
+The term ``restricted" means that the connections are between the hidden and visible layers, but not within the hidden or visible layers.
+Thus, RBM has faster training speed than Boltzmann machine, and it is feasible to stack multiple separately-trained RBMs to form a deeper neural network.
+However, the classical way to train RBM is computational infeasible because it relies on a large number of iterations of alternating Gibbs sampling.
+\cite{DeepBeliefNets} proposed contrastive divergence (CD-$x$) as a faster learning procedure.
+They discover that instead of doing the alternating Gibbs sampling for many iterations,
+applying $x$ (a small number between 1 and 4, say) steps of the alternating Gibbs sampling can quickly obtain a set of good weights for both layers.
+
+For each task, we build an RBM with 800-hidden units to perform unsupervised learning on the training dataset.
+We train the RBM using CD-1 with a batch size of 10 for 160 epochs.
+The learning rate is initialized to 0.01 and it decays by 10e-6 over each gradient update.
+We create a separate MLP with the same configuration described in Section~\ref{CDL:SubSec:MLP}, and initialize its weights in the first hidden layer (800 neurons equivalently) to those in the RBM model with the goal of improving the quality of MLP.
+We then fine-tune the MLP for 160 epochs with a small learning rate of 0.01.
+
+
+\iffalse
+RBM consists of a layer of hidden units (H) and a layer of visible units (V).
+Here ``restricted" means that connections are just between hidden and visible layer,
+but not within hidden layers or visible layers.
+This makes its training to be faster than Boltzmann machine and makes it feasible to
+stack multiple separately trained RBM together to form deep architecture.
+A joint configuration, $(\mathbf{v, h})$, of the visible and hidden units has the energy of
+\begin{align}
+    E(\mathbf{v, h}) &= -\sum_{i\in visible}a_i v_i - \sum_{j\in hidden}b_j h_j - \sum_{i, j}v_i h_j w_{ij}
+\end{align}
+where $a=\{a_i\}$ and $b=\{b_j\}$ are biases in visible and hidden layer respectively,
+and $W=\{w_{ij}\}$ is the weights between them.
+The network assigns a probability to every possible pair of $(\mathbf{v, h})$ via this energy
+function
+\begin{align}
+    p(\mathbf{v, h}) &= \frac{1}{Z} e^{-E(\mathbf{v, h})} \\
+    p(\mathbf{v}) &= \frac{1}{Z} \sum_{\mathbf{h}} e^{-E(\mathbf{v, h})}
+\end{align}
+where $Z$ is the partition function that equals to the summation over all possible hidden
+and visible vector pairs
+\begin{align}
+    Z = \sum_{\mathbf{v,h}} e^{-E(\mathbf{v, h})}
+\end{align}
+Based on the ``maximizing log likelihood" idea,
+we want to raise the probability of a training example and it can be done by
+adjusting the weights biases to lower the energy of the considered example.
+Meanwhile, we can let other examples make a big contribution to the partition function $Z$
+by raising their energy.
+Both insights can be translated to the following formula:
+\begin{align}
+    \frac{\partial \log p(v)}{\partial w_{ij}} = \langle v_i h_j \rangle_{data} - \langle v_i h_j \rangle_{model} 
+\end{align}
+This implies the following learning rule for performing stochastic gradient ascent on training
+data
+\begin{align}
+    \Delta w_{ij} &= \varepsilon (\langle v_i h_j \rangle_{data} - \langle v_i h_j \rangle_{model})
+\end{align}
+The first term $\langle v_i h_j \rangle_{data}$ is the sampling from the data and it is easy to
+compute since there is no directed connection between hidden units.
+The sampling of $h_j$ is based on the probability
+\begin{align}
+    Prob(h_j = 1 | \mathbf{v}) &= sigmoid(b_j + \sum_i{v_i w_{ij}})
+    \label{Equ:RBMSampleHidden}
+\end{align}
+Similarly, $v_i$ can be sampled with the following distribution
+\begin{align}
+    Prob(v_i = 1 | \mathbf{h}) &= sigmoid(a_j + \sum_j{h_i w_{ij}})
+    \label{Equ:RBMSampleVisible}
+\end{align}
+The term $\langle v_i h_j \rangle_{model}$ can be obtained by performing alternative Gibbs
+sampling for a long time.
+The sampling starts from a random visible state.
+Then we update the hidden units in parallel with Equation~\ref{Equ:RBMSampleHidden},
+followed by updating the visible units in parallel with Equation~\ref{Equ:RBMSampleVisible}.
+Instead of doing alternating Gibbs sampling for a large number of iterations,
+\cite{TrainCD} proposed contrastive divergence (CD) as a faster learning procedure.
+The training also start with a training vector to compute the states of the hidden units
+using Equation~\ref{Equ:RBMSampleHidden}.
+Then, with the chosen hidden states, we reconstruct the visible states by sampling each $v_i$
+with probability given in Equation~\ref{Equ:RBMSampleVisible}.
+The change of weight is then computed by
+\begin{align}
+    \Delta w_{ij} = \varepsilon (\langle v_i h_j \rangle_{data} -
+    \langle v_i h_j \rangle_{reconstruct})
+    \label{Equ:RBMCD1}
+\end{align}
+This is called contrastive divergence using one full step of alternating Gibbs sampling.
+Contrastive divergence with $n$ rounds of alternating Gibbs sampling
+is usually denoted as CD$n$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/rbm.png}
+    \caption{Restricted Boltzmann Machine.
+        Figure courtesy of https://commons.wikimedia.org/wiki/File:Restricted-boltzmann-machine.svg}
+    \label{Fig:RBMArchitecture}
+\end{figure}
+
+\fi
+
+\subsection{Autoencoders}
+An autoencoder is an unsupervised neural network with one hidden layer that sets the output layer to be equal to the input.
+However, to prevent the network from learning the meaningless identity function, we have to place extra constraints on the network,
+which generates different flavors of autoencoders.
+The sparse autoencoder works by placing a sparsity constraint on the activities of the hidden neurons~\cite{SparseAE}.
+
+We build a sparse autoencoder and our implementation is different from the
+self-taught learning approaches, which also adopts the sparse autoencoder as the unsupervised feature learner~\cite{STL-NIDS, SparseAE}.
+In those work, the hidden features learned by the sparse autoencoders are used directly by a classifier (e.g., a softmax regressor or an SVM).
+The functionality of autoencoder resembles a transformation of a raw dataset (e.g., using principal component analysis) with the goal of obtaining a new feature space beneficial to general supervised learning algorithms.
+
+We initialize the first layer weights of an MLP in the same way of using an RBM.
+The size of the over-complete hidden layer in the sparse autoencoder is 800; the sparsity value $\rho$ is 0.05.
+The autoencoder is trained with ADADELTA~\cite{ADADELTA} for 160 epochs with a batch size of 80.
+We then create a separate MLP with the same configuration described in Section~\ref{CDL:SubSec:MLP},
+and initialize its first layer weights with the learned weights of the autoencoder.
+We use the SGD optimizer with a tiny initial learning rate 0.004
+and decaying 1e-6 over each update to fine-tune the MLP model.
+
+\iffalse
+An autoencoder neural network is an unsupervised model with typically one hidden layer that
+tries to set the output layer to be equal to the input.
+As shown in Figure~\ref{Fig:AEArchitecture}, we want the network to
+learn a function $h_{W, b}(x) \approx x$.
+However, to prevent the network from learning the meaningless identity function,
+we need to place extra constraints on the network, giving birth to different
+flavors of autoencoders.
+In this project we consider one of the most popular types of autoencoder, sparse autoencoder.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/autoencoder.png}
+    \caption{General Architecture of Autoencoders.
+        Figure courtesy of~\cite{UFLDLAutoencoder}.}
+    \label{Fig:AEArchitecture}
+\end{figure}
+
+The \textbf{denoising autoencoder} algorithm is proposed by~\cite{DenoiseAE} and illustrated in
+Figure~\ref{Fig:dAEAlgorithm}.
+To prevent learning identity function, an example $\mathbf{x}$ is first corrupted, either by
+adding Gaussian noise or by random masking a fraction of items in $\mathbf{x}$ to zero.
+The autoencoder then maps corrupted $\mathbf{\tilde{x}}$ to a hidden representation $\mathbf{y} = sigmoid(\mathbf{W}\tilde{\mathbf{x}} + \mathbf{b})$.
+From $\mathbf{y}$ we reconstruct $\mathbf{z}=g_\theta'(\mathbf{y})$.
+The training needs to learn the parameters $\theta$ and $\theta'$ so that
+average reconstruction error is minimized over training set.
+For binary input $\mathbf{x}$, usually cross entropy is adopted as $L_H(\mathbf{x}, \mathbf{z})$;
+while mean squared error is used for real-valued $\mathbf{x}$.
+
+Denoising autoencoder and sparse autoencoder, surprisingly, have different application domains.
+Vincent et al.~\cite{DenoiseAE} have shown that stacked denoising autoencoder can be used to
+initialize a deep neural network's weight parameter,
+achieving similar and sometimes better performance than stacked RBM.
+They also show that training stacked denoising autoencoder with MNIST dataset, it is able
+to re-synthesize a variety of similarly good quality digits.
+Raina et al.~\cite{SparseAE} have compared sparse encoding with principle component analysis
+(PCA) and argue that transferring raw features with a well unsupervised trained
+sparse autoencoder can be beneficial to supervised learning algorithms,
+for example support vector machines (SVM).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/denoiseautoencoder.png}
+        \caption{The denoising autoencoder algorithm.
+        Input example $\mathbf{x}$ is randomly corrupted via $q_\mathcal{D}$ and then
+        is mapped via encoder $f_\theta$ to $\mathbf{y}$.
+        The decoder $g_\theta'$ attempts to reconstruct $\mathbf{x}$ and produces $\mathbf{z}$.
+        Reconstruction error is measured by loss $L_H(\mathbf{x}, \mathbf{z})$, to be minimized
+        during the training phase.
+        Figure courtesy of~\cite{DenoiseAE}.}
+    \label{Fig:dAEAlgorithm}
+\end{figure}
+
+The \textbf{sparse autoencoder} works by placing a sparsity constraint on the hidden units~\cite{SparseAE}.
+First, we make the autoencoder's hidden layer size to be over-complete,
+that is, of larger size comparing to the dimension of the input.
+Let's denote the activation of hidden unit $j$ of layer 2 in Figure~\ref{Fig:AEArchitecture}
+to be $a^2_j(\mathbf{x})$ given input example $\mathbf{x}$.
+With that, we define the average activation of hidden unit $j$ over the $m$-size
+training set
+\begin{align}
+    \hat{\rho}_j = \frac{1}{m} \sum_{i=1}^{m} a^2_j(\mathbf{x})
+\end{align}
+The sparsity constraint is enforcing, $\forall$ hidden unit $j$,
+\begin{align}
+    \hat{\rho}_j = \rho
+\end{align}
+where $\rho$ is a sparsity parameter that approximates zero (say 0.05).
+This constraint can be vectorized over the hidden layer, say of size $n_2$,
+with the KL divergence based penalty term
+\begin{align}
+    \sum_j^{n_2} KL(\rho || \hat{\rho}_j)
+    = \sum_j^{n_2} [\rho \log \frac{\rho}{\hat{\rho}_j} + (1 - \rho) \log \frac{1-\rho}{1-\hat{\rho}_j} ]
+\end{align}
+The sparsity penalty term is integrated into the cost function by adding another hyper-parameter $\beta$
+\begin{align}
+    L(W, b) = \frac{1}{2}||h_{W,b}(\mathbf{x}) - \mathbf{x}||^2 +
+    \beta \sum_j^{n_2} KL(\rho || \hat{\rho}_j)
+\end{align}
+\fi
+
+\iffalse
+\subsection{Generative Adversarial Nets}
+As another generative model, Generative Adversarial Nets (GAN)\cite{GAN} adopts a novel training framework,
+in which two models are trained simultaneously and adversarially.
+The generative model $G(z;\theta_g)$ aims to capture the probability distribution of the available unlabelled dataset,
+where its input is a noise variable $z$ following a prior distribution $p_z$.
+The discriminative model $D(x;\theta_d)$ output the probability distribution that whether the its input source $S$ comes
+from training dataset ($x\sim data$) or the generative model ($x \sim G(z)$):
+\begin{align}
+    D(X) = P(S|X)
+\end{align}
+
+Models $G$ and $D$ can be as simple as multilayer perceptrons,
+or as complex as deep convolutional nets when the task domain is image.
+The two models are trained in opposition to one another, with respect to the following log-likelihood function
+
+\begin{align}
+V(D, G) & = \mathbb{E}_{\bm{x}\sim data} [\log P(S=real|X=\bm{x})] + \mathbb{E}_{\bm{x}\sim G(\bm{z})} [\log P(S=fake|X=\bm{x})] \\
+        & = \mathbb{E}[\log D(\bm{x})] + \mathbb{E}[\log (1 - D(G(\bm{z})))]
+\end{align}
+
+With $V(D, G)$ properly defined, the training procedure is a two-player minimax game.
+First we maximize the log-likelihood that $D$ correctly recognize
+both the training examples and the samples generated from $G$;
+in the following phase, we train $G$ to generate samples that trick $D$ to make most mistakes.
+This two-phase min-max optimization can be summarized as:
+\begin{align}
+    \min_G \max_D V(D, G)
+\end{align}
+
+Powerful though GAN is, large amount of efforts and care are needed during training.
+One way to make the training stable and fast is to augment GAN with an auxiliary classifier so that
+the training phase employs the labels available in the dataset~\cite{AC-GAN}.
+In auxiliary classifier GAN (AC-GAN), the discriminator $D$ now gives both the probability
+distribution over the sources (whether $\bm{x}$ is real or fake) and the probability distribution
+over the class labels:
+\begin{align}
+    D(X) = P(S|X), P(C|X)
+\end{align}
+Accordingly, the log-likelihood function $V(D, G)$ is augmented with the log-likelihood of the correct class $L_C$:
+
+\begin{align} 
+    V(D, G) &= L_S + L_C \\
+    L_S &= \mathbb{E}_{\bm{x} \sim data} [\log P(S=real|X=\bm{x})] + 
+    \mathbb{E}_{\bm{x} \sim G(\bm{z})} [\log P(S=fake|X=\bm{x})] \\
+    L_C &= \mathbb{E}_{\bm{x} \sim data}[\log P(C=c|X=\bm{x})] + 
+    \mathbb{E}_{\bm{x} \sim G(\bm{z})} [\log P(C=c|X=\bm{x})]
+\end{align}
+
+The training procedure for AC-GAN is similar to GAN: we train $D$ to maximize $V(D, G)$;
+while at the same time we train $G$ to minimize $L_S - L_C$.
+Currently, we are interested in using GAN or AC-GAN to generate fake traffic.
+In the future, we will also attempt the semi-supervised classification framework with AC-GAN.
+\fi
+
+\subsection{Wide and Deep Learning with Embeddings}
+\label{SubSec:WD}
+The categorical and integer features are extremely sparse in the network intrusion datasets.
+%For illustration reason, we plot the histogram of the ``dloss" integer feature in UNSW-NB15 dataset,
+%which denotes the number of destination packets retransmitted or dropped.
+%As shown in~\ref{Fig:DlossHist}, ``dloss"'s values range from 0 to 6000, while more than 97\%
+%of the occurred value is 0 but values from 1000 to 6000 do appear in the dataset.
+For example, a categorical feature ``proto" indicates one of the 133 protocol types that a traffic record belongs to. Therefore, one-hot encoding will generate a 133-dimension vector consisting only one field with the value one. Neural networks are often not good at utilizing sparse large dimension inputs.
+We tackle this problem in two ways concerning the combined model in~\cite{WideDeepModel}.
+The first solution is to embed the integer or categorical features.
+An embedding is a mapping from sparse discrete objects to a dense vector of real numbers.
+``word2vec" is widely used in the natural language processing and machine translation tasks, where embeddings are treated as points in the vector space so that the similarity between objects can be visually measured
+by the Euclidean distance or angle between the vectors.
+In this case, embedding provides a solution to converting large-vocabulary-size categorical features and sparse integer features to dense vectors of continuous values.
+Deep neural network fed with embedding inputs can generalize better even with less feature engineering.
+As stated in~\cite{WideDeepModel}, these input features to the deep neural nets are denoted as deep components consisting of continuous and embedded features.
+Second, we leverage some simple linear models with nonlinear feature transformations to address the sparse inputs. The method is called wide components~\cite{WideDeepModel}, which consists of the basis and crossed features.
+The basis features are the raw input features that are either integer or categorical.
+The crossed features are the cross-product transformations of basis features that memorize the interactions between raw features.
+The Wide and Deep model complements a deep neural network
+with embedded low-dimension input vectors for good generalization.
+Its linear sub-model is integrated with the deep neural network using a weighted sum of each model's output for good memorization.
+
+The wide and deep learning model requires engineering the raw attributes in datasets into basis, crossed, continuous, and embedded components.
+In our implementation, the basis features are all the raw symbolic and integer attributes.
+Crossed features are built by a subset of combinations of the symbolic attributes in a dataset.
+The raw symbolic and integer attributes are fed to the deep neural network as embedded components after conducting embedding.
+The continuous components are the raw continuous attributes.
+To compare with other models, we set the structure of the deep neural network in the wide and deep model to be the same sizes as the baseline MLP, i.e., two hidden layers with the size of [800 480].
+
+\iffalse
+\begin{align}
+    \Phi_k (\bm{x} ) = \prod_{i=1}^{d} {x_i}^{c_{ki}}
+\end{align}
+where
+\begin{align}
+    c_{ki} = 
+    \begin{cases}
+        1, & \text{$i$-th feature $\in$ the transformation $\Phi_k$} \\
+        0, & \text{otherwise}
+    \end{cases}
+\end{align}
+
+\begin{align}
+    \Phi_k (\mathbf{x} ) = \prod_{i=1}^{d} {x_i}^{c_{ki}}, \text{ where }
+c_{ki} = 
+\begin{cases}
+    1, & \text{$i$-th feature $\in \Phi_k$} \\
+    0, & \text{otherwise}
+\end{cases}
+\end{align}
+The function of wide components, especially the cross-product transformations,
+is memoization of the raw feature interactions.
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/WideDeepModel.png}
+    \caption{Anatomy of Wide and Deep Model}
+    \label{Fig:WideDeepModel}
+\end{figure*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/dloss_hist.png}
+    \caption{Histogram of the Feature ``dloss" from UNSW-NB15 Dataset.}
+    \label{Fig:DlossHist}
+\end{figure}
+\fi
