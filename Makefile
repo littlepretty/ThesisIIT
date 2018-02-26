@@ -24,7 +24,7 @@ conf:
 
 view: conf
 	$(VIEWER) $(NAME).pdf
-	rm *.log *.aux *.blg *.bbl *.lof *.lot *.dvi *.toc
+	rm *.aux *.blg *.bbl *.lof *.lot *.dvi *.toc
 	#rm *-eps-converted-to.pdf
 	#pdffonts main.pdf
 

@@ -19,7 +19,7 @@ In this paper, we develop a three-step model abstraction method, which is summar
 
 \begin{itemize}
     \item \textbf{Identifying Equivalence Classes.} We partition all possible packets in the network into mutually exclusive sets
-        (i.e., equivalence class, as formally defined in Section~\ref{OBS:Sec:IdentiftyEC}), and the packets belongs to the same set are processed in the same way.
+        (i.e., equivalence class, as formally defined in Section~\ref{OBS:Sec:IdentifyEC}), and the packets belongs to the same set are processed in the same way.
         Those sets are identified according to the matching field of \textbf{all} the OpenFlow rules on \textbf{all} the SDN switches in the original network.
     \item \textbf{Creating Forwarding Graphs.} We model the forwarding behavior of each packet set using the topology information
         as well as the local information stored on SDN switches (e.g., port mapping, rule priorities, etc),
