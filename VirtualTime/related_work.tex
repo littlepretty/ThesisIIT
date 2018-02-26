@@ -1,0 +1,44 @@
+\section{Related Work}
+\label{VT:Sec:RelatedWorks}
+
+\subsection{Virtual Time System}
+Virtual time has been investigated to improve the scalability and fidelity of virtual-machine-based network emulation. 
+There are two main approaches to develop virtual time systems.
+The first approach is based on time dilation, a technique to uniformly scale the virtual machine's perception of time by a specified factor. 
+It was first introduced by Gupta et al.~\cite{ToInfinityBeyond},
+and has been adopted to various types of virtualization techniques and integrated with a handful of network emulators. 
+Examples include DieCast~\cite{DieCast}, SVEET~\cite{SVEET}, NETbalance~\cite{NETbalance}, TimeJails~\cite{ComparisonVR-VM, TimeJails} and TimeKeeper~\cite{TimeKeeper}. 
+The second approach focuses on synchronized virtual time by modifying the hypervisor scheduling mechanism. 
+Hybrid testing systems that integrate network emulation and simulation have adopted this approach. 
+For example,~\cite{jin2012virtual} integrates an OpenVZ-based virtual time system~\cite{VirtTimeOpenVZ} with
+a parallel discrete-event network simulator by virtual timer.
+SliceTime~\cite{SliceTime} integrates ns-3~\cite{NS-3} with Xen to build a scalable and accurate network testbed.
+
+Our approach is technically closest to TimeKeeper~\cite{TimeKeeper} through direct kernel modifications of time-related system calls. 
+The differences are (1) we are the first to apply virtual time in the context of SDN emulation,
+(2) our system has a wider coverage of system calls interacting in virtual time,
+and (3) our system has an adaptive time dilation scheduler to balance speed and fidelity for emulation experiments.
+
+\subsection{Adaptive Virtual Time Scheduling}
+The key insight of virtual time is to trade time with system resources. 
+Therefore, a primary drawback is the proportionally increased execution time.
+To determine an appropriate TDF, VENICE~\cite{VirtualTimeMachine} proposes a static management scheme to forecast the recourse demand. 
+One problem of static time dilation management is that we often assume the maximum load to ensure fidelity and thus overestimate the scaling factor. 
+
+TimeJails \cite{TimeJails} presents a dynamic management scheme~\cite{NtwkEmultAdaptVirtTime} to adjust TDF in run-time based on CPU utilization. 
+We take a similar approach with two differences: the target platform and communication overhead.
+TimeJails is a Xen-based platform extended to a 64-node cluster for scalability,
+while our system supports more scalable experiments on a single machine with Linux container.
+TimeJails requires a special protocol to prioritizing TDF request message in local area networks,
+while the communication overhead of our system is much lower, either through synchronized queues or method invocations among extended modules in the emulator.
+
+\subsection{SDN Emulation and Simulation}
+OpenFlow~\cite{Openflow} is the first standard communications interface defined between the control and forwarding planes of an SDN architecture. 
+Examples of OpenFlow-based SDN emulation testbeds include Mininet~\cite{LaptopSDN},
+Mininet-HiFi~\cite{ReproNetExprCBE}, EstiNet~\cite{EstiNet}, ns-3~\cite{NS-3} and S3FNet~\cite{jin2013parallel}.
+Mininet is currently the most popular SDN emulator, which uses process-based virtualization technique to provide a lightweight and inexpensive testbed. 
+NS-3~\cite{NS-3} has an OpenFlow simulation model and also offers a realistic OpenFlow environment through its generic emulation capability,
+which has been linked with Mininet~\cite{MininetLinkNS3}. 
+S3FNet~\cite{jin2013parallel} supports scalable simulation/emulation of OpenFlow-based SDN through
+a hybrid platform that integrates a parallel network simulator and a virtual-time-enabled OpenVZ-based network emulator~\cite{S3FWebsite}.
+
