@@ -146,14 +146,47 @@ acknowledgement.)
 \SymbolDefinition{$\delta$}{Transition Coefficient Constant for the Design of Linear-Phase FIR Filters}
 \SymbolDefinition{$\zeta$}{Reflection Coefficient Parameter}
 
-
 \clearpage
 
 
 
 %%% Abstract %%%
 \begin{abstract}           % abstract environment, this is optional
-\par Your Abstract goes here!
+\par
+Realistic and scalable testing platforms for computer network system are critical for multiple application domains.
+Network operators heavily relies on them to evaluate the functionality and the performance of their communication infrastructures and protocols.
+Replaying the cyber-attacks happened in real world and, more importantly, practicing, as well as evaluating, the countermeasures become 
+enormously difficult if without a virtually simulated or emulated testbed.
+Meanwhile, the network today in many domains and settings, are evolving toward the software-defined networking (SDN) paradigm.
+Multiple SDN simulation and emulation platforms have help expedite the adoption of many emerging SDN-based applications to production systems.
+However, all of those virtual simulation or emulation testbeds are highly coupled with the underlying available physical hardware resources.
+As the result, their correctness will be corrupted, their scalability limited, and their fidelity compromised,
+especially exposed under the common large-scale network settings.
+Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, our research work has three streams.
+
+Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
+Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
+Specifically, we address one of the key issues of this attractive methodology.
+An ordinary Linux-container based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
+This leads to the issue of temporal fidelity, especially with high workloads.
+Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
+We develope a lightweight Linux-container-based virtual time system and integrate the system to Mininet.
+Except for enhancing Minint's fidelity and scalability,
+our virtual time system is also a good alternative for the synchronization problem in hybrid simulation and emulation.
+
+Second, we ask not what simulation will do for SDN-enabled network, but ask what the centralized paradigm can do for the methodology that simulates itself.
+Following this idea, we present a model abstraction technique that effectively transforms
+the network devices in an SDN-based network to one virtualized switch model.
+While significantly reducing the model execution time and enabling the real-time simulation capability,
+our abstracted model also preserves the end-to-end forwarding behavior of the original network.
+
+Recently, deep neural networks achieve state-of-the-art results across a range of hard problem spaces,
+such as image classification and natural language processing,
+Therefore, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
+Our answer is anomaly detection based network intrusion detection systems (NIDS), the essential network-architecture-agnostic security building-blocks.
+We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with multiple advanced deep learning models.
+Using our TensorFlow-based deep learning library NetLearner, we conduct a quantitative and comparative evaluation of those models.
+
 % or \input{abstract.tex}  %you need a separate abstract.tex file to include it.
 \end{abstract}
 
@@ -161,7 +194,12 @@ acknowledgement.)
 \textpages     % Settings of text-pages are done with \textpages command
 
 % Chapters are created with \Chapter{title} command
-\Chapter{Virtual Time}
+\Chapter{Introduction}
+\input{intro.tex}
+\input{related_work.tex}
+\input{contrib.tex}
+
+\Chapter{Virtual Time System}
 \input{VirtualTime/intro.tex}
 \input{VirtualTime/related_work.tex}
 \input{VirtualTime/design.tex}
