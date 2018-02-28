@@ -1,4 +1,4 @@
-\section{Introduction}
+\section{Motivation}
 
 % Bring in the issues that our approach can address
 % Describe them as problems in current simulation/emulation systems
@@ -21,17 +21,8 @@ Therefore, increasing SDN testbed scalability and speed without losing the desir
 
 % State our idea
 In this paper, we present a model abstraction technique to transform an SDN-based network model to a ``one-big-switch'' network model.
-The idea was inspired by the work on rule placement optimization in~\cite{OneBigSwitchAbstraction}.
-With the highly abstracted network, SDN application developers now only need to consider
-simple end-to-end policy when programming a network,
-and are shielded from the details on routing policy, switch memory limits,
-and distributing rules across switches.
-Our work applies the idea of one-big-switch abstraction for enhancing the scalability
-of network simulation and emulation, while preserving the end-to-end forwarding logic.
-
 This technique is useful if users only care about the end-to-end behavior rather than
 the details within the network, such as hop-by-hop routing, or table lookup on each single switch.
-
 For example, users may want to simulate a large-scale complex network of networks consisting of traditional TCP/IP networks,
 SDN networks, industry control communication networks, etc.
 The SDN components in this scenario may not be the focus, and thus maintaining only the end-to-end behavior is sufficient for running the hybrid experiment.
@@ -42,19 +33,12 @@ required by the emulation or physical components.
 In addition, industrial collaborators may not want to disclose the details of their production network
 (e.g., topology, routing, middle-box location and functionality) to modelers for privacy and security concerns.
 They can use our model abstraction techniques on the target network and share the resulting ``one-big-switch'' model.
+
 We develop a three-step approach to transform an SDN network to a big OpenFlow switch based network,
 while still preserving the network forwarding logic equivalence.
 The high-level idea is illustrated in Figure~\ref{OBS:Fig:BigSimOverview},
 and the details are discussed in Section~\ref{OBS:Sec:Design}.
-We first group all packets into equivalence classes by analyzing the matching fields
-(e.g., source/destination MAC address/IP address/port, VLAN id, etc.)
-of the OpenFlow rules installed on the switches.
-An equivalence class represents a set of packets of the same network forwarding behavior.
-We then create a graph-based model for each equivalence class to model its packet forwarding behavior.
-Finally, we traverse all the forwarding graph models to generate rules for the big switch,
-and the number of rules is largely reduced.
-This way, we reduce the SDN network to a big-switch-based network to
-improve the scalability of SDN simulation or emulation.
+Our approach reduces the SDN network to a big-switch-based network to improve the scalability of SDN simulation or emulation.
 
 \begin{figure}[t]
 \centering
@@ -83,14 +67,9 @@ while still preserving the network forwarding rule equivalence.
 In addition, our approach allows incrementally updating the big-switch model,
 i.e., modifying the rules that are only affected by the current network changes.
 
-In this work, we present a model abstraction technique to reduce networked SDN switches to a one-big-switch model.
-We mainly focus on preserving the end-to-end network forwarding logic.
-Our long term goal is to investigate systematic model abstraction approaches that preserve end-to-end performance equivalence as well,
-such as latency and packet drop, to further enhance the model fidelity.
-
-The remainder of this paper is organized as follows.
+This chapter is organized as follows.
 Section~\ref{OBS:Sec:MotivatingExample} illustrates the problem and the approach using a simple motivating example.
 Section~\ref{OBS:Sec:Design} describes the details of the three-step model abstraction design.
 Section~\ref{OBS:Sec:Evaluation} presents the evaluation results in terms of forwarding logic equivalence, simulation time,
 reduction in flow rules, and model abstraction execution time.
-Section~\ref{OBS:Sec:RelatedWork} summarizes the related works, and Section~\ref{OBS:Sec:Conclusion} concludes the paper with future works.
+Section~\ref{OBS:Sec:Conclusion} concludes this chapter.

@@ -1,5 +1,5 @@
-\section{Related Work}
-\label{OBS:Sec:RelatedWork}
+%\section{Related Work}
+%\label{OBS:Sec:RelatedWork}
 
 \subsection{SDN Forwarding Rules Abstraction}
 
@@ -28,16 +28,16 @@ Our work leverages the idea of slicing the entire network into equivalence class
 to reduce the problem space, which enables fast model abstraction execution speed.
 %We consider the entire connected SDN network when we run forwarding traversal, especially the boundary switches that Veriflow neglects. We also add up several algorithms in finding equivalence classes.
 
-\subsection{SDN Emulation and Simulation}
-There are a number of SDN emulation and simulation testbeds based on the OpenFlow
-protocol.
-Examples include Mininet~\cite{Mininet}, EstiNet~\cite{EstiNet}, ns-3~\cite{NS3},
-S3FNet~\cite{S3F_website}, fs-sdn~\cite{FSSDN} and OpenNet~\cite{OpenNet}.
-Mininet  \cite{Mininet} applies container-based virtualization technique and cgroup based resource isolation to provide a lightweight and high fidelity emulation
-platform.
-Its functional fidelity is guaranteed by executing real SDN switch/controller software.
-ns-3~\cite{NS3} offers simulation models of SDN networks and emulation of SDN controllers via the direct code execution (DCE) technique.
-S3FNet~\cite{S3F_website} is a hybrid OpenFlow-based SDN testing platform that integrates a parallel network simulator with an OpenVZ-based network emulator.
-fs-sdn~\cite{FSSDN} extends fs, a flow-level discrete event network simulator, with the SDN capability.
-We develop a model abstraction method in this paper to transform a large scale and complicated SDN network to a one-big-switch-based network.
-We can use the resulting abstracted network model in all the aforementioned simulation and emulation environment for performance gain while still preserving the network forwarding logic.
+%\subsection{SDN Emulation and Simulation}
+%There are a number of SDN emulation and simulation testbeds based on the OpenFlow
+%protocol.
+%Examples include Mininet~\cite{Mininet}, EstiNet~\cite{EstiNet}, ns-3~\cite{NS3},
+%S3FNet~\cite{S3F_website}, fs-sdn~\cite{FSSDN} and OpenNet~\cite{OpenNet}.
+%Mininet  \cite{Mininet} applies container-based virtualization technique and cgroup based resource isolation to provide a lightweight and high fidelity emulation
+%platform.
+%Its functional fidelity is guaranteed by executing real SDN switch/controller software.
+%ns-3~\cite{NS3} offers simulation models of SDN networks and emulation of SDN controllers via the direct code execution (DCE) technique.
+%S3FNet~\cite{S3F_website} is a hybrid OpenFlow-based SDN testing platform that integrates a parallel network simulator with an OpenVZ-based network emulator.
+%fs-sdn~\cite{FSSDN} extends fs, a flow-level discrete event network simulator, with the SDN capability.
+%We develop a model abstraction method in this paper to transform a large scale and complicated SDN network to a one-big-switch-based network.
+%We can use the resulting abstracted network model in all the aforementioned simulation and emulation environment for performance gain while still preserving the network forwarding logic.
