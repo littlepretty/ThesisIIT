@@ -1,0 +1,101 @@
+Successful operation of modern networked computer systems are not by coincidence or luck.
+Network operators heavily relies on the realistic and scalable testing platforms to
+evaluate the functionality and the performance of their communication infrastructures and protocols.
+Moreover, as the successfully and widely deployed computer networking technology gets deeply integrated into people's everyday lives,
+it is no longer optional to protect network against cyber-attacks.
+Occurred attacks should be thoroughly studied and its defense carefully implemented to ensure safe and trusted communication of information.
+Replaying the attacks happened in real world and, more importantly, practicing, as well as evaluating, the countermeasures become 
+enormously difficult if without a virtually simulated or emulated testbed.
+Meanwhile, the network today in many domains and settings, are evolving toward the software-defined networking (SDN) paradigm.
+SDN promises centralized and rapid network provisioning, holistic management, low operational cost, and improved network visibility.
+Multiple SDN simulation and emulation platforms have help expedite the adoption of many emerging SDN-based applications to production systems.
+However, all of those virtual simulation or emulation testbeds are highly coupled with the underlying available physical hardware resources.
+As the result, their correctness will be corrupted, their scalability limited, and their fidelity compromised,
+especially exposed under the common large-scale network settings.
+Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, our research work has three streams.
+
+\section{Virtual Time Support for Network Emulation}
+Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
+Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
+Specifically, we address one of the key issues of this attractive methodology.
+An ordinary Linux-container based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
+This leads to the issue of both performance and temporal fidelity, especially when handling high workloads during emulation.
+
+Our approach is to develop the notion of virtual time inside containers to improve fidelity and scalability of the container-based network emulation.
+A key insight is to trade time for system resources by precisely scaling the system's capacity to match behaviors of the target network.
+The idea of virtual time has been explored in the form of time-dilation-based~\cite{ToInfinityBeyond} and
+VM-scheduling-based~\cite{VirtTimeOpenVZ, SliceTime} designs, and has been applied to various virtualization platforms including Xen~\cite{DieCast},
+OpenVZ~\cite{VirtTimeOpenVZ}, and Linux Container~\cite{TimeKeeper}.
+In this work, we take a time-dilation-based approach to build a lightweight virtual time system in Linux container,
+and have integrated the system to Mininet for scalability and fidelity enhancement.
+The time dilation factor (TDF) is defined as the ratio between the rate at which wall-clock time has
+passed to the emulated host's perception of time~\cite{ToInfinityBeyond}.
+A TDF of 10 means that for every ten seconds of real time, applications running in a time-dilated emulated host perceive the time advancement as one second.
+This way, a 100 Mbps link is scaled to a 1 Gbps link from the emulated host's viewpoint.
+Our system transparently provides the virtual time to processes inside the containers,
+while returns the ordinary system time to other processes.
+No change is required in applications, and the integration with network emulators is easy (only slight changes in the initialization routine).
+Benchmark evaluation and data center case study demonstarte that, except for enhanceing Mininet's fidelity and scalability,
+our virtual time system is also an good alternative for the synchronization problem in hybrid simulation and emulation.
+
+\section{One-Big-Switch Abstraction}
+Second, we ask not what simulation will do for SDN-enabled network, but ask what the centralized paradigm can do for the methodology that simulates itself.
+Following this idea, we present a model abstraction technique that effectively transforms
+a SDN-based network model to a ``one-big-switch'' network model.
+The idea was inspired by the work on rule placement optimization in~\cite{OneBigSwitchAbstraction}.
+With the highly abstracted network, SDN application developers now only need to consider
+simple end-to-end policy when programming a network,
+and are shielded from the details on routing policy, switch memory limits,
+and distributing rules across switches.
+
+Our work applies the idea of one-big-switch abstraction for enhancing the scalability
+of network simulation and emulation, while preserving the end-to-end forwarding behaviors of the original network.
+This technique is useful if users only care about the end-to-end behavior rather than
+the details within the network, such as hop-by-hop routing, or table lookup on each single switch.
+For example, users may want to simulate a large-scale complex network of networks consisted of multiple types of network protocols.
+While significantly reducing the model execution time, the one-big-switch model also enables the real-time simulation capability,
+which execute the network models no slower than the wall-clock time.
+In addition, the abstracted model can be shared by different parties that do not want to disclose the details
+of their own production network.
+
+We develop a three-step approach to transform an SDN network to a big OpenFlow switch based network,
+while still preserving the network forwarding logic equivalence.
+The high-level idea is illustrated in Figure~\ref{OBS:Fig:BigSimOverview},
+and the details are discussed in Section~\ref{OBS:Sec:Design}.
+We first group all packets into equivalence classes by analyzing the matching fields
+(e.g., source/destination MAC address/IP address/port, VLAN id, etc.)
+of the OpenFlow rules installed on the switches.
+An equivalence class represents a set of packets of the same network forwarding behavior.
+We then create a graph-based model for each equivalence class to model its packet forwarding behavior.
+Finally, we traverse all the forwarding graph models to generate rules for the big switch,
+and the number of rules is largely reduced but original network's end-to-end forwarding behavior is not affected.
+
+\section{Deep Learning Models for Network Intrusion Detection}
+Deep learning has gained a dramatic increase in popularity in the last couple of years,
+and has offered advanced solutions in the areas of image and speech recognition~\cite{AlexNet, SpeechDNN},
+natural language processing~\cite{Word2Vec}, Go playing~\cite{AlphaGo}, and many other domains~\cite{DeepLearning}. 
+Motivated by deep learning's success, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
+Our answer is anomaly detection based network intrusion detection systems (NIDS).
+
+As networking technology gets deeply integrated into our lives, protecting modern networked systems against cyber-attacks is no longer optional.
+Network intrusion detection systems (NIDS) are essential security solutions for today's networked systems supporting military applications,
+social communications, cloud services, and other critical infrastructures.
+A NIDS automatically monitors traffic in a network to detect malicious activities and policy violations.
+The majority of NIDSes today adopt signature-based detection techniques,
+which can only identify known attacks via matching pre-installed signatures to observed network activities. 
+The signature databases have to be frequently updated to include new types of attacks.
+Those limitations have motivated researchers to investigate anomaly detection based approaches~\cite{STL-NIDS, LOF, RankingOutliner, NB-Tree, RampLossKSVCR, GAA-ADS}. 
+
+Anomaly detection approaches use data mining or machine learning techniques to mathematically model the trustworthy network activities based on a set of training data,
+and detect deviations from the model in observed data. A key advantage is the ability to detect unknown or novel malicious activities.
+An on-line model further frees network administrators from identifying new patterns or even new types of the abnormal behaviors in a dynamic network environment.
+However, if the constructed model is not sufficiently generalized for normal or abnormal traffic,
+anomaly-based approaches would suffer from high false positive, i.e., incorrectly treat unknown normal traffic as malicious.
+the essential network-architecture-agnostic security building-blocks.
+
+We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with
+multiple advanced deep learning models and conducting a quantitative and comparative evaluation of those models.
+Specifically, we first introduce the general deep learning methodology and its potential implication on the network intrusion detection problem.
+We then review multiple machine learning solutions to two network intrusion detection tasks (NSL-KDD and UNSW-NB15 datasets).
+We develop a TensorFlow-based deep learning library, called NetLearner, and implement a handful of cutting-edge deep learning models for NIDS.
+Finally, we conduct a quantitative and comparative performance evaluation of those models using NetLearner. 
