@@ -98,8 +98,8 @@
 \begin{document}
 
 %%% Declarations for Title Page %%%
-\title{Towards Secure SDN-enabled Computer Network through \\
-High-fidelity and Scalable SDN Simulation and Emulation}
+\title{Towards Secure Software-defined-networking-enabled Computer Network through \\
+High-fidelity and Scalable Simulation and Emulation}
 \author{Jiaqi Yan}
 \degree{Doctor of Philosophy}
 \dept{Computer Science}
@@ -166,15 +166,16 @@ Under the centre theme of securing SDN-enabled large-scale network using high-fi
 
 Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
 Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
-Specifically, we address one of the key issues of this attractive methodology.
-An ordinary Linux-container based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
-This leads to the issue of temporal fidelity, especially with high workloads.
+Specifically, we address one of the key issues -- an ordinary Linux-container based SDN emulator
+uses the system clock across all the containers even if a container is not being scheduled to run.
+This leads to the issue of both performance and temporal fidelity, especially with high workloads.
 Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
-We develope a lightweight Linux-container-based virtual time system and integrate the system to Mininet.
+We develope a lightweight Linux-container-based virtual time system and integrate it to Mininet.
 Except for enhancing Minint's fidelity and scalability,
-our virtual time system is also a good alternative for the synchronization problem in hybrid simulation and emulation.
+our virtual time system is also an alternative for synchronizing clocks in hybrid simulation and emulation.
 
-Second, we ask not what simulation will do for SDN-enabled network, but ask what the centralized paradigm can do for the methodology that simulates itself.
+Second, we ask not what simulation will do for SDN-enabled network,
+but ask what the centralized paradigm can do for the methodology that simulates itself.
 Following this idea, we present a model abstraction technique that effectively transforms
 the network devices in an SDN-based network to one virtualized switch model.
 While significantly reducing the model execution time and enabling the real-time simulation capability,
@@ -183,9 +184,9 @@ our abstracted model also preserves the end-to-end forwarding behavior of the or
 Recently, deep neural networks achieve state-of-the-art results across a range of hard problem spaces,
 such as image classification and natural language processing,
 Therefore, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
-Our answer is anomaly detection based network intrusion detection systems (NIDS), the essential network-architecture-agnostic security building-blocks.
+Our answer is anomaly detection based network intrusion detection systems (NIDS),
+the essential network-architecture-agnostic security building-blocks.
 We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with multiple advanced deep learning models.
-Using our TensorFlow-based deep learning library NetLearner, we conduct a quantitative and comparative evaluation of those models.
 
 % or \input{abstract.tex}  %you need a separate abstract.tex file to include it.
 \end{abstract}
@@ -195,20 +196,20 @@ Using our TensorFlow-based deep learning library NetLearner, we conduct a quanti
 
 % Chapters are created with \Chapter{title} command
 \Chapter{Introduction}
-\input{intro.tex}
-\input{related_work.tex}
+\input{intro}
+\input{related_work}
 
 \Chapter{Virtual Time System}
-\input{VirtualTime/intro.tex}
-\input{VirtualTime/design.tex}
-\input{VirtualTime/implementation.tex}
-\input{VirtualTime/evaluation.tex}
-\input{VirtualTime/case_study.tex}
-\input{VirtualTime/conclusion.tex}
+\input{VirtualTime/motivation}
+\input{VirtualTime/design}
+\input{VirtualTime/implementation}
+\input{VirtualTime/evaluation}
+\input{VirtualTime/case_study}
+\input{VirtualTime/conclusion}
 \clearpage
 
 \Chapter{One Big Switch}
-\input{OneBigSwitch/intro}
+\input{OneBigSwitch/motivation}
 \input{OneBigSwitch/example}
 \input{OneBigSwitch/design}
 \input{OneBigSwitch/evaluation}
@@ -216,11 +217,11 @@ Using our TensorFlow-based deep learning library NetLearner, we conduct a quanti
 \clearpage
 
 \Chapter{Deep Learning for Network Intrusion Detection}
-\input{CompareDL/background.tex}
-\input{CompareDL/datasets.tex}
-\input{CompareDL/architectures.tex}
-\input{CompareDL/evaluation.tex}
-\input{CompareDL/conclusion.tex}
+\input{CompareDL/background}
+\input{CompareDL/datasets}
+\input{CompareDL/architectures}
+\input{CompareDL/evaluation}
+\input{CompareDL/conclusion}
 \clearpage
 
 
