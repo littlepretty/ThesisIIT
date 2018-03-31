@@ -98,8 +98,9 @@
 \begin{document}
 
 %%% Declarations for Title Page %%%
-\title{Towards Secure Software-defined-networking-enabled Computer Network through \\
-High-fidelity and Scalable Simulation and Emulation}
+\title{A Scalable Simulation and Modeling Framework for Evaluation of
+Software-Defined Networking Design and Security Applications
+}
 \author{Jiaqi Yan}
 \degree{Doctor of Philosophy}
 \dept{Computer Science}
@@ -153,42 +154,87 @@ acknowledgement.)
 %%% Abstract %%%
 \begin{abstract}           % abstract environment, this is optional
 \par
-Realistic and scalable testing platforms for computer network system are critical for multiple application domains.
-Network operators heavily relies on them to evaluate the functionality and the performance of their communication infrastructures and protocols.
-Replaying the cyber-attacks happened in real world and, more importantly, practicing, as well as evaluating, the countermeasures become 
-enormously difficult if without a virtually simulated or emulated testbed.
-Meanwhile, the network today in many domains and settings, are evolving toward the software-defined networking (SDN) paradigm.
-Multiple SDN simulation and emulation platforms have help expedite the adoption of many emerging SDN-based applications to production systems.
-However, all of those virtual simulation or emulation testbeds are highly coupled with the underlying available physical hardware resources.
-As the result, their correctness will be corrupted, their scalability limited, and their fidelity compromised,
-especially exposed under the common large-scale network settings.
-Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, our research work has three streams.
+The world today is highly connected by many large-scale computer networks, supporting military applications,
+social communications, power grid facilities, cloud services, and other critical infrastructures.
+However, a gap has grown between the complexity of the system and the increasing need for security and resilience.
+We believe this gap is now reaching a tipping point, resulting in a dramatic change in the way
+that networks and applications are architected, developed, monitored, and protected.
+This trend calls for a scalable and high-fidelity network testing and evaluation platform to
+facilitate the transformation from in-house research ideas to real-world working solutions.
 
-Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
-Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
-Specifically, we address one of the key issues -- an ordinary Linux-container based SDN emulator
-uses the system clock across all the containers even if a container is not being scheduled to run.
-This leads to the issue of both performance and temporal fidelity, especially with high workloads.
-Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
-We develope a lightweight Linux-container-based virtual time system and integrate it to Mininet.
-Except for enhancing Minint's fidelity and scalability,
-our virtual time system is also an alternative for synchronizing clocks in hybrid simulation and emulation.
+With this objective, we investigate means to design and build a scalable and high-fidelity network testbed
+using container-based emulation and parallel simulation; and our study focuses on the emerging software-defined networking (SDN) technology.
+Existing simulation and emulation platforms facilitate the adoption of the SDN-based network architecture
+and applications to production systems.
+However, the performance of those platforms is highly dependent on the underlying physical hardware resources.
+Insufficient resources would lead to undesired results, such as low experimental fidelity or slow execution speed,
+especially with large-scale network settings.
 
-Second, we ask not what simulation will do for SDN-enabled network,
-but ask what the centralized paradigm can do for the methodology that simulates itself.
-Following this idea, we present a model abstraction technique that effectively transforms
-the network devices in an SDN-based network to one virtualized switch model.
+To improve the testbed fidelity, we first develop a lightweight virtual time system for Linux container
+and integrate the system into a widely-used SDN emulator.
+A key issue with an ordinary Linux-container based emulator is that it uses the system clock across all
+the containers even if a container is not being scheduled to run, which leads to the issue of both performance and temporal fidelity,
+especially with high workloads.
+We investigate virtual time approaches by precisely scaling the time of interactions between containers and physical devices.
+Our evaluation results indicate a definite improvement in fidelity and scalability,
+and the virtual time system enables efficient clock synchronization algorithms between simulation and emulation systems.
+
+To improve the testbed scalability, we investigate how the centralized paradigm of SDN-based networks
+can be utilized to reduce the simulation workload.
+We explore a model abstraction technique that effectively transforms the network devices in
+an SDN-based network to one virtualized switch model.
 While significantly reducing the model execution time and enabling the real-time simulation capability,
 our abstracted model also preserves the end-to-end forwarding behavior of the original network.
 
+Ongoing and Future Work: We also utilized the network testbed to perform security evaluation of various smart grid applications.
+We notice that both the communication network and power grid are complex systems that generate and process a huge amount of data.
+The logically-centralized SDN control, on the one hand,
+has to process the inquiries from the networks (e.g., critical control and potentially big data traffic),
+and on the other hand, enables many efficient security solutions, such as intrusion detection, mitigation, and prevention.
 Recently, deep neural networks achieve state-of-the-art results across a range of hard problem spaces,
-such as image classification and natural language processing,
-Therefore, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
-Our answer is anomaly detection based network intrusion detection systems (NIDS),
-the essential network-architecture-agnostic security building-blocks.
-We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with multiple advanced deep learning models.
+such as image classification and natural language processing. We want to study how to utilize the big data to secure communication networks.
 
-% or \input{abstract.tex}  %you need a separate abstract.tex file to include it.
+The focus is to use deep-learning based approach for network intrusion detection.
+Our initial approach targets on a general communication network and datasets.
+We have performed the feasibility study of off-line deep-learning based intrusion detection
+by constructing the detection engine with multiple advanced deep learning models.
+In the future, we will investigate SDN specific solutions and apply the solutions in the domain of modern power systems.
+
+%Realistic and scalable testing platforms for computer network system are critical for multiple application domains.
+%Network operators heavily relies on them to evaluate the functionality and the performance of their communication infrastructures and protocols.
+%Replaying the cyber-attacks happened in real world and, more importantly, practicing, as well as evaluating, the countermeasures become 
+%enormously difficult if without a virtually simulated or emulated testbed.
+%Meanwhile, the network today in many domains and settings, are evolving toward the software-defined networking (SDN) paradigm.
+%Multiple SDN simulation and emulation platforms have help expedite the adoption of many emerging SDN-based applications to production systems.
+%However, all of those virtual simulation or emulation testbeds are highly coupled with the underlying available physical hardware resources.
+%As the result, their correctness will be corrupted, their scalability limited, and their fidelity compromised,
+%especially exposed under the common large-scale network settings.
+%Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, our research work has three streams.
+
+%Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
+%Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
+%Specifically, we address one of the key issues -- an ordinary Linux-container based SDN emulator
+%uses the system clock across all the containers even if a container is not being scheduled to run.
+%This leads to the issue of both performance and temporal fidelity, especially with high workloads.
+%Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
+%We develope a lightweight Linux-container-based virtual time system and integrate it to Mininet.
+%Except for enhancing Minint's fidelity and scalability,
+%our virtual time system is also an alternative for synchronizing clocks in hybrid simulation and emulation.
+
+%Second, we ask not what simulation will do for SDN-enabled network,
+%but ask what the centralized paradigm can do for the methodology that simulates itself.
+%Following this idea, we present a model abstraction technique that effectively transforms
+%the network devices in an SDN-based network to one virtualized switch model.
+%While significantly reducing the model execution time and enabling the real-time simulation capability,
+%our abstracted model also preserves the end-to-end forwarding behavior of the original network.
+
+%Recently, deep neural networks achieve state-of-the-art results across a range of hard problem spaces,
+%such as image classification and natural language processing,
+%Therefore, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
+%Our answer is anomaly detection based network intrusion detection systems (NIDS),
+%the essential network-architecture-agnostic security building-blocks.
+%We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with multiple advanced deep learning models.
+
 \end{abstract}
 
 
