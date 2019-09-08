@@ -1,0 +1,134 @@
+\section{Implementation}\label{sec:Implement}
+In this section, we discuss a few implementation details, which include how we derive CFGs from dissembled code, what kind of loss functions are used in model training, and the open source MAGIC project.
+
+\subsection{Details in Building CFG}
+\label{sec:BuildCfg}
+To build a control flow graph from disassembled code in possibly different formats, we first pre-process the input files so that the resulting program $P$ is a one-to-one mapping from \textit{sorted addresses} to \textit{assembly instructions}, e.g., $P: \mathbf{Z}^+ \rightarrow \mathbf{I}$.
+
+We then perform a two-pass iteration over $P$.
+Instructions $inst \in \mathbf{I}$ are associated with a couple of tags,
+i.e., \texttt{\{start, branchTo, fallThrough, return\}}, used by the second pass for creating code blocks and connecting blocks.
+To adapt to (potentially) hundreds of types of instructions, the first pass applies the visitor pattern to implement if-else free instruction tagging.
+As an example, Algorithm~\ref{alg:CallExample} details the tagging operations when visiting a conditional jump instruction $cj$.
+This procedure relies on a helper function \texttt{findDstAddr($inst$)} to extract the destination address of a jump instruction $inst$.
+For a conditional jump instruction,
+it branches to the jump target ($P[dstAddr]$, handled by line 2 -- 3) and falls through to the next instruction ($P[cj.addr + cj.size]$, handled by line 4 -- 5).
+
+%\begin{algorithm}
+%\caption{\texttt{visitConditionalJump($cj$)}}
+%\label{alg:CallExample}
+%\begin{algorithmic}[1]
+%\STATE $dstAddr \leftarrow \texttt{findDstAddr}(cj)$
+%\STATE $cj.branchTo \leftarrow dstAddr$
+%\STATE $P[dstAddr].start \leftarrow true$
+%\STATE $cj.fallThrough \leftarrow true$
+%\STATE $P[cj.addr + cj.size].start \leftarrow true$
+%\end{algorithmic}
+%\end{algorithm}
+
+\begin{algorithm}[t]
+    \DontPrintSemicolon
+    \KwData{$cj = $ a conditional jump instruction \newline
+            $P = $ program, e.g., mapping from instruction address to instruction}
+    $dstAddr \gets \texttt{findDstAddr}(cj)$\;
+    $cj.branchTo \gets dstAddr$\;
+    $P[dstAddr].start \gets true$\;
+    $cj.fallThrough \gets true$\;
+    $P[cj.addr + cj.size].start \gets true$\;
+    \caption{\texttt{visitConditionalJump($cj$)}}
+    \label{alg:CallExample}
+\end{algorithm}
+
+The second pass creates code blocks (or vertices) and connects blocks on the fly.
+The skeleton of the procedure is illustrated in Algorithm~\ref{alg:SecondPass}.
+Algorithm~\ref{alg:SecondPass} assumes two trivial helper functions.
+Firstly, \texttt{getBlockAtAddr($addr$)} returns the block starting at $addr$
+if it already exists; otherwise it creates a new block starting at $addr$.
+The second one \texttt{getNextInst($P, inst$)} returns the instruction next to $inst$ if it exists; otherwise, \texttt{None} is returned.
+With both helpers, Algorithm~\ref{alg:SecondPass} works in three steps.
+The first if statement creates a new block if $inst$ was marked as \texttt{start} in the first pass.
+The second step connects $block$ to $nextBlock$ if the last instruction in $block$ is falling through to the next instruction, which happens to be the start of $nextBlock$.
+The final step creates an edge (potentially a new block) for any branching operations, e.g., jump or call.
+
+%\begin{algorithm}
+%\caption{\texttt{CfgBuilder::connectBlocks()}}
+%\label{alg:SecondPass}
+%\begin{algorithmic}[1]
+%\FORALL{$inst$ in program $P$}
+    %\IF{$inst.start$}
+        %\STATE $currBlock \leftarrow \texttt{getBlockAtAddr}(inst.addr)$
+    %\ENDIF
+    %\STATE $nextBlock \leftarrow currBlock$
+    %\STATE
+    %\STATE $nextInst \leftarrow \texttt{getNextInst}(P, inst)$
+    %\IF{$nextInst \neq$ None}
+        %\IF {$inst.fallThrough$ \AND $nextInst.start$}
+            %\STATE $nextBlock \leftarrow \texttt{getBlockAtAddr}(nextInst.addr)$
+            %\STATE add $nextBlock$ to $currBlock$'s edge list
+        %\ENDIF
+    %\ENDIF
+    %\STATE
+    %\IF{$inst.branchTo \neq$ None}
+        %\STATE $block \leftarrow \texttt{getBlockAtAddr}(inst.branchTo)$
+        %\STATE add $block$ to $currBlock$'s edge list
+    %\ENDIF
+    %\STATE
+    %\STATE add $inst$ to $currBlock$
+    %\STATE $currBlock \leftarrow nextBlock$
+%\ENDFOR
+%\end{algorithmic}
+%\end{algorithm}
+
+\begin{algorithm}[t]
+    \DontPrintSemicolon
+    \KwData{$P = $ program, e.g., mapping from instruction address to instruction}
+    \ForEach {$inst$ in program $P$} {
+        \If{$inst.start$} {
+            $currBlock \gets \texttt{getBlockAtAddr}(inst.addr)$\;
+        }
+        $nextBlock \gets currBlock$\;
+        $nextInst \gets \texttt{getNextInst}(P, inst)$\;
+        \If{$nextInst \neq$ None} {
+            \If{$inst.fallThrough \land nextInst.start$} {
+                $nextBlock \gets \texttt{getBlockAtAddr(nextInst.addr)}$\l\;
+                add $nextBlock$ to $currBlock$'s edge list\;
+            }
+        }
+        \If {$inst.branchTo \neq$ None} {
+            $block \gets \texttt{getBlockAtAddr}(inst.branchTo)$\;
+            add $block$ to $currBlock$'s edge list\;
+        }
+        add $inst$ to $currBlock$\;
+        $currBlock \gets nextBlock$\;
+    }
+    \caption{\texttt{CfgBuilder::connectBlocks()}}
+    \label{alg:SecondPass}
+\end{algorithm}
+
+\subsection{Loss Functions Used in Model Training}
+Another technical advantage of \sysname is its support for the end-to-end deep neural network training.
+Regardless of how we change the layer configurations, i.e., whether to use the sort pooling layer or the adaptive max pooling layer, the model's output is always the prediction of the observed input.
+Therefore, the training procedure always minimizes the mean negative logarithmic loss, which is defined as
+\begin{equation}
+    \mathcal{L} = \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i, c} \log(p_{i, c})
+\end{equation}
+where $N$ is the number of observations in the dataset, $C$ is the number of malware families in the dataset, 
+$y_{i, c}$ is 1 if the $i$th sample belongs to malware family $c$,
+and $p_{i, c}$ is the predicted probability that $i$th sample is in family $c$ in the output of the model.
+We adopt the Adam optimization algorithm \cite{Adam} implemented in PyTorch \cite{PyTorch} to auto-generate the gradient of the model parameters and update the parameters in the DGCNN (e.g. $W^t, 1 \leq t \leq h$ in graph convolution layers) accordingly.
+
+\subsection{Open Source \sysname Project}
+%Depending on the DGCNN-based classifier, 
+For malware classification tasks, \sysname runs either in the training mode or in the prediction mode.
+In the training stage, we repeatedly activate only the first half of the pipeline to obtain a large amount of labeled CFGs.
+Then, a DGCNN and its classifier are trained using the stochastic gradient descent on the labeled CFGs in a batch mode.
+When the training finishes, \sysname takes the CFGs of unknown binary executables as inputs and make predictions.
+
+We have implemented a prototype system of \sysname with approximately 4,000 line of Python code.
+The implementation can be divided into two independent parts.
+The first part generates ACFGs from either assembly code or control flow graphs.
+Due to the necessity of processing a large number of assembly programs, \sysname can generate multiple ACFGs in parallel using Python's multi-threading library.
+The second part handles the training, tuning, and evaluation of the extended DGCNN, which is built upon, but heavily rewritten, from Muhang's PyTorch implementation \cite{MuhanDgcnn}.
+For example, we developed the adaptive pooling layer and the WeightedVertices layer.
+Besides, MAGIC supports automatic and exhaustive hyper-parameter tuning, cross-validation, training and prediction using GPUs.
+We will make \sysname's codebase publicly available at Github in the near future.

@@ -1,0 +1,99 @@
+\documentclass[10pt, conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{tablefootnote}
+\usepackage{xspace}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\newcommand{\sysname}{MAGIC\xspace}
+\newcommand{\revision}[1]{\textcolor{red}{#1}}
+
+\begin{document}
+
+\title{Classifying Malware Represented as Control Flow Graphs using Deep Graph Convolutional Neural Network}
+
+\author{
+\IEEEauthorblockN{Jiaqi Yan}
+\IEEEauthorblockA{Illinois Institute of Technology \\
+jyan31@hawk.iit.edu}
+\and
+\IEEEauthorblockN{Guanhua Yan}
+\IEEEauthorblockA{Binghamton University, State University of New York \\
+ghyan@binghamton.edu}
+\and
+\IEEEauthorblockN{Dong Jin}
+\IEEEauthorblockA{Illinois Institute of Technology  \\
+dong.jin@iit.edu}
+% \IEEEauthorblockN{Kyon Jon Smith, Yuki Nagato, Haruhi Suzumiya}
+% \IEEEauthorblockA{\textit{SOS Brigade}  \\
+% \textit{Kitakou North High} \\
+% Nishinomiya, JP \\
+% \{kyon.jsmith, yuki.nagato, iamgod\}@sos.knh.jp}
+}
+
+\maketitle
+
+\begin{abstract}
+\if 0
+Malware remains one of the biggest cyber threats in the modern digital world.
+Existing machine-learning-based malware classification approaches highly rely on non-intuitive and non-generic engineered features extracted from binary bytes or assembly code.
+This paper proposes a malware detection and classification method featuring several unique advantages.
+We represent binary executable as a \textit{Control Flow Graph} (CFG), which fully preserves the logic of the program.
+Within CFG, we can freely extract both instruction-level and vertex-to-vertex attributes from each code block,
+and then build an \textit{Attributed Control Flow Graph} (ACFG), a generic format for arbitrary binaries.
+However, the existing works of malware analysis using ACFG have to rely on inefficient and inadaptive graph matching techniques.
+To overcome the drawbacks, we propose to use the \textit{Deep Graph Convolutional Neural Network} (DGCNN) to fuse the vertices attributes of the graph structure in a breadth-first-search fashion.
+Learning informative hidden features and training classifier are performed together by minimizing the malware classification error.
+We transform two independent datasets into the generic ACFG format, and conduct evaluation over totaling 20K ACFG samples.
+The results show that our deep convolution model effectively detects malware represented as ACFG,
+and achieves competitive performance comparing to the state-of-the-art methods.
+\fi 
+Malware have been one of the biggest cyber threats in the digital world for a long time.
+Existing machine learning-based malware classification methods rely on handcrafted features extracted from raw binary files or disassembled code.
+The diversity of such features created has made it hard to build generic malware classification systems that
+work effectively across different operational environments.
+To strike a balance between generality and performance,
+we explore new machine learning techniques to classify malware programs represented as their control flow graphs (CFGs).
+To overcome the drawbacks of existing malware analysis methods using inefficient and non-adaptive graph matching techniques, in this work,
+we build a new system that uses deep graph convolutional neural network to embed structural information inherent in CFGs for effective yet efficient malware classification.
+We use two large independent datasets that contain more than 20K malware samples to evaluate our proposed system and
+the experimental results show that it can classify CFG-represented malware programs with performance
+comparable to those of the state-of-the-art methods applied on handcrafted malware features.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+malware classification, control flow graph, deep learning, graph convolution
+\end{IEEEkeywords}
+
+\input{intro}
+\input{system_design}
+\input{dgcnn}
+\input{implementation}
+\input{experiments}
+\input{related_works}
+\input{conclusion}
+
+\section*{Acknowledgment}
+We would like to thank the anonymous DSN reviewers and our shepherd Long Wang for their valuable feedback.
+We also thank Ping Liu for the insightful discussions and Muhan Zhang for the bug fixes in the pytorch version of DGCNN.
+This work is partly sponsored by the Air Force Office of Scientific Research (AFOSR) under Grant YIP FA9550-17-1-0240,
+the National Science Foundation (NSF) under Grant CNS-1618631, and the Maryland Procurement Office under Contract No. H98230-18-D-0007.
+Any opinions, findings and conclusions or recommendations expressed in this material are those of the author(s)
+and do not necessarily reflect the views of AFOSR, NSF, and the Maryland Procurement Office.
+
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{IEEEabrv,ref}
+
+\end{document}

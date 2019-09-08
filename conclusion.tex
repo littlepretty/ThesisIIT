@@ -1,8 +1,6 @@
 \Chapter{Conclusion}
 \label{Sec:Conclusion}
 
-\section{Summary of Current Work}
-
 Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct our research work in three streams.
 First, we address one of the key issues in Linux-container-based network emulation (LCNE).
 Even though LCNE combines many desired features of software simulation and physical testbeds,
@@ -21,9 +19,9 @@ Third, motivated by the recent advancement and success of deep neural networks,
 we study the feasibility of deep learning based network intrusion detection systems (NIDS) in order to enhance the essential network-architecture-agnostic security building-block.
 We construct the detection engine with multiple advanced deep learning models and compare their performance.
 
-\section{Future Work}
-Malware detection with executable is promising
-\cite{GatedConvNet, ACFG4BugSearch, GraphEmbedSimDetection, MalConvNvidia}.
+%\section{Future Work}
+%Malware detection with executable is promising
+%\cite{GatedConvNet, ACFG4BugSearch, GraphEmbedding, MalConvNvidia}.
 %When applying the machine learning algorithms or design customized neural networks, the following
 %should be taken into consideration as guidance:
 %\begin{enumerate}
@@ -34,46 +32,46 @@ Malware detection with executable is promising
     %Since PE header 
 %\end{enumerate}
 
-\begin{algorithm}[h]
-\DontPrintSemicolon
-    \KwIn
-    {
-        $D = $ binary code dataset. \newline
-        $bc = $ a particular binary code file in $D$. \newline
-        $g \equiv (V, E, x) = ACFG(bc) $ the ACFG of a particular binary code file. \newline
-        $\mu_v = $ feature vector of a particular node in ACFG. \newline
-        $nn \equiv $ neural network with parameters $W_1, P_1, P_2, W_2$.
-    }
-    \SetKwProg{Fn}{Function}{}{\KwRet}
-    \SetKwFunction{ACFG}{acfg\_bytecode}
-    \SetKwFunction{EmbeddingACFG}{embedding\_acfg}
-    \SetKwFunction{GetBatchEmbedding}{get\_batch\_embedding}
-    \SetKwFunction{Train}{train}
-    \Fn{\EmbeddingACFG{$g$, $nn$}} {
-        Algorithm 1 in paper\;
-        But return the set of vertex embeddings $\mu_g = \{\mu_v| \forall v \in V\}$\;
-    }
-    \Fn{\GetBatchEmbedding{$nn$}} {
-        $batch\_ACFG= $ sample $batch\_size$ binary code files from $D\_ACFG$\;
-        Pair $g \in batch\_ACFG$ with 1 positive and 1 negative ACFG to obtain
-        $batch\_pairs = {(g_i, g_j, 1), (g_i, g_j', -1) | g_i \in batch\_ACFG}$\;
-        \ForEach (// Embed $batch\_pairs$ to $batch\_embeddings$) {$(g_i, g_j, label) \in batch\_pairs$} 
-        {
-            $\mu_{g_i}$ = \EmbeddingACFG{$g_i$, $nn$}\;
-            $\mu_{g_j}$ = \EmbeddingACFG{$g_j$, $nn$}\;
-            Append $(\mu_{g_i}, \mu_{g_j}, label)$ to $batch\_embeddings$\;
-        }
-        \KwRet{$batch\_embeddings$}
-    }
-    \Fn{\Train{$D$}} {
-        Initialize parameters in $nn$\;
-        Convert all byte code files: $D\_{ACFG} = \{ g | g = $ \ACFG{$bc$} $\forall bc \in D\}$\;
-        \For (// Train $E$ epochs) {epoch = 1 to 100} {
-            \For (// Train with batch data) {i = 1 to $\frac{||D||}{batch\_size}$} {
-                $batch\_embeddings = $ \GetBatchEmbedding{$nn$}\;
-                $nn$.fit($batch\_embeddings$)\;
-            }
-        }
-    }
-\caption{End-to-End Traning Algorithm with Embedding}
-\end{algorithm}
+%\begin{algorithm}[h]
+%\DontPrintSemicolon
+    %\KwIn
+    %{
+        %$D = $ binary code dataset. \newline
+        %$bc = $ a particular binary code file in $D$. \newline
+        %$g \equiv (V, E, x) = ACFG(bc) $ the ACFG of a particular binary code file. \newline
+        %$\mu_v = $ feature vector of a particular node in ACFG. \newline
+        %$nn \equiv $ neural network with parameters $W_1, P_1, P_2, W_2$.
+    %}
+    %\SetKwProg{Fn}{Function}{}{\KwRet}
+    %\SetKwFunction{ACFG}{acfg\_bytecode}
+    %\SetKwFunction{EmbeddingACFG}{embedding\_acfg}
+    %\SetKwFunction{GetBatchEmbedding}{get\_batch\_embedding}
+    %\SetKwFunction{Train}{train}
+    %\Fn{\EmbeddingACFG{$g$, $nn$}} {
+        %Algorithm 1 in paper\;
+        %But return the set of vertex embeddings $\mu_g = \{\mu_v| \forall v \in V\}$\;
+    %}
+    %\Fn{\GetBatchEmbedding{$nn$}} {
+        %$batch\_ACFG= $ sample $batch\_size$ binary code files from $D\_ACFG$\;
+        %Pair $g \in batch\_ACFG$ with 1 positive and 1 negative ACFG to obtain
+        %$batch\_pairs = {(g_i, g_j, 1), (g_i, g_j', -1) | g_i \in batch\_ACFG}$\;
+        %\ForEach (// Embed $batch\_pairs$ to $batch\_embeddings$) {$(g_i, g_j, label) \in batch\_pairs$} 
+        %{
+            %$\mu_{g_i}$ = \EmbeddingACFG{$g_i$, $nn$}\;
+            %$\mu_{g_j}$ = \EmbeddingACFG{$g_j$, $nn$}\;
+            %Append $(\mu_{g_i}, \mu_{g_j}, label)$ to $batch\_embeddings$\;
+        %}
+        %\KwRet{$batch\_embeddings$}
+    %}
+    %\Fn{\Train{$D$}} {
+        %Initialize parameters in $nn$\;
+        %Convert all byte code files: $D\_{ACFG} = \{ g | g = $ \ACFG{$bc$} $\forall bc \in D\}$\;
+        %\For (// Train $E$ epochs) {epoch = 1 to 100} {
+            %\For (// Train with batch data) {i = 1 to $\frac{||D||}{batch\_size}$} {
+                %$batch\_embeddings = $ \GetBatchEmbedding{$nn$}\;
+                %$nn$.fit($batch\_embeddings$)\;
+            %}
+        %}
+    %}
+%\caption{End-to-End Traning Algorithm with Embedding}
+%\end{algorithm}

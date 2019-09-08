@@ -49,6 +49,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{amssymb}
 
 \newtheorem{lemma}{Lemma}
 \newtheorem{theorem}{Theorem}
@@ -75,6 +76,9 @@
 \usepackage{comment}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{xspace}
 
 
 % *** To balance reference page ***
@@ -87,6 +91,7 @@
 
 % *** Fancy Table ***
 \usepackage{multirow}
+\usepackage{tablefootnote}
 
 % *** Highlight changes ***
 \usepackage{color, soul}
@@ -94,6 +99,9 @@
 \newcommand{\paragraphb}[1]{\vspace{0.03in}\noindent{\bf #1} }
 \newcommand{\paragraphe}[1]{\vspace{0.03in}\noindent{\em #1} }
 \newcommand{\paragraphbe}[1]{\vspace{0.03in}\noindent{\bf \em #1} }
+
+% System name for MAGIC
+\newcommand{\sysname}{MAGIC\xspace}
 
 \begin{document}
 
@@ -267,6 +275,16 @@ In the future, we will investigate SDN specific solutions and apply the solution
 \input{CompareDL/architectures}
 \input{CompareDL/evaluation}
 \input{CompareDL/conclusion}
+\clearpage
+
+\Chapter{Deep Learning for Malware Detection}
+\input{Magic/intro}
+\input{Magic/system_design}
+\input{Magic/dgcnn}
+\input{Magic/implementation}
+\input{Magic/experiments}
+\input{Magic/related_works}
+\input{Magic/conclusion}
 \clearpage
 
 \input{conclusion}

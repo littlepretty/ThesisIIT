@@ -1,0 +1,22 @@
+\section{Conclusion} \label{sec:conclusions}
+In this work, we have applied deep graph convolution neural network to the malware classification problem.
+Different from existing machine learning-based malware detection approaches that commonly rely on handcrafted features and ensemble models,
+this work proposes and evaluates an end-to-end malware classification pipeline with two distinguishing features.
+Firstly, our malware classification system works directly on CFG-represented malware programs, making it deployable in a variety of operational environments.
+%in our system, which is generic to any kind of subjects and preserves the semantic meanings of the program.
+%From a CFG, one can freely define and extract attributes from each code block, thus obtaining an ACFG.
+Secondly, we extend the state-of-the-art graph convolutional neural network to aggregate attributes collected from individual basic blocks through the neighborhood defined by the graph structures and thus embed them into vectors that are amenable to machine learning-based classification.
+Our experimental evaluation conducted on two large malware datasets has shown that our proposed method achieves classification performances that are comparable to those of state-of-the-art methods applied on handcrafted features.
+
+We envision MAGIC would be deployed on a cloud, as a typical end user does not have enough labeled malware samples to train good classification models.
+A user can upload suspicious files to the cloud, which further trains appropriate MAGIC parameters to classify programs newly seen in her operational environment.
+In this way, even if a particular user may not have labeled programs to train a specific neural network, he can still benefit from MAGIC who learns from many other uses that do have labeled datasets.
+
+%One of the important future work for us is to conduct a cross-dataset evaluation and compare our proposed malware detection system to ensemble approaches.
+%Gradient boosting approaches achieved an outstanding low loss on the Microsoft Malware Classification Challenge Dataset (corresponding to MSACFG dataset in our report),
+%but their generalization ability remains untested until we apply them to more independent datasets, for example, the private dataset in our evaluation.
+
+% \textbf{Limitation: classification on CFG/ACFG assume the input binary are unpacked assembly files.}
+% How to handle packed binaries in the future?
+% First, default/predefined PE sections(\textit{.text, .data, .bss, .rdata, .edata, .idata, .rsrc, .tls, and .reloc}) VS special sec names.
+% Second, there are many \texttt{dd, db, dw} instructions.
