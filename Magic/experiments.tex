@@ -5,7 +5,7 @@ We evaluate the performance of \sysname using two large malware datasets, each w
 
 \subsection{Malware Datasets}
 The first dataset, which we refer to as the \textit{MSKCFG} dataset, includes the CFGs derived from the malware files used in the 2015 Microsoft Malware Classification Challenge hosted by Kaggle~\cite{MsAcfgDataset}. The dataset contains samples that fall into nine families: \{Ramnit, Lollipop, Kelihos\_ver3, Vundo, Simda, Tracur, Kelihos\_ver1, Obfuscator.ACY, Gatak\}.
-Figure~\ref{fig:MSKCFGLabelDist} presents the number of samples in each of these nine malware families in the dataset.
+Figure~\ref{MG:Fig:MSKCFGLabelDist} presents the number of samples in each of these nine malware families in the dataset.
 %The identification of benign code is not in the scope of the contest, and all the input files are supposed to be malicious.
 In the competition, Kaggle provided 10,868 labeled malware samples as the training dataset, for each of which two files were given.
 % Kaggle used another 10,873 malware samples, whose labels remained unknown to participants, to rank the submissions.
@@ -24,7 +24,7 @@ Another dataset, which we refer to as \textit{YANCFG}, includes the CFGs of 16,3
 %However, the dataset given to us are CFG format files.
 Similar to the MSKCFG dataset, the PE headers were not available to us for malware classification from the second dataset. All the CFGs were labeled with a majority voting scheme based on the detection results of five major AV scanners returned by the VirusTotal online malware analysis service~\cite{VirusTotal}.
 All the CFGs belong to 12 distinct malware families: \{Bagle, Benign, Bifrose, Hupigon, Koobface, Ldpinch, Lmir, Rbot, Sdbot, Swizzor, Vundo, Zbot, Zlob\}.
-Figure~\ref{fig:YANCFGLabelDist} depicts the number of samples for each of these 12 families in the dataset.
+Figure~\ref{MG:Fig:YANCFGLabelDist} depicts the number of samples for each of these 12 families in the dataset.
 These CFGs were further converted to their corresponding ACFGs by MAGIC within 6.8 hours using the same desktop machine as mentioned above.
 %After the 6.8-hour CFG-to-ACFG conversion, we obtained 16,351 ACFGs.% further discarded 1,976 empty graphs.
 %These ACFGs are stored together and referred as \textit{YANCFG} as a whole dataset.
@@ -34,7 +34,7 @@ These CFGs were further converted to their corresponding ACFGs by MAGIC within 6
 
 We did not merge two malware datasets in our experiments due to the following reasons.
 Firstly, the YANCFG dataset carries pre-processed CFGs,
-while we developed our own parser to extract CFGs from the malware assembly code in the Microsoft dataset (see Section~\ref{sec:BuildCfg}).
+while we developed our own parser to extract CFGs from the malware assembly code in the Microsoft dataset (see Section~\ref{MG:SubSec:BuildCfg}).
 % The differences in the methods used to extract CFGs from the two datasets may lead to inconsistent CFG representations for model training.
 The CFG extracted from the MSKCFG dataset by our own parser has different low-level feature representation from that of the CFGs pre-given in YANCFG;
 so they cannot be applied to one model.
@@ -69,16 +69,16 @@ Batch Size & [10, 40] & 10 & 40\\
 Weight L2 Regularization Factor & [0.0001, 0.0005] & 0.0001 & 0.0005\\
 \hline
 \end{tabular}
-\label{tab:Hyperparameters}
+\label{MG:Tab:Hyperparameters}
 \end{center}
 \end{table*}
 
 \subsection{Model Training and Evaluation}
 As the malware families are different in the two datasets, we need to create two different \sysname instances to classify their malware samples separately. However, MAGIC uses the same way to train DGCNN and tune its hyperparameters for both datasets.
 The first step is hyperparameter tuning.
-Table~\ref{tab:Hyperparameters} lists the hyperparameters used in both the deep neural network itself (e.g., the sizes of the graph convolution layers) and the algorithm for training the model (e.g., batch size and learning rate).
+Table~\ref{MG:Tab:Hyperparameters} lists the hyperparameters used in both the deep neural network itself (e.g., the sizes of the graph convolution layers) and the algorithm for training the model (e.g., batch size and learning rate).
 To determine the optimal values of these hyperparameters,
-we exhaustively search all 208 hyperparameter settings defined by the value ranges listed in Table~\ref{tab:Hyperparameters}.
+we exhaustively search all 208 hyperparameter settings defined by the value ranges listed in Table~\ref{MG:Tab:Hyperparameters}.
 In particular, 64 DGCNN models use adaptive pooling, 96 DGCNN models use the sort pooling and Conv1D layer, and 48 DGCNN models use the sort pooling and WeightVertices layer.
 We apply the five-fold cross-validation technique to evaluate the performance of a model under a specific hyperparameter setting.
 To conduct five-fold cross validation, the dataset is splitted into five equal-size subsets.
@@ -99,7 +99,7 @@ we also measure its precision, recall, and F1 score averaged over the five valid
 We used four GeForce GTX 1080 Ti graphic cards to train and run the 208 variants of DGCNN.
 Training a particular model is always done on a single GPU,
 but the evaluation procedure actually takes up all the four GPUs because our \sysname implementation supports parallel model training on multiple GPUs.
-The last two columns in Table~\ref{tab:Hyperparameters} describe the best models chosen by MAGIC for the MSKCFG and YANCFG datasets, respectively.
+The last two columns in Table~\ref{MG:Tab:Hyperparameters} describe the best models chosen by MAGIC for the MSKCFG and YANCFG datasets, respectively.
 % Confusion matrix for a random validation set is also included.
 %Their cross-validation scores are reported in the following two sub-sections for both MSKCFG and YANCFG dataset respectively.
 In the following, we report the cross-validation scores for the two datasets.
@@ -107,17 +107,17 @@ In the following, we report the cross-validation scores for the two datasets.
 \begin{figure}
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/MsAcfgLabelDist.eps}}
 \caption{Malware Family Distribution in MSKCFG Dataset.}
-\label{fig:MSKCFGLabelDist}
+\label{MG:Fig:MSKCFGLabelDist}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/YanAcfgLabelDist.eps}}
 \caption{Malware Family Distribution in YANCFG Dataset.}
-\label{fig:YANCFGLabelDist}
+\label{MG:Fig:YANCFGLabelDist}
 \end{figure}
 
 \subsection{Results on the MSKCFG Dataset}
-The best cross-validation scores (precision, recall and F1) for the MSKCFG dataset are shown in Figure~\ref{fig:MSKCFGScores}, and the exact score values are listed in Table~\ref{tab:MSKCFGScores}.
+The best cross-validation scores (precision, recall and F1) for the MSKCFG dataset are shown in Figure~\ref{MG:Fig:MSKCFGScores}, and the exact score values are listed in Table~\ref{MG:Tab:MSKCFGScores}.
 The standard variances are not listed because the scores' variations among five different cross-validation folds are negligible ($<0.004$).
 % Table~\ref{tab:MSKCFGConfusionMatrix} details the corresponding confusion table.
 For all nine malware families, our best model has achieved good validation scores with precisions higher than 0.96, recalls higher than 0.96, and F1-scores higher than 0.97.
@@ -125,7 +125,7 @@ For all nine malware families, our best model has achieved good validation score
 \begin{figure}
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/MsAcfgScores.eps}}
 \caption{Cross-Validation Scores of \sysname on the MSKCFG Dataset.}
-\label{fig:MSKCFGScores}
+\label{MG:Fig:MSKCFGScores}
 \end{figure}
 
 \begin{table}
@@ -148,7 +148,7 @@ Obfuscator.ACY  &   0.995593 &  0.962293 &  0.978655 \\
 \hline
 \end{tabular}
 \end{center}
-\label{tab:MSKCFGScores}
+\label{MG:Tab:MSKCFGScores}
 \end{table}
 
 Since Microsoft released the competition dataset in 2015, many researchers have used the dataset (completely or partially) to evaluate their techniques for malware detection and classification~\cite{NovelFeatureFusion, EnsembleDNN, AutoEncoderMicrosoft, FunctionCallGraph, StaticFeatures, PolySeqCls, AutoEncoderFeatureLearn, YuxinMalwareDnn}.
@@ -164,9 +164,9 @@ Therefore, we did not compare our work with the evaluation results reported in \
 Among the other five papers of malware classification, both \cite{FunctionCallGraph} and \cite{StaticFeatures} conducted the ten-fold cross validation over the Microsoft dataset, but only reported the overall accuracy.
 \cite{PolySeqCls} also performed a ten-fold cross validation but reported both the overall accuracy and logarithmic loss.
 Both \cite{NovelFeatureFusion} and \cite{AutoEncoderFeatureLearn} performed a five-fold cross validation and reported both the overall accuracy and logarithmic loss.
-Since the Microsoft dataset is not balanced across malware families, we compare \sysname with the five previous works that reported not only the overall accuracy but also the mean logarithmic loss, and the results are shown in Table~\ref{tab:CompareMicrosoftCv}.
+Since the Microsoft dataset is not balanced across malware families, we compare \sysname with the five previous works that reported not only the overall accuracy but also the mean logarithmic loss, and the results are shown in Table~\ref{MG:Tab:CompareMicrosoftCv}.
 
-The methods listed in Table~\ref{tab:CompareMicrosoftCv} can be classified into either ensemble-learning or single-model based approaches.
+The methods listed in Table~\ref{MG:Tab:CompareMicrosoftCv} can be classified into either ensemble-learning or single-model based approaches.
 \cite{NovelFeatureFusion} extracts more than 1800 features and uses gradient boosting based classifier, and it achieves the best log-loss (0.0197) and accuracy (99.42\%) using the XGBoost classifier. 
 \cite{FunctionCallGraph} achieves the second best accuracy (99.3\%) by ensembling multiple random forest methods, which already ensembles multiple decision trees.
 The DGCNN-based technique used by MAGIC achieves highly competitive results.
@@ -193,7 +193,7 @@ Random Forest with Feature Engineering\cite{StaticFeatures}             &       
 \hline
 \end{tabular}
 \end{center}
-\label{tab:CompareMicrosoftCv}
+\label{MG:Tab:CompareMicrosoftCv}
 \end{table*}
 
 
@@ -214,23 +214,23 @@ Random Forest with Feature Engineering\cite{StaticFeatures}             &       
 % Obfuscator.ACY  &       9 &         1 &             0 &      0 &      0 &       0 &             0 &            235 &      0 \\
 %     Gatak       &       0 &         0 &             0 &      1 &      0 &       0 &             0 &              0 &    210 \\
 % \end{tabular}
-% \label{tab:MSKCFGConfusionMatrix}
+% \label{MG:Tab:MSKCFGConfusionMatrix}
 % \end{table*}
 
 
 \subsection{Results on the YANCFG Dataset}
-\sysname's best cross validation scores on the YANCFG dataset are depicted in Figure~\ref{fig:YANCFGScores} and the exact values of these scores are listed in Table~\ref{tab:YANCFGScores}.
+\sysname's best cross validation scores on the YANCFG dataset are depicted in Figure~\ref{MG:Fig:YANCFGScores} and the exact values of these scores are listed in Table~\ref{MG:Tab:YANCFGScores}.
 % Table~\ref{tab:YANCFGScores} is the corresponding confusion table on the 20\% holdout set.
-We observe in Figure~\ref{fig:YANCFGScores} that \sysname achieves F1-scores higher than 0.9 for nine of the 13 binary families including \{Bagle, Benign, Bifrose, Hupigon, Koobface, Swizzor, Vundo, Zbot, Zlob\}.
+We observe in Figure~\ref{MG:Fig:YANCFGScores} that \sysname achieves F1-scores higher than 0.9 for nine of the 13 binary families including \{Bagle, Benign, Bifrose, Hupigon, Koobface, Swizzor, Vundo, Zbot, Zlob\}.
 The classification performances on both the Koobface and Swizzor families are perfect with a precision of 1.0 and a recall of 1.0.
 Regarding the other five families with F1 scores lower than 0.8, they all have relatively small populations in the YANCFG dataset.
 Our classifier suffers relatively low recalls (around 0.5) for both the Ldpinch and Sdbot families. For the Ldpinch, Rbot and Sdbot families, their precision scores (between 0.64 and 0.70) are not as good as the other ten families (more than 0.8).
 
 In order to further assess \sysname, we compared our results to the F1 scores obtained in~\cite{YanDataset}.
 That work ensembles a group of individual SVM (Support Vector Machine)-based classifiers (refer to \textbf{ESVC} hereafter). Our work does not use the raw hexadecimal bytes, the PE headers, and the execution traces in the original dataset.%, which put our approach at a disadvantage.
-We plot the comparison results in Figure~\ref{fig:YANCFGF1Improve} as the relative and absolute amount of improvement to ESVC as achieved by \sysname.
-Note that the improvement statistics for the Benign family are not shown in Figure~\ref{fig:YANCFGF1Improve} because the F1 score for the benign samples is not reported in~\cite{YanDataset}.
-The positive values in Figure~\ref{fig:YANCFGF1Improve} mean factual improvement, while the negative values mean degradation.
+We plot the comparison results in Figure~\ref{MG:Fig:YANCFGF1Improve} as the relative and absolute amount of improvement to ESVC as achieved by \sysname.
+Note that the improvement statistics for the Benign family are not shown in Figure~\ref{MG:Fig:YANCFGF1Improve} because the F1 score for the benign samples is not reported in~\cite{YanDataset}.
+The positive values in Figure~\ref{MG:Fig:YANCFGF1Improve} mean factual improvement, while the negative values mean degradation.
 Close to the bottom of the figure, we observe that the only family over which \sysname performs visibly poorer than ESVC is Rbot, with an approximate performance degradation of 0.07 relatively and 0.05 absolutely.
 For Hupigon, the downgradation is nearly invisible (less than 0.01 both relatively and absolutely), and both approaches achieve F1 scores higher than 0.94.
 On the other hand, \sysname outperforms ESVC for the other ten families.
@@ -291,20 +291,20 @@ We plan to test our models with the latest malware samples in our future work.
 \hline
 \end{tabular}
 \end{center}
-\label{tab:YANCFGScores}
+\label{MG:Tab:YANCFGScores}
 \end{table}
 
 \begin{figure}
 \centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/YanAcfgScores.eps}}
 \caption{Cross-Validation Scores of \sysname on the YANCFG Dataset.}
-\label{fig:YANCFGScores}
+\label{MG:Fig:YANCFGScores}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/YanAcfgF1Improve.eps}}
 \caption{F1 Score Comparison between \sysname and ESVC\cite{YanDataset} on the YANCFG Dataset.
 Improvement on the classification accuracy of benign samples is not shown because it is not reported in \cite{YanDataset}.}
-\label{fig:YANCFGF1Improve}
+\label{MG:Fig:YANCFGF1Improve}
 \end{figure}
 
 % \begin{table*}
@@ -328,6 +328,6 @@ Improvement on the classification accuracy of benign samples is not shown becaus
 %      Zbot &      0 &       0 &        1 &        3 &         0 &        1 &     0 &     1 &      0 &        0 &      1 &   178 &     5 \\
 %      Zlob &      0 &       0 &        0 &        0 &         0 &        1 &     0 &     1 &      0 &        0 &      0 &     1 &   384 \\
 % \end{tabular}
-% \label{tab:YANCFGConfusionMatrix}
+% \label{MG:Tab:YANCFGConfusionMatrix}
 % \end{table*}
 

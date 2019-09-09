@@ -2,24 +2,26 @@
 \label{MG:Sec:System}
 
 %Before that, let's take an overview of the components in \sysname in the pipeline order.
-This section overviews the three main components of \sysname, whose workflow is illustrated in Figure~\ref{fig:SystemPipeline}.
+This section overviews the three main components of \sysname, whose workflow is illustrated in Figure~\ref{MG:Fig:SystemPipeline}.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=1.0\textwidth]{Magic/figures/SystemPipeline.eps}}
-\caption{The workflow of \sysname, a DGCNN-based malware classification system}
-\label{fig:SystemPipeline}
+    \centerline{\includegraphics[width=1.0\textwidth]{Magic/figures/SystemPipeline.eps}}
+    \caption{The workflow of \sysname, a DGCNN-based malware classification system}
+    \label{MG:Fig:SystemPipeline}
 \end{figure*}
 
-\subsection{Control Flow Graph}\label{subsec:ConstructCfg}
+\subsection{Control Flow Graph}
+\label{MG:Subsec:ConstructCfg}
 %Given a cross-platform assembly code, 
 
 \sysname relies on the state-of-the-art tools, such as IDA Pro~\cite{bib:idapro}, to extract CFGs from malware code.
 In a CFG, a vertex represents a basic block, which contains a straight sequence of code or assembly instructions without any control flow transition except at its exit.
 Two vertices $(u, v)$ are connected by a directed edge $u \rightarrow v$ if either the last instruction in $u$ falls through the first line of code in $v$,
 or there is a jump instruction in $u$ that is destined to some instructions (e.g., jump target) in $v$.
-The implementation details on how to build the CFG from disassembled execution code will be given in Section~\ref{sec:BuildCfg}.
+The implementation details on how to build the CFG from disassembled execution code will be given in Section~\ref{MG:SubSec:BuildCfg}.
 
-\subsection{Attributed Control Flow Graph}\label{subsec:Cfg2Acfg}
+\subsection{Attributed Control Flow Graph}
+\label{MG:SubSec:Cfg2Acfg}
 The CFG representation of software program is generic for the purpose of malware classification in several ways.
 First, this type of representation transcends specific programming languages in which the programs are written or hardware platforms for which the programs are developed.
 Although other low-level representations such as hexadecimal byte sequences have similar properties, a CFG explicitly expresses the execution logic of a program using a graph data structure.
@@ -35,32 +37,32 @@ Hence, the semantics of a malware program is embodied by not only the characteri
 
 To convert CFGs to structures that are amenable to machine learning, we define attributes at each vertex that summarize code characteristics as numerical values.
 Initially the attributes computed at a vertex do not contain any structural information, which means that their values are independently collected from the corresponding basic block.
-Table~\ref{tab:UsedAttributes} lists the attributes implemented in our prototype system, although more attributes can be conveniently added to further improve malware classification performance.
+Table~\ref{MG:Tab:UsedAttributes} lists the attributes implemented in our prototype system, although more attributes can be conveniently added to further improve malware classification performance.
 
 \begin{table}[htbp]
-\caption{Block-level attributes used in \sysname}
-\begin{center}
-\begin{tabular}{c|l}
-\hline
-Attribute Type & Attribute Description \\
-\hline
-\multirow{10}{*}{From Code Sequence} & \# Numeric Constants \\
- & \# Transfer Instructions         \\
- & \# Call Instructions             \\
- & \# Arithmetic Instructions       \\
- & \# Compare Instructions          \\
-% & \# Crypto instructions           \\
- & \# Mov Instructions              \\
- & \# Termination Instructions      \\
- & \# Data Declaration Instructions \\
- & \# Total Instructions            \\
-\hline
-\multirow{2}{*}{From Vertex Structure} & \# Offspring, i.e., Degree \\
- & \# Instructions in the Vertex    \\
- \hline
-\end{tabular}
-\label{tab:UsedAttributes}
-\end{center}
+    \caption{Block-level attributes used in \sysname}
+    \begin{center}
+        \begin{tabular}{c|l}
+            \hline
+            Attribute Type & Attribute Description \\
+            \hline
+            \multirow{10}{*}{From Code Sequence} & \# Numeric Constants \\
+            & \# Transfer Instructions         \\
+            & \# Call Instructions             \\
+            & \# Arithmetic Instructions       \\
+            & \# Compare Instructions          \\
+            % & \# Crypto instructions           \\
+            & \# Mov Instructions              \\
+            & \# Termination Instructions      \\
+            & \# Data Declaration Instructions \\
+            & \# Total Instructions            \\
+            \hline
+            \multirow{2}{*}{From Vertex Structure} & \# Offspring, i.e., Degree \\
+            & \# Instructions in the Vertex    \\
+            \hline
+        \end{tabular}
+        \label{MG:Tab:UsedAttributes}
+    \end{center}
 \end{table}
 
 As the raw attributes in an attributed CFG (ACFG) contain little structural information and the number of vertices in an ACFG varies with the individual program from which the CFG is derived, for the purpose of malware classification it is necessary to aggregate these attributes over all the vertices in the ACFG in an organic manner depending on its graph structure.
@@ -73,7 +75,9 @@ The task of such attribute aggregation is accomplished with DGCNN, which shall b
 %It also includes structural information of the vertex, such as the number of offspring and betweenness.
 
 
-\subsection{Deep Graph Convolution Neural Network}\label{subsec:DGCNN}
+\subsection{Deep Graph Convolution Neural Network}
+\label{MG:Subsec:DGCNN}
+
 Unlike image or text-based data, graph-based data are of variable sizes and are thus not naturally ordered tensors.
 %Therefore, a gap exists between the ACFG and the optimal features on the basis of which a machine-learning-powered detection engine makes malware prediction. In our pipeline, this gap is bridged by 
 To address this challenge, we use the state-of-the-art deep neural network that can automatically learn discriminative latent features from malware data abstracted as ACFGs.

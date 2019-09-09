@@ -89,13 +89,13 @@ thus embedding high-dimensional structural information into vectors that are ame
 Putting all together, in this paper we present \sysname,
 an end-to-end \underline{M}alware detection system characterized by both \underline{A}ttributed control flow \underline{G}raph representation and
 us\underline{I}ng deep graph \underline{C}onvolution neural network.
-Designed as an data-oriented machine learning pipeline, we illustrate \sysname end-to-end in Figure~\ref{fig:SystemPipeline}.
+Designed as an data-oriented machine learning pipeline, we illustrate \sysname end-to-end in Figure~\ref{MG:Fig:SystemPipeline}.
 Starting from the left end, \sysname assumes a raw executable binary is firstly disassembled into intermediate assembly code,
 which is readily supported by many binary analysis tools, like IDA-Pro.
 Cross-platform assembly code then go through a parser and a extractor that together builds the attributed control flow graph.
 System flow ends with a malware prediction made by a pre-trained deep-learning based decision engine,
 powered by our carefully re-engineered graph convolution neural network model.
-We unveil the design details component by component from Section~\ref{sec:DGCNN} to Section~\ref{sec:Implement}.
+We unveil the design details component by component from Section~\ref{MG:Sec:DGCNN} to Section~\ref{MG:Sec:Implement}.
 \fi
 
 To demonstrate the applicability of DGCNN for malware classification,

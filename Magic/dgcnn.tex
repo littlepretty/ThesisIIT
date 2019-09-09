@@ -1,7 +1,7 @@
 \section{Algorithm Description}
 \label{MG:Sec:DGCNN}
 
-Our work on applying DGCNN for malware classification in \sysname has been inspired by the deep learning model proposed in~\cite{Dgcnn}. In this section, we first introduce how DGCNN aggregates attributes through the neighborhood defined by the graph structure. We then discuss how to extend the existing DGCNN model with our own modifications. To explain the rationale of the DGCNN-based malware classification algorithm clearly, we walk through an example graph with five vertices as shown in Figure~\ref{fig:ExampleGraph}.
+Our work on applying DGCNN for malware classification in \sysname has been inspired by the deep learning model proposed in~\cite{Dgcnn}. In this section, we first introduce how DGCNN aggregates attributes through the neighborhood defined by the graph structure. We then discuss how to extend the existing DGCNN model with our own modifications. To explain the rationale of the DGCNN-based malware classification algorithm clearly, we walk through an example graph with five vertices as shown in Figure~\ref{MG:Fig:ExampleGraph}.
 
 \subsection{Primer on DGCNN}
 
@@ -13,16 +13,16 @@ $\tilde{\mathbf{D}}_{i,i} = \sum_j \tilde{\mathbf{A}}_{i,j}$.
 We assume that each vertex is associated with a $c$-dimension attribute vector.
 Therefore, we use $\mathbf{X} \in \mathbb{R}^{n \times c}$ to denote the attribute matrix for all the vertices in the graph. %$\forall v \in V$.
 Alternatively, we can also treat $\mathbf{X}$ as the concatenation of $c$ \textit{attribute channels} of the graph.
-For the sample graph $g$ in Figure~\ref{fig:ExampleGraph}, we displayed the corresponding augmented adjacency matrix $\tilde{\mathbf{A}}$, the augmented diagonal degree matrix $\tilde{\mathbf{D}}$, and the attribute matrix $\mathbf{X}$ with two attribute channels $F1$ and $F2$.
+For the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraph}, we displayed the corresponding augmented adjacency matrix $\tilde{\mathbf{A}}$, the augmented diagonal degree matrix $\tilde{\mathbf{D}}$, and the attribute matrix $\mathbf{X}$ with two attribute channels $F1$ and $F2$.
 Given $\tilde{\mathbf{A}}$ and $\mathbf{X}$ for graph $G$, the DGCNN-based algorithm performs three sequential stages to obtain its tensor representation for malware classification. Note that $\tilde{\mathbf{D}}$ can be calculated from $\tilde{\mathbf{A}}$.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleGraph.eps}}
-\caption{An sample graph $g$ used in Section~\ref{sec:DGCNN} to illustrate how the extended DGCNN works in \sysname.
+\caption{An sample graph $g$ used in Section~\ref{MG:Sec:DGCNN} to illustrate how the extended DGCNN works in \sysname.
 Assuming the vertices have two attribute channels, we show
 $g$'s augmented adjacency matrix $\tilde{\mathbf{A}}$, augmented diagonal degree matrix $\tilde{\mathbf{D}}$,
 as well as attribute matrix $\mathbf{X}$.}
-\label{fig:ExampleGraph}
+\label{MG:Fig:ExampleGraph}
 \end{figure}
 
 \textbf{Graph Convolution Layer(s).} In the first stage, a \textit{graph convolution} technique propagates each vertex's attributes to its neighborhood based on the structural connectivity.
@@ -46,14 +46,14 @@ In other words, the $j$-th feature channel of vertex $i$ is computed as a linear
 The layer finally outputs the element-wise activation using a nonlinear function $f$.
 At the end of $h$ graph convolution layers, DGCNN concatenates each layer's output $Z^{t}$,
 denoted as $\mathbf{Z}^{1:h} = [\mathbf{Z}^1, \mathbf{Z}^2, \ldots, \mathbf{Z}^{h}]$.
-For the sample graph $g$, Figure~\ref{fig:ExampleGraphConvolution} shows how the two sequential graph convolution layers transform the initial attribute matrix $\mathbf{Z}_0=\mathbf{X}$ to $\mathbf{Z}_1$ and $\mathbf{Z}_2$, both of which together form $\mathbf{Z}^{1:2}$.
+For the sample graph $g$, Figure~\ref{MG:Fig:ExampleGraphConvolution} shows how the two sequential graph convolution layers transform the initial attribute matrix $\mathbf{Z}_0=\mathbf{X}$ to $\mathbf{Z}_1$ and $\mathbf{Z}_2$, both of which together form $\mathbf{Z}^{1:2}$.
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleGraphConvolution.eps}}
 \caption{After applying $h=2$ graph convolution layers, the sample graph $g$ is transformed to $\mathbf{Z}^{1:h}$.
 We assume the weight parameters in the two graph convolution layers are $\mathbf{W}^1 = [[1, 0 ,1], [0, 1, 0]]$ and $\mathbf{W}^2 = [[0, 1 ,-2, 2], [1, 1, 7, -2], [1, 0, -1, 4]]$.
 For simplicity, numbers are of 2 precision, and we perform the element-wise RELU nonlinear activation $f(x) = max(x, 0)$ in both graph convolution layers.}
-\label{fig:ExampleGraphConvolution}
+\label{MG:Fig:ExampleGraphConvolution}
 \end{figure}
 
 \textbf{SortPooling Layer.} Intuitively $\mathbf{Z}^{1:h}$ has $n$ rows and $\sum_{1}^{h}c_t$ column, which
@@ -69,7 +69,7 @@ If there are $c_h$ ties on the last layer's output $\mathbf{Z}^{h}$,
 sorting continues by using the second last layer's output $\mathbf{Z}^{h - 1}$, and the procedure repeats until all ties are broken.
 The sortpooling layer further truncates or pads the sorted tensors by the first dimension so that it outputs $\mathbf{Z}^{sp}$ of size $k$ by $\sum_{1}^{h}c_t$.
 Hence, the sortpooling process unifies the size of feature descriptors for all graphs.
-Following our sample graph $g$, we visualize this process in Figure~\ref{fig:ExampleSortpool}.
+Following our sample graph $g$, we visualize this process in Figure~\ref{MG:Fig:ExampleSortpool}.
 The row of $\mathbf{Z}^{h}$ is first sorted using only the value in the last column.
 The last two rows (i.e., yellow and red) are discarded from the sorted matrix as $n - k = 2 > 0$.
 
@@ -78,8 +78,8 @@ If $F$ is the number of filters in the last one-dimension convolution layer, the
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleSortpool.eps}}
-\caption{Given the graph convolution result $\mathbf{Z}^{1:h}$ for the sample graph $g$ in Figure~\ref{fig:ExampleGraphConvolution}, the sortpooling layer with $k = 3$ sorts the feature descriptors (based on only the last feature channel in this example) and then truncates the two `smallest' rows.}
-\label{fig:ExampleSortpool}
+\caption{Given the graph convolution result $\mathbf{Z}^{1:h}$ for the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraphConvolution}, the sortpooling layer with $k = 3$ sorts the feature descriptors (based on only the last feature channel in this example) and then truncates the two `smallest' rows.}
+\label{MG:Fig:ExampleSortpool}
 \end{figure}
 
 \subsection{WeightedVertices Layer}
@@ -88,7 +88,7 @@ Mathematically, a single channel Conv1D layer can be represented as a row of par
 Its output $E \in \mathbb{R}^{1 \times \sum_{1}^{h}c_t}$, when fed with \textit{transposed} $\mathbf{Z}^{sp}$, will be equivalent to
 \begin{equation}
     E = f(\mathbf{W} \times \mathbf{Z}^{sp})
-\label{equ:WeightedVertices}
+\label{MG:Equ:WeightedVertices}
 \end{equation}
 %which is obviously after we notice that
 This is because
@@ -98,8 +98,8 @@ This is because
 where $1\leq c \leq \sum_{1}^{h}c_t$, and $f$ is an element-wise nonlinear activation function.
 Inspired by the graph embedding idea in\cite{GraphEmbedding}, our Conv1D layer treats each row of the sort pooling result $\mathbf{Z}^{sp}_{i}$ as the embedding of the vertices kept by the sortpooling layer.
 
-Equivalently, Equation~(\ref{equ:WeightedVertices}) computes $E$, the embedding of the graph obtained through a weighted summation of vertex embeddings \cite{GraphEmbedding}.
-For our sample graph $g$, its ``embedding" is computed in Figure~\ref{fig:ExampleWeightedVertice}, where we assume weight vector $\mathbf{W}=[0.4, 0.1, 0.5]$.
+Equivalently, Equation~(\ref{MG:Equ:WeightedVertices}) computes $E$, the embedding of the graph obtained through a weighted summation of vertex embeddings \cite{GraphEmbedding}.
+For our sample graph $g$, its ``embedding" is computed in Figure~\ref{MG:Fig:ExampleWeightedVertice}, where we assume weight vector $\mathbf{W}=[0.4, 0.1, 0.5]$.
 In reality, $\mathbf{W}$ is updated by gradient descent during the process of minimizing the classification loss.
 For ease of presentation, in the remainder of the paper we refer to this special Conv1D layer after the sortpooling layer as the \textit{WeightedVertices} layer.
 We replace the original Conv1D layer with the WeightVertices layer, because the WeightVertices layer leverages the graph embedding idea to make the output from the sorting pooling layer compatible with the malware classifier.
@@ -107,14 +107,14 @@ We replace the original Conv1D layer with the WeightVertices layer, because the 
 % \begin{figure}[htbp]
 % \centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/WeightedVertice.eps}}
 % \caption{Weight vertices layer aggregates vertex embeddings, e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$, into graph embedding $E$. $V_1, V2, V3, ...,$ and $ V_k$ in figure are feature descriptors of sort pooled vertices, represented as rows in $\mathbf{Z}^{sp}$.}
-% \label{fig:WeightedVertice}
+% \label{MG:Fig:WeightedVertice}
 % \end{figure}
 
 \begin{figure*}[htbp]
 \centerline{\includegraphics[width=0.92\textwidth]{Magic/figures/ExampleWeightedVertice.eps}}
 \caption{WeightVertices layer aggregates sample graph $g$'s vertex embeddings,
-e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$ in Figure~\ref{fig:ExampleSortpool}, to graph embedding $E$. We choose again RELU as the nonlinear activition function $f$ for simplicity.}
-\label{fig:ExampleWeightedVertice}
+e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$ in Figure~\ref{MG:Fig:ExampleSortpool}, to graph embedding $E$. We choose again RELU as the nonlinear activition function $f$ for simplicity.}
+\label{MG:Fig:ExampleWeightedVertice}
 \end{figure*}
 
 \subsection{AdaptiveMaxPooling: An Alternative to Sortpooling}
@@ -127,9 +127,9 @@ Given an set of two-dimension inputs of various sizes $\{x_i | x_i \in \mathbb{R
 The AMP layer divides each input $x_i$ into a $H \times W$ grid with a sub-window size approximately to $h_i / H$ and $w_i / W$,
 and then automatically chooses kernel sizes as well as convolution strides for different $x_i$.
 Inside each sub-window and each channel, only the maximum element is kept in order to form the set of identical-dimension outputs $\{y_i | y_i \in \mathbb{R}^{ H \times W}\}$.
-The way in which AMP works for our sample graph $g$ is illustrated in Figure~\ref{fig:ExampleAmp}.
+The way in which AMP works for our sample graph $g$ is illustrated in Figure~\ref{MG:Fig:ExampleAmp}.
 Since the dimension of the graph convolution output $\mathbf{Z}^{1:h}_g$ for $g$ is $5 \times 7$, AMP uses a max pooling kernel of size $3 \times 3$.
-To show how AMP works for inputs of different dimension sizes, in Figure~\ref{fig:ExampleAmp} we also feed $\mathbf{Z}^{1:h}_{g'}$, the graph convolution output for another graph $g'$ (not shown here), to the $3 \times 3$ AMP layer. In this case, the kernel size is adaptively adjusted to $2 \times 3$.
+To show how AMP works for inputs of different dimension sizes, in Figure~\ref{MG:Fig:ExampleAmp} we also feed $\mathbf{Z}^{1:h}_{g'}$, the graph convolution output for another graph $g'$ (not shown here), to the $3 \times 3$ AMP layer. In this case, the kernel size is adaptively adjusted to $2 \times 3$.
 
 We have two motivations for using AMP at the end of the graph convolution layer.
 In addition to unifying the convolution layer output $\mathbf{Z}^{1:h}$, AMP empowers us to aggregate $\mathbf{Z}^{1:h}$
@@ -144,16 +144,16 @@ The output of the AMP layer is further fed into a multiple-Conv2D-layer neural n
 % two two-dimension inputs with different sizes.
 % For the first input of size $4\times 4$, adaptive max pooling's kernel size = $2 \times 2$(shown as red shadow), padding = 0, stride = $1 \times 1$.
 % For the second input of size $5\times 7$, adaptive max pooling's kernel size = $3 \times 3$(shown as red shadow), padding = 0, stride = $2 \times 1$.}
-% \label{fig:AdaptiveMaxPooling}
+% \label{MG:Fig:AdaptiveMaxPooling}
 % \end{figure}
 
 \begin{figure*}[htbp]
 \centerline{\includegraphics[width=0.92\textwidth]{Magic/figures/ExampleAmp.eps}}
 \caption{An example of $3\times 3$ adaptive max pooling layer with two two-dimension inputs with different sizes.
-The left top matrix $\mathbf{Z}^{1:h}_g$ represents the graph convolution output of the sample graph $g$ in Figure~\ref{fig:ExampleGraph}.
+The left top matrix $\mathbf{Z}^{1:h}_g$ represents the graph convolution output of the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraph}.
 The left bottom matrix $\mathbf{Z}^{1:h}_{g'}$ represents the graph convolution output of another imaginary graph $g'$ with four vertices.
 For $\mathbf{Z}^{1:h}_g$ of size $5\times 7$, adaptive max pooling's kernel size = $3 \times 3$ (shown as red shadow).
 For $\mathbf{Z}^{1:h}_{g'}$ of size $4\times 7$, adaptive max pooling's kernel size = $2 \times 3$ (shown as red shadow).
 For both inputs, padding = 0, stride = $2 \times 1$.}
-\label{fig:ExampleAmp}
+\label{MG:Fig:ExampleAmp}
 \end{figure*}

@@ -4,21 +4,21 @@
 In this section, we discuss a few implementation details, which include how we derive CFGs from dissembled code, what kind of loss functions are used in model training, and the open source MAGIC project.
 
 \subsection{Details in Building CFG}
-\label{sec:BuildCfg}
+\label{MG:SubSec:BuildCfg}
 To build a control flow graph from disassembled code in possibly different formats, we first pre-process the input files so that the resulting program $P$ is a one-to-one mapping from \textit{sorted addresses} to \textit{assembly instructions}, e.g., $P: \mathbf{Z}^+ \rightarrow \mathbf{I}$.
 
 We then perform a two-pass iteration over $P$.
 Instructions $inst \in \mathbf{I}$ are associated with a couple of tags,
 i.e., \texttt{\{start, branchTo, fallThrough, return\}}, used by the second pass for creating code blocks and connecting blocks.
 To adapt to (potentially) hundreds of types of instructions, the first pass applies the visitor pattern to implement if-else free instruction tagging.
-As an example, Algorithm~\ref{alg:CallExample} details the tagging operations when visiting a conditional jump instruction $cj$.
+As an example, Algorithm~\ref{MG:Alg:CallExample} details the tagging operations when visiting a conditional jump instruction $cj$.
 This procedure relies on a helper function \texttt{findDstAddr($inst$)} to extract the destination address of a jump instruction $inst$.
 For a conditional jump instruction,
 it branches to the jump target ($P[dstAddr]$, handled by line 2 -- 3) and falls through to the next instruction ($P[cj.addr + cj.size]$, handled by line 4 -- 5).
 
 %\begin{algorithm}
 %\caption{\texttt{visitConditionalJump($cj$)}}
-%\label{alg:CallExample}
+%\label{MG:Alg:CallExample}
 %\begin{algorithmic}[1]
 %\STATE $dstAddr \leftarrow \texttt{findDstAddr}(cj)$
 %\STATE $cj.branchTo \leftarrow dstAddr$
@@ -38,23 +38,23 @@ it branches to the jump target ($P[dstAddr]$, handled by line 2 -- 3) and falls 
     $cj.fallThrough \gets true$\;
     $P[cj.addr + cj.size].start \gets true$\;
     \caption{\texttt{visitConditionalJump($cj$)}}
-    \label{alg:CallExample}
+    \label{MG:Alg:CallExample}
 \end{algorithm}
 
 The second pass creates code blocks (or vertices) and connects blocks on the fly.
-The skeleton of the procedure is illustrated in Algorithm~\ref{alg:SecondPass}.
-Algorithm~\ref{alg:SecondPass} assumes two trivial helper functions.
+The skeleton of the procedure is illustrated in Algorithm~\ref{MG:Alg:SecondPass}.
+Algorithm~\ref{MG:Alg:SecondPass} assumes two trivial helper functions.
 Firstly, \texttt{getBlockAtAddr($addr$)} returns the block starting at $addr$
 if it already exists; otherwise it creates a new block starting at $addr$.
 The second one \texttt{getNextInst($P, inst$)} returns the instruction next to $inst$ if it exists; otherwise, \texttt{None} is returned.
-With both helpers, Algorithm~\ref{alg:SecondPass} works in three steps.
+With both helpers, Algorithm~\ref{MG:Alg:SecondPass} works in three steps.
 The first if statement creates a new block if $inst$ was marked as \texttt{start} in the first pass.
 The second step connects $block$ to $nextBlock$ if the last instruction in $block$ is falling through to the next instruction, which happens to be the start of $nextBlock$.
 The final step creates an edge (potentially a new block) for any branching operations, e.g., jump or call.
 
 %\begin{algorithm}
 %\caption{\texttt{CfgBuilder::connectBlocks()}}
-%\label{alg:SecondPass}
+%\label{MG:Alg:SecondPass}
 %\begin{algorithmic}[1]
 %\FORALL{$inst$ in program $P$}
     %\IF{$inst.start$}
@@ -104,7 +104,7 @@ The final step creates an edge (potentially a new block) for any branching opera
         $currBlock \gets nextBlock$\;
     }
     \caption{\texttt{CfgBuilder::connectBlocks()}}
-    \label{alg:SecondPass}
+    \label{MG:Alg:SecondPass}
 \end{algorithm}
 
 \subsection{Loss Functions Used in Model Training}
