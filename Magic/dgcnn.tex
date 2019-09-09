@@ -1,11 +1,11 @@
-\section{Algorithm Description}\label{sec:DGCNN}
+\section{Algorithm Description}
+\label{MG:Sec:DGCNN}
 
 Our work on applying DGCNN for malware classification in \sysname has been inspired by the deep learning model proposed in~\cite{Dgcnn}. In this section, we first introduce how DGCNN aggregates attributes through the neighborhood defined by the graph structure. We then discuss how to extend the existing DGCNN model with our own modifications. To explain the rationale of the DGCNN-based malware classification algorithm clearly, we walk through an example graph with five vertices as shown in Figure~\ref{fig:ExampleGraph}.
 
 \subsection{Primer on DGCNN}
 
-\subsubsection{Notations}
-We denote the adjacency matrix of a graph $G=(V, E)$ of $n$ vertices as $\mathbf{A} \in \mathbb{Z} ^{n\times n}$.
+\textbf{Notations.} We denote the adjacency matrix of a graph $G=(V, E)$ of $n$ vertices as $\mathbf{A} \in \mathbb{Z} ^{n\times n}$.
 Note that $G$ is a directed graph, and $\mathbf{A}$ is not necessarily symmetric.
 To allow the attributes of a vertex to be propagated back to the vertex itself, we define the augmented adjacency matrix $\tilde{\mathbf{A}} = \mathbf{A} + \mathbf{I}$.
 Accordingly, the augmented diagonal degree matrix of $G$ is defined as $\tilde{\mathbf{D}}$, where
@@ -25,10 +25,8 @@ as well as attribute matrix $\mathbf{X}$.}
 \label{fig:ExampleGraph}
 \end{figure}
 
-\subsubsection{Graph Convolution Layer(s)}
-
-In the first stage, a \textit{graph convolution} technique propagates each vertex's attributes to its neighborhood based on the structural connectivity.
-To aggregate multi-scale substructural attributes, multiple graph
+\textbf{Graph Convolution Layer(s).} In the first stage, a \textit{graph convolution} technique propagates each vertex's attributes to its neighborhood based on the structural connectivity.
+To aggregate multi-scale sub-structural attributes, multiple graph
 convolution layers are stacked, which can be defined recursively as follows:
 \begin{equation}
     \mathbf{Z}^{t + 1} = f(\tilde{\mathbf{D}}^{-1} \tilde{\mathbf{A}} \mathbf{Z}^t \mathbf{W}^t)
@@ -58,8 +56,7 @@ For simplicity, numbers are of 2 precision, and we perform the element-wise RELU
 \label{fig:ExampleGraphConvolution}
 \end{figure}
 
-\subsubsection{SortPooling Layer}
-Intuitively $\mathbf{Z}^{1:h}$ has $n$ rows and $\sum_{1}^{h}c_t$ column, which
+\textbf{SortPooling Layer.} Intuitively $\mathbf{Z}^{1:h}$ has $n$ rows and $\sum_{1}^{h}c_t$ column, which
 corresponds to the \textit{feature descriptor} of each vertex at different scales.
 The second stage, namely the \textit{sortpooling} layer,
 leverages the feature descriptors to sort the vertices.
@@ -76,8 +73,7 @@ Following our sample graph $g$, we visualize this process in Figure~\ref{fig:Exa
 The row of $\mathbf{Z}^{h}$ is first sorted using only the value in the last column.
 The last two rows (i.e., yellow and red) are discarded from the sorted matrix as $n - k = 2 > 0$.
 
-\subsubsection{Remaining Layer}
-In the last stage, the authors of the original DGCNN\cite{Dgcnn} append a one-dimension convolution (Conv1D) layer of kernel size $\sum_{1}^{h}c_t$ and stride size $\sum_{1}^{h}c_t$.
+\textbf{Remaining Layer(s).} In the last stage, the authors of the original DGCNN\cite{Dgcnn} append a one-dimension convolution (Conv1D) layer of kernel size $\sum_{1}^{h}c_t$ and stride size $\sum_{1}^{h}c_t$.
 If $F$ is the number of filters in the last one-dimension convolution layer, the sort pooling output $\mathbf{Z}^{sp}$ will be reduced to a one-dimension vector of size $k \times F$, which is then fed into a fully connected one-layer perceptron for graph classification.
 
 \begin{figure}[htbp]

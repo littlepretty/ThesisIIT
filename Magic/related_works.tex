@@ -1,5 +1,4 @@
-\section{Related Works} \label{sec:related-work}
-We introduce related works on deep learning based malware classification and deep neural networks for graph data.
+% We introduce related works on deep learning based malware classification and deep neural networks for graph data.
 
 % \subsection{Weakness of Existing Malware Detection Approaches}
 % In the solution that wins the 2015 Microsoft Malware Classification Challenge\cite{MsWinner}, one set of useful features are the intensities of the first 800 pixels.
@@ -11,16 +10,17 @@ We introduce related works on deep learning based malware classification and dee
 % malware developers can easily counter the first-800-pixel-intensity features by padding certain pixels that statistically close to these in normal binaries.
 % Similar mechanism can be conveniently employed to confuse the detection approaches that heavily relies on opcode n-grams\cite{NgramMalwareDetect, QgramMalwareDetect, McBoost}.
 
-\subsection{Deep Learning Based Malware Detection}
+\section{Deep Learning Based Malware Classification}
+
 As an important problem in cybersecurity, malware detection and classification have drawn the attentions of many researchers from both communities of cybersecurity and data mining~\cite{MalDetectSurvey1, MalDetectSurvey2}.
 There has been a recent trend of applying deep learning techniques for malware defense tasks and these works largely fall into two categories.
 In the first category, which adopts a feature-centric approach, researchers reuse or extend features developed in previous works but extracted from the newer datasets collected from customized, private, and specific environments~\cite{EarlyStageRnn, DeepFlow, DeepAM, RandomProjectionNn, AutoEncoderFeatureLearn, AutoEncoderMicrosoft, LstmSyscall, MalwareLstmGru}.
-For example, the work in \cite{DeepFlow} focused on malware collected from Android devices and that in \cite{DeepAM} targets malware on the cloud platforms.
+For example, the work in~\cite{DeepFlow} focused on malware collected from Android devices and that in~\cite{DeepAM} targets malware on the cloud platforms.
 Off-the-shelf deep learning models have been used as tunable black boxes.
 Compared with classic machine learning algorithms like decision trees, random forest, and gradient boosting,
-deep learning models fed with the same training datasets may result in better detection performance \cite{DeepFlow,RandomProjectionNn} and faster execution \cite{EarlyStageRnn},
+deep learning models fed with the same training datasets may result in better detection performance~\cite{DeepFlow,RandomProjectionNn} and faster execution~\cite{EarlyStageRnn},
 because of their advantages on big data analysis~\cite{RandomProjectionNn} and the possibility of using parallel computing hardware (i.e., GPUs).
-Moreover, the works in \cite{AutoEncoderFeatureLearn} and \cite{AutoEncoderMicrosoft} have focused on automation of feature learning using unsupervised deep learning techniques.
+Moreover, the works in~\cite{AutoEncoderFeatureLearn} and~\cite{AutoEncoderMicrosoft} have focused on automation of feature learning using unsupervised deep learning techniques.
 
 In the second category, which adopts a model-centric approach, researchers are motivated by finding specific but superior deep learning architectures for malware defense tasks.
 For example, to find similar success of convolution neural network in the application domains of computer vision and image classification, researchers have proposed methods to transform the byte sequences in binary malware executables into gray or color images, which are amenable to the existing deep learning-based image classification techniques~\cite{R2D2, GibertCnn}. Other researchers have explored how deep sequence models, such as LSTM, GRU, and the attention mechanism, can be applied to programs the sequences of system calls or API calls transformed from malware programs~\cite{LstmSyscall,MalwareLstmGru}. 
@@ -28,15 +28,15 @@ For example, to find similar success of convolution neural network in the applic
 %Many existing works including our work that apply deep learning to malware detection is a hybrid of the two categories.
 Our work takes a hybrid approach that intersects with the works in both categories. First, our work improves the accuracy of malware classification using not only the features that can be explicitly expressed with numeric values (i.e., attributes extracted from basic blocks) but also those that are inherent within the structure of the program (i.e., control flow graphs). On the other hand, deep learning models are not used as black boxes in our work, as we have proposed modifications to the standard DGCNN that are better tailored to the malware classification problem.
 
-\subsection{Deep Learning Models for Graph-Represented Data}
+\section{Deep Learning Models for Graph-Represented Data}
+
 %As people in today's world are increasingly connected by computer network and social network, data collected from our digital lives are also organized in networks or graphs.
 %Motivated by the increasingly available graphical datasets, researchers in artificial intelligence and data science community are studying how neural network can help computers to efficiently learn the inherent relationships that reside in graph's unordered connectivity.
-
 There are two parallel lines of research on deep learning algorithms for graph-represented data.
-In the first setting \cite{Node2Vec, LineNetworkEmbedding, SemiSupervisedGcn}, a single graph is given and the task is to infer unknown labels of individual vertices, or  unknown types of connectivity between vertices.
+In the first setting~\cite{Node2Vec, LineNetworkEmbedding, SemiSupervisedGcn}, a single graph is given and the task is to infer unknown labels of individual vertices, or  unknown types of connectivity between vertices.
 Though this problem has wide applications in social networks and recommendation systems, it does not align well with our goal in this paper. 
 Instead, our work fits into the second setting, where assuming a group of labeled graphs with different structures and sizes, the task is to predict the label of future unknown graphs\cite{Dgcnn, SeqGraphKernels, SimonovskyEcc}.
-In this setting, both the works in\cite{SeqGraphKernels} and \cite{Dgcnn} have mentioned their connections with the classic Weisfeiler-Lehman subtree kernel \cite{WlGraphKernel} or the Weisfeiler-Lehman algorithm \cite{WlAlgorithm}.
-In contrast, the work in \cite{SeqGraphKernels} introduces the recurrent neuron based graph kernel, then stacks multiple graph kernel neural layers into deep network.
-Similar to the sort pooling layer discussed in \cite{Dgcnn}, the work in \cite{SimonovskyEcc} generalizes the convolution operator and enables it to handle arbitrary graphs of different sizes.
-In our work, we propose to enhance the architectures introduced in \cite{Dgcnn} with both the weight vertices layer and the adaptive max pooling layer for the malware classification task.
+In this setting, both the works in~\cite{SeqGraphKernels} and~\cite{Dgcnn} have mentioned their connections with the classic Weisfeiler-Lehman subtree kernel~\cite{WlGraphKernel} or the Weisfeiler-Lehman algorithm~\cite{WlAlgorithm}.
+In contrast, the work in~\cite{SeqGraphKernels} introduces the recurrent neuron based graph kernel, then stacks multiple graph kernel neural layers into deep network.
+Similar to the sort pooling layer discussed in~\cite{Dgcnn}, the work in~\cite{SimonovskyEcc} generalizes the convolution operator and enables it to handle arbitrary graphs of different sizes.
+In our work, we propose to enhance the architectures introduced in~\cite{Dgcnn} with both the weight vertices layer and the adaptive max pooling layer for the malware classification task.

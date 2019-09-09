@@ -250,9 +250,16 @@ In the future, we will investigate SDN specific solutions and apply the solution
 % Chapters are created with \Chapter{title} command
 \Chapter{Introduction}
 \input{intro}
-\input{related_work}
+
+\Chapter{Overview of Related Works}
+\label{Cpt:RelatedWorks}
+\input{VirtualTime/related_works}
+\input{OneBigSwitch/related_works}
+\input{CompareDL/related_works}
+\input{Magic/related_works}
 
 \Chapter{Virtual Time System}
+\label{Cpt:VTS}
 \input{VirtualTime/motivation}
 \input{VirtualTime/design}
 \input{VirtualTime/implementation}
@@ -262,6 +269,7 @@ In the future, we will investigate SDN specific solutions and apply the solution
 \clearpage
 
 \Chapter{One Big Switch}
+\label{Cpt:OBS}
 \input{OneBigSwitch/motivation}
 \input{OneBigSwitch/example}
 \input{OneBigSwitch/design}
@@ -270,6 +278,7 @@ In the future, we will investigate SDN specific solutions and apply the solution
 \clearpage
 
 \Chapter{Deep Learning for Network Intrusion Detection}
+\label{Chp:DLNID}
 \input{CompareDL/background}
 \input{CompareDL/datasets}
 \input{CompareDL/architectures}
@@ -277,16 +286,17 @@ In the future, we will investigate SDN specific solutions and apply the solution
 \input{CompareDL/conclusion}
 \clearpage
 
-\Chapter{Deep Learning for Malware Detection}
-\input{Magic/intro}
+\Chapter{Deep Learning for Malware Classification}
+\label{Cpt:DLMC}
 \input{Magic/system_design}
 \input{Magic/dgcnn}
 \input{Magic/implementation}
 \input{Magic/experiments}
-\input{Magic/related_works}
 \input{Magic/conclusion}
 \clearpage
 
+\Chapter{Conclusion}
+\label{Cpt:Conclusion}
 \input{conclusion}
 
 %
