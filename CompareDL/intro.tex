@@ -1,14 +1,19 @@
-\section{Deep Learning Models for Network Intrusion Detection}
-\label{CDL:Sec:Intro}
+\section{Deep Learning for Intrusion Detection System}
+\label{DL:Sec:Intro}
 
 Deep learning has gained a dramatic increase in popularity in the last couple of years,
 and has offered advanced solutions in the areas of image and speech recognition~\cite{AlexNet, SpeechDNN},
 natural language processing~\cite{Word2Vec}, Go playing~\cite{AlphaGo}, and many other domains~\cite{DeepLearning}. 
-Motivated by deep learning's success, we ask what together simulation/emulation testing system and deep learning technology can do for network security.
-Our answer is anomaly detection based network intrusion detection systems (NIDS).
+Motivated by deep learning's success, we ask what together simulation/emulation testing system and deep learning technology can do for cyber security.
+Specifically, we focus on the domain of intrusion detection system.
+Though both motivated by the deep learning technology, we have different answers for both network-based and host-based intrusion detection systems.
+
+
+\subsection{Deep Learning Based Network Intrusion Detection}
+\label{DL:SubSec:NIDS}
 
 As networking technology gets deeply integrated into our lives, protecting modern networked systems against cyber-attacks is no longer optional.
-Network intrusion detection systems (NIDS) are essential security solutions for today's networked systems supporting military applications,
+Network intrusion detection systems (NIDSes) are essential security solutions for today's networked systems supporting military applications,
 social communications, cloud services, and other critical infrastructures.
 A NIDS automatically monitors traffic in a network to detect malicious activities and policy violations.
 The majority of NIDSes today adopt signature-based detection techniques,
@@ -21,12 +26,11 @@ and detect deviations from the model in observed data. A key advantage is the ab
 An on-line model further frees network administrators from identifying new patterns or even new types of the abnormal behaviors in a dynamic network environment.
 However, if the constructed model is not sufficiently generalized for normal or abnormal traffic,
 anomaly-based approaches would suffer from high false positive, i.e., incorrectly treat unknown normal traffic as malicious.
-the essential network-architecture-agnostic security building-blocks.
 
 We study the feasibility of off-line deep learning based NIDS by constructing the detection engine with
 multiple advanced deep learning models and conducting a quantitative and comparative evaluation of those models.
 Specifically, we first introduce the general deep learning methodology and its potential implication on the network intrusion detection problem.
 We then review multiple machine learning solutions to two network intrusion detection tasks (NSL-KDD and UNSW-NB15 datasets).
 We develop a TensorFlow-based deep learning library, called NetLearner, and implement a handful of cutting-edge deep learning models for NIDS.
-Finally, we conduct a quantitative and comparative performance evaluation of those models using NetLearner. 
+Finally, we conduct a quantitative and comparative performance evaluation of those models using NetLearner.
 

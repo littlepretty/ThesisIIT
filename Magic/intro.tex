@@ -1,13 +1,14 @@
-\section{Deep Learning Based Malware Classification}
+\subsection{Deep Learning Based Malware Detection}
+\label{DL:SubSec:MC}
 
 % The harm of malicious software in current days.
 While many anti-virus vendors and computer security researchers have fought hard against malicious software for many years,
 they remain one of the biggest digital threats in the cyberworld.
 Motivated by the high return on investment ratio,
 the underground malware industry has been consistently enlarging the sheer volume of the threats on the Internet every year.
-According to a report by AV-TEST\cite{AvTest}, the number of total malware by 2018 is estimated at over 800 million,
+According to a report by AV-TEST~\cite{AvTest}, the number of total malware by 2018 is estimated at over 800 million,
 which has increased 28 times over the past 10 years.
-Even worse, recently viciously keen cybercriminals made a lot of efforts to diversify their avenues of attacks\cite{SymantecReport}.
+Even worse, recently viciously keen cybercriminals made a lot of efforts to diversify their avenues of attacks~\cite{SymantecReport}.
 Inspired by the astonishing rise in crypto currency values,
 47 new coin mining malware families have emerged since early 2017 and was ascribed to the 956\% soar of the number of crypto mining attacks in the past year~\cite{CryptoMiningAttacks}.
 % Similarly, corresponding to the fact that more and more network traffics are coming from mobile devices instead of desktops,
@@ -16,7 +17,7 @@ Traditional signature-based detection approaches have failed to thwart the ever-
 Therefore efficient, robust and scalable anti-malware solutions are indispensable for protecting the trustworthiness of the modern cyberworld.
 
 % Weakness of existing approaches
-A number of recent research efforts\cite{NgramMalwareDetect, QgramMalwareDetect, McBoost, GraphMalwareDetect, YanDataset, AutoEncoderFeatureLearn, AutoEncoderMicrosoft, FunctionCallGraph, YuxinMalwareDnn,NovelFeatureFusion,StaticFeatures,PolySeqCls} have shown that machine learning (ML) offers a promising approach to thwart the voluminous malware attacks.
+A number of recent research efforts~\cite{NgramMalwareDetect, QgramMalwareDetect, McBoost, GraphMalwareDetect, YanDataset, AutoEncoderFeatureLearn, AutoEncoderMicrosoft, FunctionCallGraph, YuxinMalwareDnn,NovelFeatureFusion,StaticFeatures,PolySeqCls} have shown that machine learning (ML) offers a promising approach to thwart the voluminous malware attacks.
 These efforts have been inspired by the great success of ML in improving the accuracy of image classification, language translation, and many other applications.
 There is however a dilemma when we investigate an effective ML-based malware classification system.
 On one hand, if we focus too much on finding discriminative malware features to achieve high classification accuracy, the features constructed as such may lose their generality when a different operational environment is encountered.
@@ -38,7 +39,7 @@ The generality of CFGs for malware classification can be attributed to two facto
 (1) the CFG can be extracted from different formats of malware code, such as binary executable files, exploit code discovered in network traffic~\cite{zhang2007analyzing}, emulated malware~\cite{sharif2009automatic},
 and attack code chained together from gadgets in return-oriented programming attacks~\cite{shacham2007geometry},
 and (2) the CFG can be used to derive a variety of static analysis features widely used in existing works on ML-based malware classification,
-such as n-grams\cite{NgramMalwareDetect}, q-grams\cite{QgramMalwareDetect}, opcodes~\cite{bilar2007opcodes} and structural information~\cite{kong2013discriminant}.
+such as n-grams~\cite{NgramMalwareDetect}, q-grams~\cite{QgramMalwareDetect}, opcodes~\cite{bilar2007opcodes} and structural information~\cite{kong2013discriminant}.
 Therefore, a malware classification system trained from CFG-represented malware programs can find applications in various operational environments.
 
 % How CFG and deep learning can help.
@@ -102,14 +103,14 @@ To demonstrate the applicability of DGCNN for malware classification,
 we have developed a new system called \sysname (an end-to-end \underline{ma}lware defense system that classifies CF\underline{G}-represented malware programs us\underline{i}ng DG\underline{C}NN).
 \sysname improves the effectiveness of malware classification by extending the standard DGCNN with customized techniques tailored for malware classification.
 We use two large malware datasets to evaluate the performance of \sysname and the experimental results show that it can classify CFG-represented malware programs with accuracy comparable to those of the state-of-the-art methods applied on handcrafted malware features.
-%Experiment result shows MalDenfenser achieves performance comparable to state-of-the-art methods.
+Experiment result shows \sysname achieves performance comparable to state-of-the-art methods.
 
-The remainder of the paper is organized as follows.
-In Section~\ref{MG:Sec:System}, we introduce the overall design of \sysname.
-In Section~\ref{MG:Sec:DGCNN}, we provide a primer on DGCNN and then present our improvements over the standard DGCNN for classifying CFG-represented malware programs.
-In Section~\ref{MG:Sec:Implement} we discuss a few implementation details of \sysname.
-We present our experimental results in Section~\ref{MG:Sec:Experiment}.
-We draw concluding remarks in Section~\ref{MG:Sec:Conclusion}.
+%The remainder of the paper is organized as follows.
+%In Section~\ref{MG:Sec:System}, we introduce the overall design of \sysname.
+%In Section~\ref{MG:Sec:DGCNN}, we provide a primer on DGCNN and then present our improvements over the standard DGCNN for classifying CFG-represented malware programs.
+%In Section~\ref{MG:Sec:Implement} we discuss a few implementation details of \sysname.
+%We present our experimental results in Section~\ref{MG:Sec:Experiment}.
+%We draw concluding remarks in Section~\ref{MG:Sec:Conclusion}.
 
 % In a summary, our contributions made in this work are as follows.
 % \begin{itemize}
