@@ -40,38 +40,71 @@ The CFG extracted from the MSKCFG dataset by our own parser has different low-le
 so they cannot be applied to one model.
 Secondly, testing MAGIC on datasets collected from independent sources also allows us to gain insights into its generality when applied in different operational environments.
 
-\begin{table*}[htbp]
-\caption{Hyperparameters and Search Ranges during Tuning}
-\begin{center}
-\begin{tabular}{l|r|r|r}
-\hline
-Hyperparameter & Choice or Value Range & Best Model for MSKCFG & Best Model for YANCFG \\
-\hline
-\hline
-Pooling Type & [Adaptive Pooling, Sort Pooling] & Adaptive Pooling &  Adaptive Pooling\\
-\hline
-Pooling Ratio & [0.2, 0.64] & 0.64 & 0.2 \\
-\hline
-Graph Convolution Size & [(32, 32, 32, 1)\tablefootnote{Only for sort pooling}, (32, 32, 32, 32), (128, 64, 32, 32)] & (128, 64, 32, 32) & (32, 32, 32, 32)\\
-\hline
-Remaining Layer\tablefootnote{Applicable only when set \textit{pooling type} to sort} & [1D Convolution Layer, WeightVertices Layer] & Not Applicable &  Not Applicable \\
-\hline
-2D Convolution Channels\tablefootnote{Applicable only when set \textit{pooling type} to adaptive pooling} & [16, 32]  & 16 & 16 \\
-\hline
-1D Convolution Channel Pairs\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [(16, 32)] & Not Applicable & Not Applicable \\
-\hline
-1D Convolution Kernel Size\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [5, 7] & Not Applicable & Not Applicable\\
-\hline
-Dropout Rate & [0.1, 0.5] & 0.1 & 0.5 \\
-\hline
-Batch Size & [10, 40] & 10 & 40\\
-\hline
-Weight L2 Regularization Factor & [0.0001, 0.0005] & 0.0001 & 0.0005\\
-\hline
-\end{tabular}
-\label{MG:Tab:Hyperparameters}
-\end{center}
-\end{table*}
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{l|r}
+            \hline
+            Hyperparameter & Choice or Value Range \\
+            \hline
+            \hline
+            Pooling Type & [Adaptive Pooling, Sort Pooling] \\
+            \hline
+            Pooling Ratio & [0.2, 0.64] \\
+            \hline
+            Graph Convolution Size & [(32, 32, 32, 1)\tablefootnote{Only for sort pooling}, (32, 32, 32, 32), (128, 64, 32, 32)] \\
+            \hline
+            Remaining Layer\tablefootnote{Applicable only when set \textit{pooling type} to sort} & [1D Convolution Layer, WeightVertices Layer] \\
+            \hline
+            2D Convolution Channels\tablefootnote{Applicable only when set \textit{pooling type} to adaptive pooling} & [16, 32] \\
+            \hline
+            1D Convolution Channel Pairs\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [(16, 32)] \\
+            \hline
+            1D Convolution Kernel Size\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [5, 7] \\
+            \hline
+            Dropout Rate & [0.1, 0.5] \\
+            \hline
+            Batch Size & [10, 40] \\
+            \hline
+            Weight L2 Regularization Factor & [0.0001, 0.0005] \\
+            \hline
+        \end{tabular}
+        \caption{Hyperparameters and Search Ranges during Tuning}
+        \label{MG:Tab:Hyperparameters}
+    \end{center}
+\end{table}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{l|r|r}
+            \hline
+            Hyperparameter & For MSKCFG & For YANCFG \\
+            \hline
+            \hline
+            Pooling Type & Adaptive Pooling &  Adaptive Pooling\\
+            \hline
+            Pooling Ratio & 0.64 & 0.2 \\
+            \hline
+            Graph Convolution Size & (128, 64, 32, 32) & (32, 32, 32, 32)\\
+            \hline
+            Remaining Layer & Not Applicable &  Not Applicable \\
+            \hline
+            2D Convolution Channels & 16 & 16 \\
+            \hline
+            1D Convolution Channel Pairs & Not Applicable & Not Applicable \\
+            \hline
+            1D Convolution Kernel Size & Not Applicable & Not Applicable\\
+            \hline
+            Dropout Rate & 0.1 & 0.5 \\
+            \hline
+            Batch Size & 10 & 40\\
+            \hline
+            Weight L2 Regularization Factor & 0.0001 & 0.0005\\
+            \hline
+        \end{tabular}
+        \caption{Optimal Hyperparameters for Both MSKCFG and YANCFG Datasets}
+        \label{MG:Tab:BestHyperparameters}
+    \end{center}
+\end{table}
 
 \subsection{Model Training and Evaluation}
 As the malware families are different in the two datasets, we need to create two different \sysname instances to classify their malware samples separately. However, MAGIC uses the same way to train DGCNN and tune its hyperparameters for both datasets.
@@ -99,21 +132,21 @@ we also measure its precision, recall, and F1 score averaged over the five valid
 We used four GeForce GTX 1080 Ti graphic cards to train and run the 208 variants of DGCNN.
 Training a particular model is always done on a single GPU,
 but the evaluation procedure actually takes up all the four GPUs because our \sysname implementation supports parallel model training on multiple GPUs.
-The last two columns in Table~\ref{MG:Tab:Hyperparameters} describe the best models chosen by MAGIC for the MSKCFG and YANCFG datasets, respectively.
+Table~\ref{MG:Tab:BestHyperparameters} describe the best models chosen by MAGIC for the MSKCFG and YANCFG datasets, respectively.
 % Confusion matrix for a random validation set is also included.
 %Their cross-validation scores are reported in the following two sub-sections for both MSKCFG and YANCFG dataset respectively.
 In the following, we report the cross-validation scores for the two datasets.
 
 \begin{figure}
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/MsAcfgLabelDist.eps}}
-\caption{Malware Family Distribution in MSKCFG Dataset.}
-\label{MG:Fig:MSKCFGLabelDist}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/MsAcfgLabelDist.eps}}
+    \caption{Malware Family Distribution in MSKCFG Dataset.}
+    \label{MG:Fig:MSKCFGLabelDist}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/YanAcfgLabelDist.eps}}
-\caption{Malware Family Distribution in YANCFG Dataset.}
-\label{MG:Fig:YANCFGLabelDist}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgLabelDist.eps}}
+    \caption{Malware Family Distribution in YANCFG Dataset.}
+    \label{MG:Fig:YANCFGLabelDist}
 \end{figure}
 
 \subsection{Results on the MSKCFG Dataset}
@@ -123,32 +156,32 @@ The standard variances are not listed because the scores' variations among five 
 For all nine malware families, our best model has achieved good validation scores with precisions higher than 0.96, recalls higher than 0.96, and F1-scores higher than 0.97.
 
 \begin{figure}
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/MsAcfgScores.eps}}
-\caption{Cross-Validation Scores of \sysname on the MSKCFG Dataset.}
-\label{MG:Fig:MSKCFGScores}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/MsAcfgScores.eps}}
+    \caption{Cross-Validation Scores of \sysname on the MSKCFG Dataset.}
+    \label{MG:Fig:MSKCFGScores}
 \end{figure}
 
 \begin{table}
-\caption{Performances of \sysname on the MSKCFG Dataset.}
-\begin{center}
-\begin{tabular}{l|rrr}
-\hline
-   Family       &  Precision &    Recall &        F1 \\
-\hline
-\hline
-   Ramnit       &   0.962378 &  0.991289 &  0.976615 \\
- Lollipop       &   0.995960 &  0.997550 &  0.996754 \\
- Kelihos\_Ver3  &   1.000000 &  1.000000 &  1.000000 \\
-    Vundo       &   0.981975 &  1.000000 &  0.990895 \\
-    Simda       &   0.990476 &  1.000000 &  0.994987 \\
-   Tracur       &   1.000000 &  0.987013 &  0.993463 \\
- Kelihos\_Ver1  &   1.000000 &  0.982493 &  0.991156 \\
-Obfuscator.ACY  &   0.995593 &  0.962293 &  0.978655 \\
-    Gatak       &   0.999775 &  0.996841 &  0.998304 \\
-\hline
-\end{tabular}
-\end{center}
-\label{MG:Tab:MSKCFGScores}
+    \caption{Performances of \sysname on the MSKCFG Dataset.}
+    \begin{center}
+        \begin{tabular}{l|rrr}
+            \hline
+            Family       &  Precision &    Recall &        F1 \\
+            \hline
+            \hline
+            Ramnit       &   0.962378 &  0.991289 &  0.976615 \\
+            Lollipop       &   0.995960 &  0.997550 &  0.996754 \\
+            Kelihos\_Ver3  &   1.000000 &  1.000000 &  1.000000 \\
+            Vundo       &   0.981975 &  1.000000 &  0.990895 \\
+            Simda       &   0.990476 &  1.000000 &  0.994987 \\
+            Tracur       &   1.000000 &  0.987013 &  0.993463 \\
+            Kelihos\_Ver1  &   1.000000 &  0.982493 &  0.991156 \\
+            Obfuscator.ACY  &   0.995593 &  0.962293 &  0.978655 \\
+            Gatak       &   0.999775 &  0.996841 &  0.998304 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{MG:Tab:MSKCFGScores}
 \end{table}
 
 Since Microsoft released the competition dataset in 2015, many researchers have used the dataset (completely or partially) to evaluate their techniques for malware detection and classification~\cite{NovelFeatureFusion, EnsembleDNN, AutoEncoderMicrosoft, FunctionCallGraph, StaticFeatures, PolySeqCls, AutoEncoderFeatureLearn, YuxinMalwareDnn}.
@@ -177,23 +210,23 @@ As an alternative work that also applies deep neural network, our DGCNN-based ap
 %regarding log-loss (27.40\% improvement) and accuracy (1.5\% improvement).
 
 \begin{table*}
-\caption{Cross Validation Metric Comparison on the Microsoft Dataset.}
-\begin{center}
-\begin{tabular}{l|rr}
-\hline
-   Approach Brief Description                                           & Mean Logarithmic Loss     & Accuracy \\
-\hline
-\hline
-\sysname                                                                &               0.0543      &   99.25 \\
-XGBoost with Heavy Feature Engineering\cite{NovelFeatureFusion}         &               0.0197      &   99.42 \\
-Deep Autoencoder based XGBoost\cite{AutoEncoderFeatureLearn}            &               0.0748      &   98.20 \\
-Strand Gene Sequence Classifier\cite{PolySeqCls}                        &               0.2228      &   97.41 \\
-Ensemble Multiple Random Forest Classifiers\cite{FunctionCallGraph}     &       Not Reported        &   99.30 \\
-Random Forest with Feature Engineering\cite{StaticFeatures}             &       Not Reported        &   99.21 \\
-\hline
-\end{tabular}
-\end{center}
-\label{MG:Tab:CompareMicrosoftCv}
+    \caption{Cross Validation Metric Comparison on the Microsoft Dataset.}
+    \begin{center}
+        \begin{tabular}{l|rr}
+            \hline
+            Approach Brief Description                                           & Mean Logarithmic Loss     & Accuracy \\
+            \hline
+            \hline
+            \sysname                                                                &               0.0543      &   99.25 \\
+            XGBoost with Heavy Feature Engineering\cite{NovelFeatureFusion}         &               0.0197      &   99.42 \\
+            Deep Autoencoder based XGBoost\cite{AutoEncoderFeatureLearn}            &               0.0748      &   98.20 \\
+            Strand Gene Sequence Classifier\cite{PolySeqCls}                        &               0.2228      &   97.41 \\
+            Ensemble Multiple Random Forest Classifiers\cite{FunctionCallGraph}     &       Not Reported        &   99.30 \\
+            Random Forest with Feature Engineering\cite{StaticFeatures}             &       Not Reported        &   99.21 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{MG:Tab:CompareMicrosoftCv}
 \end{table*}
 
 
@@ -268,43 +301,43 @@ We plan to test our models with the latest malware samples in our future work.
 
 
 \begin{table}
-\caption{Performance of \sysname on the YANCFG Dataset.}
-\begin{center}
-\begin{tabular}{l|rrr}
-\hline
-   Family &  Precision &    Recall &  F1 Score \\
-\hline
-\hline
-    Bagle &   0.863636 &  0.950000 &  0.904762 \\
-   Benign &   0.954128 &  0.962963 &  0.958525 \\
-  Bifrose &   0.930380 &  0.901840 &  0.915888 \\
-  Hupigon &   0.935287 &  0.945679 &  0.940454 \\
- Koobface &   1.000000 &  1.000000 &  1.000000 \\
-  Ldpinch &   0.692308 &  0.514286 &  0.590164 \\
-     Lmir &   0.833333 &  0.731707 &  0.779220 \\
-     Rbot &   0.641221 &  0.763636 &  0.697095 \\
-    Sdbot &   0.700000 &  0.488372 &  0.575342 \\
-  Swizzor &   0.995708 &  0.995708 &  0.995708 \\
-    Vundo &   0.990859 &  0.981884 &  0.986351 \\
-     Zbot &   0.941799 &  0.936842 &  0.939314 \\
-     Zlob &   0.967254 &  0.992248 &  0.979592 \\
-\hline
-\end{tabular}
-\end{center}
-\label{MG:Tab:YANCFGScores}
+    \caption{Performance of \sysname on the YANCFG Dataset.}
+    \begin{center}
+        \begin{tabular}{l|rrr}
+            \hline
+            Family &  Precision &    Recall &  F1 Score \\
+            \hline
+            \hline
+            Bagle &   0.863636 &  0.950000 &  0.904762 \\
+            Benign &   0.954128 &  0.962963 &  0.958525 \\
+            Bifrose &   0.930380 &  0.901840 &  0.915888 \\
+            Hupigon &   0.935287 &  0.945679 &  0.940454 \\
+            Koobface &   1.000000 &  1.000000 &  1.000000 \\
+            Ldpinch &   0.692308 &  0.514286 &  0.590164 \\
+            Lmir &   0.833333 &  0.731707 &  0.779220 \\
+            Rbot &   0.641221 &  0.763636 &  0.697095 \\
+            Sdbot &   0.700000 &  0.488372 &  0.575342 \\
+            Swizzor &   0.995708 &  0.995708 &  0.995708 \\
+            Vundo &   0.990859 &  0.981884 &  0.986351 \\
+            Zbot &   0.941799 &  0.936842 &  0.939314 \\
+            Zlob &   0.967254 &  0.992248 &  0.979592 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{MG:Tab:YANCFGScores}
 \end{table}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/YanAcfgScores.eps}}
-\caption{Cross-Validation Scores of \sysname on the YANCFG Dataset.}
-\label{MG:Fig:YANCFGScores}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgScores.eps}}
+    \caption{Cross-Validation Scores of \sysname on the YANCFG Dataset.}
+    \label{MG:Fig:YANCFGScores}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/YanAcfgF1Improve.eps}}
-\caption{F1 Score Comparison between \sysname and ESVC\cite{YanDataset} on the YANCFG Dataset.
-Improvement on the classification accuracy of benign samples is not shown because it is not reported in \cite{YanDataset}.}
-\label{MG:Fig:YANCFGF1Improve}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgF1Improve.eps}}
+    \caption{F1 Score Comparison between \sysname and ESVC\cite{YanDataset} on the YANCFG Dataset.
+    Improvement on the classification accuracy of benign samples is not shown because it is not reported in \cite{YanDataset}.}
+    \label{MG:Fig:YANCFGF1Improve}
 \end{figure}
 
 % \begin{table*}

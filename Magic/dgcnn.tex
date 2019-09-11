@@ -16,14 +16,14 @@ Alternatively, we can also treat $\mathbf{X}$ as the concatenation of $c$ \texti
 For the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraph}, we displayed the corresponding augmented adjacency matrix $\tilde{\mathbf{A}}$, the augmented diagonal degree matrix $\tilde{\mathbf{D}}$, and the attribute matrix $\mathbf{X}$ with two attribute channels $F1$ and $F2$.
 Given $\tilde{\mathbf{A}}$ and $\mathbf{X}$ for graph $G$, the DGCNN-based algorithm performs three sequential stages to obtain its tensor representation for malware classification. Note that $\tilde{\mathbf{D}}$ can be calculated from $\tilde{\mathbf{A}}$.
 
-\begin{figure}[htbp]
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleGraph.eps}}
+\begin{figure*}[htbp]
+\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraph.eps}}
 \caption{An sample graph $g$ used in Section~\ref{MG:Sec:DGCNN} to illustrate how the extended DGCNN works in \sysname.
 Assuming the vertices have two attribute channels, we show
 $g$'s augmented adjacency matrix $\tilde{\mathbf{A}}$, augmented diagonal degree matrix $\tilde{\mathbf{D}}$,
 as well as attribute matrix $\mathbf{X}$.}
 \label{MG:Fig:ExampleGraph}
-\end{figure}
+\end{figure*}
 
 \textbf{Graph Convolution Layer(s).} In the first stage, a \textit{graph convolution} technique propagates each vertex's attributes to its neighborhood based on the structural connectivity.
 To aggregate multi-scale sub-structural attributes, multiple graph
@@ -48,13 +48,13 @@ At the end of $h$ graph convolution layers, DGCNN concatenates each layer's outp
 denoted as $\mathbf{Z}^{1:h} = [\mathbf{Z}^1, \mathbf{Z}^2, \ldots, \mathbf{Z}^{h}]$.
 For the sample graph $g$, Figure~\ref{MG:Fig:ExampleGraphConvolution} shows how the two sequential graph convolution layers transform the initial attribute matrix $\mathbf{Z}_0=\mathbf{X}$ to $\mathbf{Z}_1$ and $\mathbf{Z}_2$, both of which together form $\mathbf{Z}^{1:2}$.
 
-\begin{figure}[htbp]
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleGraphConvolution.eps}}
+\begin{figure*}[htbp]
+\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraphConvolution.eps}}
 \caption{After applying $h=2$ graph convolution layers, the sample graph $g$ is transformed to $\mathbf{Z}^{1:h}$.
 We assume the weight parameters in the two graph convolution layers are $\mathbf{W}^1 = [[1, 0 ,1], [0, 1, 0]]$ and $\mathbf{W}^2 = [[0, 1 ,-2, 2], [1, 1, 7, -2], [1, 0, -1, 4]]$.
 For simplicity, numbers are of 2 precision, and we perform the element-wise RELU nonlinear activation $f(x) = max(x, 0)$ in both graph convolution layers.}
 \label{MG:Fig:ExampleGraphConvolution}
-\end{figure}
+\end{figure*}
 
 \textbf{SortPooling Layer.} Intuitively $\mathbf{Z}^{1:h}$ has $n$ rows and $\sum_{1}^{h}c_t$ column, which
 corresponds to the \textit{feature descriptor} of each vertex at different scales.
@@ -76,11 +76,11 @@ The last two rows (i.e., yellow and red) are discarded from the sorted matrix as
 \textbf{Remaining Layer(s).} In the last stage, the authors of the original DGCNN\cite{Dgcnn} append a one-dimension convolution (Conv1D) layer of kernel size $\sum_{1}^{h}c_t$ and stride size $\sum_{1}^{h}c_t$.
 If $F$ is the number of filters in the last one-dimension convolution layer, the sort pooling output $\mathbf{Z}^{sp}$ will be reduced to a one-dimension vector of size $k \times F$, which is then fed into a fully connected one-layer perceptron for graph classification.
 
-\begin{figure}[htbp]
-\centerline{\includegraphics[width=0.44\textwidth]{Magic/figures/ExampleSortpool.eps}}
+\begin{figure*}[htbp]
+\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleSortpool.eps}}
 \caption{Given the graph convolution result $\mathbf{Z}^{1:h}$ for the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraphConvolution}, the sortpooling layer with $k = 3$ sorts the feature descriptors (based on only the last feature channel in this example) and then truncates the two `smallest' rows.}
 \label{MG:Fig:ExampleSortpool}
-\end{figure}
+\end{figure*}
 
 \subsection{WeightedVertices Layer}
 In the first extension to DGCNN, we observe that the Conv1D layer following the sortpooling layer can alternatively be of kernel size $k$, stride size $k$, and single channel.
@@ -105,13 +105,13 @@ For ease of presentation, in the remainder of the paper we refer to this special
 We replace the original Conv1D layer with the WeightVertices layer, because the WeightVertices layer leverages the graph embedding idea to make the output from the sorting pooling layer compatible with the malware classifier.
 
 % \begin{figure}[htbp]
-% \centerline{\includegraphics[width=0.48\textwidth]{Magic/figures/WeightedVertice.eps}}
+% \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/WeightedVertice.eps}}
 % \caption{Weight vertices layer aggregates vertex embeddings, e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$, into graph embedding $E$. $V_1, V2, V3, ...,$ and $ V_k$ in figure are feature descriptors of sort pooled vertices, represented as rows in $\mathbf{Z}^{sp}$.}
 % \label{MG:Fig:WeightedVertice}
 % \end{figure}
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.92\textwidth]{Magic/figures/ExampleWeightedVertice.eps}}
+\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleWeightedVertice.eps}}
 \caption{WeightVertices layer aggregates sample graph $g$'s vertex embeddings,
 e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$ in Figure~\ref{MG:Fig:ExampleSortpool}, to graph embedding $E$. We choose again RELU as the nonlinear activition function $f$ for simplicity.}
 \label{MG:Fig:ExampleWeightedVertice}
@@ -148,7 +148,7 @@ The output of the AMP layer is further fed into a multiple-Conv2D-layer neural n
 % \end{figure}
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.92\textwidth]{Magic/figures/ExampleAmp.eps}}
+\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleAmp.eps}}
 \caption{An example of $3\times 3$ adaptive max pooling layer with two two-dimension inputs with different sizes.
 The left top matrix $\mathbf{Z}^{1:h}_g$ represents the graph convolution output of the sample graph $g$ in Figure~\ref{MG:Fig:ExampleGraph}.
 The left bottom matrix $\mathbf{Z}^{1:h}_{g'}$ represents the graph convolution output of another imaginary graph $g'$ with four vertices.
