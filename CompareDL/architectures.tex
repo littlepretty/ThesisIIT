@@ -237,7 +237,7 @@ or as complex as deep convolutional nets when the task domain is image.
 The two models are trained in opposition to one another, with respect to the following log-likelihood function
 
 \begin{align}
-V(D, G) & = \mathbb{E}_{\bm{x}\sim data} [\log P(S=real|X=\bm{x})] + \mathbb{E}_{\bm{x}\sim G(\bm{z})} [\log P(S=fake|X=\bm{x})] \\
+    V(D, G) & = \mathbb{E}_{\bm{x}\sim data} [\log P(S=real|X=\bm{x})] + \mathbb{E}_{\bm{x}\sim G(\bm{z})} [\log P(S=fake|X=\bm{x})] \\
         & = \mathbb{E}[\log D(\bm{x})] + \mathbb{E}[\log (1 - D(G(\bm{z})))]
 \end{align}
 
@@ -320,11 +320,11 @@ where
 
 \begin{align}
     \Phi_k (\mathbf{x} ) = \prod_{i=1}^{d} {x_i}^{c_{ki}}, \text{ where }
-c_{ki} = 
-\begin{cases}
-    1, & \text{$i$-th feature $\in \Phi_k$} \\
-    0, & \text{otherwise}
-\end{cases}
+    c_{ki} = 
+    \begin{cases}
+        1, & \text{$i$-th feature $\in \Phi_k$} \\
+        0, & \text{otherwise}
+    \end{cases}
 \end{align}
 The function of wide components, especially the cross-product transformations,
 is memoization of the raw feature interactions.

@@ -73,30 +73,30 @@ This leads to the question on how to balance the speed and fidelity,
 and our approach is to explore the adaptive time dilation scheduling, whose evaluation is presented in the next section. 
 
 \begin{figure}
-\centering
+    \centering
     \subfigure[Chain Network Topology]{{\epsfig{file=VirtualTime/figures/TopoChainExample.eps, width=0.45\textwidth}}
     \label{VT:Fig:ChainTopoExample}}
     \subfigure[Linear Network Topologies]{{\epsfig{file=VirtualTime/figures/TopoLinearExample.eps, width=0.45\textwidth}}
     \label{VT:Fig:LinearTopoExample}}
-\caption{Network Topologies Used in Virtual Time Evaluation}
+    \caption{Network Topologies Used in Virtual Time Evaluation}
 \end{figure}
 
 \begin{figure}
-\centering
+    \centering
     \subfigure[TCP Throughput with Different Link Bandwidths]{{\epsfig{file=VirtualTime/figures/Perf40SwDiffBw.eps, width=0.45\textwidth}}
     \label{VT:Fig:Perf40SwDiffBw}}
     \subfigure[TCP Throughput with 10 Gbps Links]{{\epsfig{file=VirtualTime/figures/Perf40Sw10GbLink.eps, width=0.45\textwidth}}
     \label{VT:Fig:Perf40Sw10GbLink}}
-\caption{Fidelity Evaluation Experimental Results}
+    \caption{Fidelity Evaluation Experimental Results}
 \end{figure}
 
 \begin{figure}
-\centering
+    \centering
     \subfigure[TCP Throughput]{{\epsfig{file=VirtualTime/figures/ScaleDiff100Sw4GbLink.eps, width=0.45\textwidth}}
     \label{VT:Fig:ScaleDiffSw4GbLink}}
     \subfigure[Evaluation Running Time]{{\epsfig{file=VirtualTime/figures/ScaleTime100Sw4GbLink.eps, width=0.45\textwidth}}
     \label{VT:Fig:ScaleTime}}
-\caption{Scalability Evaluation Experimental Results}
+    \caption{Scalability Evaluation Experimental Results}
 \end{figure}
 
 \subsection{Adaptive TDF Scheduling}
@@ -107,7 +107,7 @@ We selected 5 non-overlap client-server pairs: \texttt{(h1, h20), (h21, h40), h(
 The entire experiment was divided into three phases: (1) initially, transmit flow \texttt{(h1,h20)},
 (2) after 50 seconds, transmit all five flows, and (3) after 150 seconds, stop all the transmissions except for flow \texttt{(h1,h20)}.
 The goal is to evaluate how our adaptive time dilation scheduler behaves under dynamic emulation workloads with the peak load exceeding Mininet's capability.
- 
+
 We ran the experiments in three cases.
 In case 1, TDF was set to 1 (i.e., no virtual time) and the adaptive virtual time scheduling was disabled.
 All flows' TCP throughputs measured by \texttt{iperf3} over time are plotted in Figure~\ref{VT:Fig:5FlowsNoVT}. 
@@ -141,41 +141,41 @@ We can see that case 3 ($TDF = 11$) is around 10 times slower than case 1 ($TDF 
 Our adaptive time dilation scheduler managed to reduce 46\% of the running time as compared to case 3 with little fidelity loss. 
 
 \begin{figure}
-\centering
-	\subfigure[TCP Throughput without Virtual Time]{{\epsfig{file=VirtualTime/figures/5FlowsNoVT.eps, width=0.45\textwidth}}
-	\label{VT:Fig:5FlowsNoVT}}
-	\subfigure[TCP Throughput with Adaptive Time Dilation]{\epsfig{file=VirtualTime/figures/5FlowsAdaptiveVT.eps, width=0.45\textwidth}
+    \centering
+    \subfigure[TCP Throughput without Virtual Time]{{\epsfig{file=VirtualTime/figures/5FlowsNoVT.eps, width=0.45\textwidth}}
+    \label{VT:Fig:5FlowsNoVT}}
+    \subfigure[TCP Throughput with Adaptive Time Dilation]{\epsfig{file=VirtualTime/figures/5FlowsAdaptiveVT.eps, width=0.45\textwidth}
     \label{VT:Fig:5FlowsAdaptiveVT}}
     \\
-	\subfigure[TCP Throughput with Fixed Time Dilation (11)]{\epsfig{file=VirtualTime/figures/5FlowsFixedVT.eps, width=0.45\textwidth}
-	\label{VT:Fig:5FlowsFixedVT}}
-	\subfigure[TDF Trace: Adaptive Virtual Time Scheduling]{\epsfig{file=VirtualTime/figures/5FlowsHistoryTDF.eps, width=0.45\textwidth}
-	\label{VT:Fig:HistoryTDF}}
-\caption{Adaptive Virtual Time Scheduling Evaluation}
-\label{VT:Fig:Adaptive}
+    \subfigure[TCP Throughput with Fixed Time Dilation (11)]{\epsfig{file=VirtualTime/figures/5FlowsFixedVT.eps, width=0.45\textwidth}
+    \label{VT:Fig:5FlowsFixedVT}}
+    \subfigure[TDF Trace: Adaptive Virtual Time Scheduling]{\epsfig{file=VirtualTime/figures/5FlowsHistoryTDF.eps, width=0.45\textwidth}
+    \label{VT:Fig:HistoryTDF}}
+    \caption{Adaptive Virtual Time Scheduling Evaluation}
+    \label{VT:Fig:Adaptive}
 \end{figure}
 
 \begin{table*}
-\centering
-\caption{Comparison of Emulation Execution Time}
-\begin{tabular}{c|c|c|c} 
-\hline
- & No Virtual Time & Adaptive Virtual Time & Fixed Virtual Time \\ 
-\hline
-\hline
-Running Time (s)  & 240.730 & 1332.242 & 2434.910 \\ 
-\hline
-Average TDF & 1.000 & 5.900 & 11.000 \\ 
-\hline
-%Slow Down Ratio & 1.204 & 5.534 & 10.115 \\
-Slow Down Ratio & 1.000 & 5.534 & 10.115 \\
-%\hline
-%AVG. CPU\% & 31.968 & 28.287 & 20.376 \\ 
-%\hline
-%STDEV. CPU\% & 10.915 & 7.175 & 4.173 \\ 
-\hline
-\end{tabular}
-\label{VT:Tab:CompareRunTime}
+    \centering
+    \caption{Comparison of Emulation Execution Time}
+    \begin{tabular}{c|c|c|c} 
+        \hline
+        & No Virtual Time & Adaptive Virtual Time & Fixed Virtual Time \\ 
+        \hline
+        \hline
+        Running Time (s)  & 240.730 & 1332.242 & 2434.910 \\ 
+        \hline
+        Average TDF & 1.000 & 5.900 & 11.000 \\ 
+        \hline
+        %Slow Down Ratio & 1.204 & 5.534 & 10.115 \\
+        Slow Down Ratio & 1.000 & 5.534 & 10.115 \\
+        %\hline
+        %AVG. CPU\% & 31.968 & 28.287 & 20.376 \\ 
+        %\hline
+        %STDEV. CPU\% & 10.915 & 7.175 & 4.173 \\ 
+        \hline
+    \end{tabular}
+    \label{VT:Tab:CompareRunTime}
 \end{table*}
 
 \subsection{System Overhead}
@@ -198,18 +198,18 @@ is a few orders of magnitude less than the number of calls to \texttt{gettimeofd
 (e.g., only 14 TDF transitions occurred per host over the period of 1,332 seconds in the earlier adaptive TDF experiment), that overhead is also negligible.
 
 \begin{table*}
-\centering
-\caption{Lightweight Virtual Time System: Overhead of System Calls}
-\begin{tabular}{c|c|c|c}
-\hline
- & No Virtual Time & Virtual Time & Avg Overhead / System Call \\%& Overhead Rate in E  \\ 
-\hline
-\hline
-\texttt{gettimeofday}  & 0.0532 $\mu$s & 0.0661 $\mu$s & 0.0129 $\mu$s\\% & $3.0 \times 10^{-4}$\\ 
-\hline
-\texttt{setTDF} & 0  & 0.0628 $\mu$s & 0.0628 $\mu$s\\% & $3.65\times 10^{-9}$ \\ 
-\hline
-\end{tabular}
-\label{VT:Tab:Overhead}
+    \centering
+    \caption{Lightweight Virtual Time System: Overhead of System Calls}
+    \begin{tabular}{c|c|c|c}
+        \hline
+        & No Virtual Time & Virtual Time & Avg Overhead / System Call \\%& Overhead Rate in E  \\ 
+        \hline
+        \hline
+        \texttt{gettimeofday}  & 0.0532 $\mu$s & 0.0661 $\mu$s & 0.0129 $\mu$s\\% & $3.0 \times 10^{-4}$\\ 
+        \hline
+        \texttt{setTDF} & 0  & 0.0628 $\mu$s & 0.0628 $\mu$s\\% & $3.65\times 10^{-9}$ \\ 
+        \hline
+    \end{tabular}
+    \label{VT:Tab:Overhead}
 \end{table*}
 

@@ -19,9 +19,9 @@ and the attribute matrix $\mathbf{X}$ with two attribute channels named $F1$ and
 Given $\tilde{\mathbf{A}}$ and $\mathbf{X}$ for graph $G$, the DGCNN-based algorithm performs three sequential stages to obtain its tensor representation for malware classification. Note that $\tilde{\mathbf{D}}$ can be calculated from $\tilde{\mathbf{A}}$.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraph.eps}}
-\caption{An Example Graph $g$ and its Corresponding Matrices.}
-\label{MG:Fig:ExampleGraph}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraph.eps}}
+    \caption{An Example Graph $g$ and its Corresponding Matrices.}
+    \label{MG:Fig:ExampleGraph}
 \end{figure*}
 
 \textbf{Graph Convolution Layer(s).} In the first stage, a \textit{graph convolution} technique propagates each vertex's attributes to its neighborhood based on the structural connectivity.
@@ -51,9 +51,9 @@ We assume the weight parameters in the two graph convolution layers are $\mathbf
 For simplicity, numbers are of 2 precision, and we perform the element-wise RELU nonlinear activation $f(x) = max(x, 0)$ in both graph convolution layers.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraphConvolution.eps}}
-\caption{Applying $h=2$ Graph Convolution Layers to Example Graph $g$}
-\label{MG:Fig:ExampleGraphConvolution}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleGraphConvolution.eps}}
+    \caption{Applying $h=2$ Graph Convolution Layers to Example Graph $g$}
+    \label{MG:Fig:ExampleGraphConvolution}
 \end{figure*}
 
 \textbf{SortPooling Layer.} Intuitively $\mathbf{Z}^{1:h}$ has $n$ rows and $\sum_{1}^{h}c_t$ column, which
@@ -79,9 +79,9 @@ The last two rows (i.e., yellow and red) are discarded from the sorted matrix as
 If $F$ is the number of filters in the last one-dimension convolution layer, the sort pooling output $\mathbf{Z}^{sp}$ will be reduced to a one-dimension vector of size $k \times F$, which is then fed into a fully connected one-layer perceptron for graph classification.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleSortpool.eps}}
-\caption{Applying Sortpooling Layer to Example Graph $g$}
-\label{MG:Fig:ExampleSortpool}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleSortpool.eps}}
+    \caption{Applying Sortpooling Layer to Example Graph $g$}
+    \label{MG:Fig:ExampleSortpool}
 \end{figure*}
 
 \subsection{WeightedVertices Layer}
@@ -90,7 +90,7 @@ Mathematically, a single channel Conv1D layer can be represented as a row of par
 Its output $E \in \mathbb{R}^{1 \times \sum_{1}^{h}c_t}$, when fed with \textit{transposed} $\mathbf{Z}^{sp}$, will be equivalent to
 \begin{equation}
     E = f(\mathbf{W} \times \mathbf{Z}^{sp})
-\label{MG:Equ:WeightedVertices}
+    \label{MG:Equ:WeightedVertices}
 \end{equation}
 %which is obviously after we notice that
 This is because
@@ -110,9 +110,9 @@ For ease of presentation, in the remainder of the paper we refer to this special
 We replace the original Conv1D layer with the WeightVertices layer, because the WeightVertices layer leverages the graph embedding idea to make the output from the sorting pooling layer compatible with the malware classifier.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleWeightedVertice.eps}}
-\caption{Applying WeightVertices Layer to Example Graph $g$.}
-\label{MG:Fig:ExampleWeightedVertice}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleWeightedVertice.eps}}
+    \caption{Applying WeightVertices Layer to Example Graph $g$.}
+    \label{MG:Fig:ExampleWeightedVertice}
 \end{figure*}
 
 \subsection{AdaptiveMaxPooling: An Alternative to Sortpooling}
@@ -144,7 +144,7 @@ This is easily accomplished by applying a two-dimension convolution (Conv2D) lay
 The output of the AMP layer is further fed into a multiple-Conv2D-layer neural network, inspired by VGG~\cite{VGG}, to predict the probability distribution of the malware families that the input CFG should belong to.
 
 \begin{figure*}[htbp]
-\centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleAmp.eps}}
-\caption{Applying AdaptiveMaxPooling Layers to Example Graph $g$.}
-\label{MG:Fig:ExampleAmp}
+    \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleAmp.eps}}
+    \caption{Applying AdaptiveMaxPooling Layers to Example Graph $g$.}
+    \label{MG:Fig:ExampleAmp}
 \end{figure*}

@@ -8,10 +8,10 @@ Second, we slightly modified the initialization procedure of Mininet with two ad
 Third, we discuss our design to enable transparent support of virtual time for applications running in the containers.
 
 \begin{figure}
-\centering
-\epsfig{file=VirtualTime/figures/VT-Mininet-Hifi.eps, width=0.9\textwidth}
-\caption{Integration of Mininet-Hifi and Virtual Time}
-\label{VT:Fig:VTMininetHifi}
+    \centering
+    \epsfig{file=VirtualTime/figures/VT-Mininet-Hifi.eps, width=0.9\textwidth}
+    \caption{Integration of Mininet-Hifi and Virtual Time}
+    \label{VT:Fig:VTMininetHifi}
 \end{figure}
 
 \subsection{Modification in Linux Kernel}
@@ -23,10 +23,10 @@ To make a process have its own perception of time, we added the following four n
     \item \texttt{physical\_start\_ns} represents the starting time that a process detaches from the system clock and begins to use the virtual time, in nanoseconds.
     \item \texttt{physical\_past\_nsec} represents how much physical time has elapsed since the last time the process requested the current time, in nanoseconds
     \item \texttt{virtual\_start\_nsec} represents the starting time that a process detaches from the system clock and uses the virtual time, in nanoseconds 
-	\item \texttt{virtual\_past\_nsec} represents how much virtual time has elapsed since the last time the process requested the current time, in nanoseconds
+    \item \texttt{virtual\_past\_nsec} represents how much virtual time has elapsed since the last time the process requested the current time, in nanoseconds
     \item \texttt{freeze\_start\_ns} represents the starting time that a process or a process group is frozen. It is always zero for a non-frozen process.
     \item \texttt{freeze\_past\_ns} represents the cumulative time, in nanoseconds, that a running process or a process group remains in the frozen state.
-	\item \texttt{dilation} represents the TDF of a time-dilated process
+    \item \texttt{dilation} represents the TDF of a time-dilated process
 \end{itemize}
 
 \begin{algorithm}[ht]

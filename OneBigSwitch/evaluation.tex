@@ -2,62 +2,62 @@
 \label{OBS:Sec:Evaluation}
 
 \begin{figure*}[ht]
-        \centering
+    \centering
         \subfigure[$\mathcal{R}_1$, packets received per host in $net_1(d=2, f=3)$] {
-                \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/ping_mat_2_3.eps}
+            \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/ping_mat_2_3.eps}
                 \label{OBS:Fig:PingMatrix1}
-        }
+            }
         \subfigure[$\mathcal{R}_2$, Packets received in $net_2(d=2, f=3)$] {
-                \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/bs_ping_mat_2_3.eps}
+            \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/bs_ping_mat_2_3.eps}
                 \label{OBS:Fig:PingMatrix2}
-        }
+            }
         \\
         \subfigure[$\mathcal{R}_1$, Packets received in $net_1(d=4, f=3)$] {
-                \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/ping_mat_4_3.eps}
+            \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/ping_mat_4_3.eps}
                 \label{OBS:Fig:PingMatrix3}
-        }
+            }
         \subfigure[$\mathcal{R}_2$, Packets received in $net_2(d=4, f=3)$] {
-                \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/bs_ping_mat_4_3.eps}
+            \includegraphics[width=.45\textwidth]{OneBigSwitch/figures/bs_ping_mat_4_3.eps}
                 \label{OBS:Fig:PingMatrix4}
-        }
+            }
         \caption[Forwarding Logic Evaluation after One-Big-Switch Abstraction]{
-        Matrix $\mathcal{R}$ represents the number of packets received at each host.
+            Matrix $\mathcal{R}$ represents the number of packets received at each host.
         $net_1$ is the original SDN network with a tree topology ($d$, $f$),
         where $d$ is depth and $f$ is fanout.
         $net_2$ is the corresponding one-big-switch-based network.
         The gradient legend visualizes the number of received packets.
         $\mathcal{R}_1$ and $\mathcal{R}_2$ are identical,
         which indicate that our model abstraction technique preserves the network forwarding logic.}
-        \label{OBS:Fig:ComparePingMatrix}
+    \label{OBS:Fig:ComparePingMatrix}
 \end{figure*}
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/comp_num_rules.eps}
-\caption[Number of Rules Reduced after One-Big-Switch Abstraction]{Number of rules needed to preserve the network forwarding logic.
+    \centering
+    \includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/comp_num_rules.eps}
+    \caption[Number of Rules Reduced after One-Big-Switch Abstraction]{Number of rules needed to preserve the network forwarding logic.
         The number of rules on the big switch is about 72\% to 89\% less than
         the number of rules in the original tree-topology network.
         The x-axis label ($d$, $f$) represents the depth and fanout parameters
         in a tree topology network.}
-\label{OBS:Fig:CompareNumRules}
+    \label{OBS:Fig:CompareNumRules}
 \end{figure}
 
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/comp_sim_time.eps}
-\caption[Comparison of Simulation Execution Time]{Comparison of simulation execution time.
+    \centering
+    \includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/comp_sim_time.eps}
+    \caption[Comparison of Simulation Execution Time]{Comparison of simulation execution time.
         The big-switch-based network model saves about 75\% to 85\% running time
         as compared to simulating the corresponding SDN-based network.
         The x-axis label ($d$, $f$) represents the depth and fanout parameters in a tree topology network.}
-\label{OBS:Fig:CompareSimulationTime}
+    \label{OBS:Fig:CompareSimulationTime}
 \end{figure}
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/bs_overhead.eps}
-\caption[Execution Time of One-Big-Switch Abstraction]{Execution time to transform an SDN-based network to a big-switch-based network.}
-\label{OBS:Fig:BSOverhead}
+    \centering
+    \includegraphics[width=0.9\textwidth]{OneBigSwitch/figures/bs_overhead.eps}
+    \caption[Execution Time of One-Big-Switch Abstraction]{Execution time to transform an SDN-based network to a big-switch-based network.}
+    \label{OBS:Fig:BSOverhead}
 \end{figure}
 
 \subsection{Network Forwarding Logic Equivalence}
@@ -79,7 +79,7 @@ We first demonstrate that the forwarding logic of the original software-defined 
 %One can find the shortest path between a pair of hosts $(s, d)$ with a layer-two learning switch controller application. Traversing the tree up and down in breadth-first-search style, learning switch application can automatically install OpenFlow rules on each hop once we initiate \texttt{ping} between the given pair of host. More specifically,
 \if 0
 \hl{
-Since the production SDN network snapshot, including topology connections and rules installed on
+    Since the production SDN network snapshot, including topology connections and rules installed on
 individual switches, are not easy to obtain, our demonstration is based on the following plausible setup.
 }
 \fi

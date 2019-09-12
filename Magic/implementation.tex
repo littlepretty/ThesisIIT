@@ -52,35 +52,6 @@ The first if statement creates a new block if $inst$ was marked as \texttt{start
 The second step connects $block$ to $nextBlock$ if the last instruction in $block$ is falling through to the next instruction, which happens to be the start of $nextBlock$.
 The final step creates an edge (potentially a new block) for any branching operations, e.g., jump or call.
 
-%\begin{algorithm}
-%\caption{\texttt{CfgBuilder::connectBlocks()}}
-%\label{MG:Alg:SecondPass}
-%\begin{algorithmic}[1]
-%\FORALL{$inst$ in program $P$}
-    %\IF{$inst.start$}
-        %\STATE $currBlock \leftarrow \texttt{getBlockAtAddr}(inst.addr)$
-    %\ENDIF
-    %\STATE $nextBlock \leftarrow currBlock$
-    %\STATE
-    %\STATE $nextInst \leftarrow \texttt{getNextInst}(P, inst)$
-    %\IF{$nextInst \neq$ None}
-        %\IF {$inst.fallThrough$ \AND $nextInst.start$}
-            %\STATE $nextBlock \leftarrow \texttt{getBlockAtAddr}(nextInst.addr)$
-            %\STATE add $nextBlock$ to $currBlock$'s edge list
-        %\ENDIF
-    %\ENDIF
-    %\STATE
-    %\IF{$inst.branchTo \neq$ None}
-        %\STATE $block \leftarrow \texttt{getBlockAtAddr}(inst.branchTo)$
-        %\STATE add $block$ to $currBlock$'s edge list
-    %\ENDIF
-    %\STATE
-    %\STATE add $inst$ to $currBlock$
-    %\STATE $currBlock \leftarrow nextBlock$
-%\ENDFOR
-%\end{algorithmic}
-%\end{algorithm}
-
 \begin{algorithm}[t]
     \DontPrintSemicolon
     \KwData{$P = $ program, e.g., mapping from instruction address to instruction}

@@ -2,131 +2,131 @@
 \label{OBS:Sec:MotivatingExample}
 
 \tikzset {
-        roundnode/.style={circle, draw=blue!80, fill=blue!5, very thick, minimum size=7mm},
+    roundnode/.style={circle, draw=blue!80, fill=blue!5, very thick, minimum size=7mm},
         squarenode/.style={rectangle, draw=red!80, fill=red!5, very thick, minimum size=7mm},
         ->-/.style={->, line width=1.2pt},
         ==/.style={line width=1.6pt}
-}
+    }
 
 \begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\node[roundnode] (sw0) {SW0};
-\node[roundnode] (sw1) [below left=2cm of sw0] {SW1};
-\node[roundnode] (sw2) [below=1.1cm of sw0] {SW2};
-\node[roundnode] (sw3) [below right=2cm of sw0] {SW3};
-\node[squarenode] (net1) [below=1cm of sw1] {10.1.0.10/16};
-\node[squarenode] (net2) [below=1cm of sw2] {10.0.0.10/8};
-\node[squarenode] (net3) [below=1cm of sw3] {11.1.0.10/16};
+    \centering
+    \begin{tikzpicture}
+        \node[roundnode] (sw0) {SW0};
+        \node[roundnode] (sw1) [below left=2cm of sw0] {SW1};
+        \node[roundnode] (sw2) [below=1.1cm of sw0] {SW2};
+        \node[roundnode] (sw3) [below right=2cm of sw0] {SW3};
+        \node[squarenode] (net1) [below=1cm of sw1] {10.1.0.10/16};
+        \node[squarenode] (net2) [below=1cm of sw2] {10.0.0.10/8};
+        \node[squarenode] (net3) [below=1cm of sw3] {11.1.0.10/16};
 
-\draw[-, line width=1.2pt] (sw0) -- node [near start, above] {0} node[near end, below] {1} (sw1);
-\draw[-, line width=1.2pt] (sw0) -- node [near start, right] {1} node[near end, left] {1} (sw2);
-\draw[-, line width=1.2pt] (sw0) -- node [near start, above] {2} node[near end, below] {1} (sw3);
-\draw[-, line width=1.2pt] (sw1) -- node [near start, left] {0} (net1);
-\draw[-, line width=1.2pt] (sw2) -- node [near start, left] {0} (net2);
-\draw[-, line width=1.2pt] (sw3) -- node [near start, right] {0} (net3);
-\end{tikzpicture}
-\caption{A Tree-Topology SDN Network}
-\label{OBS:Fig:ExampleNetworkTopo}
+        \draw[-, line width=1.2pt] (sw0) -- node [near start, above] {0} node[near end, below] {1} (sw1);
+        \draw[-, line width=1.2pt] (sw0) -- node [near start, right] {1} node[near end, left] {1} (sw2);
+        \draw[-, line width=1.2pt] (sw0) -- node [near start, above] {2} node[near end, below] {1} (sw3);
+        \draw[-, line width=1.2pt] (sw1) -- node [near start, left] {0} (net1);
+        \draw[-, line width=1.2pt] (sw2) -- node [near start, left] {0} (net2);
+        \draw[-, line width=1.2pt] (sw3) -- node [near start, right] {0} (net3);
+    \end{tikzpicture}
+    \caption{A Tree-Topology SDN Network}
+    \label{OBS:Fig:ExampleNetworkTopo}
 \end{figure}
 
 \begin{figure*}
-\centering
-\subfigure[Forwarding Graph for EC1 and EC3] {
-\begin{tikzpicture}
-\node[roundnode] (sw2) {SW2};
-\node[roundnode] (sw0) [left=of sw2] {SW0};
-\node[roundnode] (sw1) [above left=of sw0] {SW1};
-\node[roundnode] (sw3) [below left=of sw0] {SW3};
-\node[squarenode, align=center] (ec13) [right=of sw2] {EC1: 10.0.*.*\\EC3: 10.2.0.0-10.255.255.255};
+    \centering
+    \subfigure[Forwarding Graph for EC1 and EC3] {
+        \begin{tikzpicture}
+            \node[roundnode] (sw2) {SW2};
+            \node[roundnode] (sw0) [left=of sw2] {SW0};
+            \node[roundnode] (sw1) [above left=of sw0] {SW1};
+            \node[roundnode] (sw3) [below left=of sw0] {SW3};
+            \node[squarenode, align=center] (ec13) [right=of sw2] {EC1: 10.0.*.*\\EC3: 10.2.0.0-10.255.255.255};
 
-\draw[->-] (sw0) -- node [near start, above] {1} node[near end, above] {1} (sw2);
-\draw[->-] (sw1) -- node [near start, above] {1} node[near end, above] {0} (sw0);
-\draw[->-] (sw3) -- node [near start, above] {1} node[near end, above] {2} (sw0);
-\draw[->-] (sw2) -- node [near start, above] {0} (ec13);
-\end{tikzpicture}
-\label{OBS:Fig:ExampleForwardingEC13}
+            \draw[->-] (sw0) -- node [near start, above] {1} node[near end, above] {1} (sw2);
+            \draw[->-] (sw1) -- node [near start, above] {1} node[near end, above] {0} (sw0);
+            \draw[->-] (sw3) -- node [near start, above] {1} node[near end, above] {2} (sw0);
+            \draw[->-] (sw2) -- node [near start, above] {0} (ec13);
+        \end{tikzpicture}
+    \label{OBS:Fig:ExampleForwardingEC13}
 }
 
-\subfigure[Forwarding Graph for EC2] {
-\begin{tikzpicture}
-\node[roundnode] (sw1) {SW1};
-\node[roundnode] (sw0) [left=of sw2] {SW0};
-\node[roundnode] (sw2) [above left=of sw0] {SW2};
-\node[roundnode] (sw3) [below left=of sw0] {SW3};
-\node[squarenode] (ec2) [right=of sw1] {EC2: 10.1.*.*};
+    \subfigure[Forwarding Graph for EC2] {
+        \begin{tikzpicture}
+            \node[roundnode] (sw1) {SW1};
+            \node[roundnode] (sw0) [left=of sw2] {SW0};
+            \node[roundnode] (sw2) [above left=of sw0] {SW2};
+            \node[roundnode] (sw3) [below left=of sw0] {SW3};
+            \node[squarenode] (ec2) [right=of sw1] {EC2: 10.1.*.*};
 
-\draw[->-] (sw0) -- node [near start, above] {0} node[near end, above] {1} (sw1);
-\draw[->-] (sw2) -- node [near start, above] {1} node[near end, above] {1} (sw0);
-\draw[->-] (sw3) -- node [near start, above] {1} node[near end, above] {2} (sw0);
-\draw[->-] (sw1) -- node [near start, above] {0} (ec2);
-\end{tikzpicture}
-\label{OBS:Fig:ExampleForwardingEC2}
+            \draw[->-] (sw0) -- node [near start, above] {0} node[near end, above] {1} (sw1);
+            \draw[->-] (sw2) -- node [near start, above] {1} node[near end, above] {1} (sw0);
+            \draw[->-] (sw3) -- node [near start, above] {1} node[near end, above] {2} (sw0);
+            \draw[->-] (sw1) -- node [near start, above] {0} (ec2);
+        \end{tikzpicture}
+    \label{OBS:Fig:ExampleForwardingEC2}
 }
-\subfigure[Forwarding Graph for EC4] {
-\begin{tikzpicture}
-\node[roundnode] (sw3) {SW3};
-\node[roundnode] (sw0) [left=of sw3] {SW0};
-\node[roundnode] (sw1) [above left=of sw0] {SW1};
-\node[roundnode] (sw2) [below left=of sw0] {SW2};
-\node[squarenode] (ec4) [right=of sw3] {EC4: 11.1.*.*};
+    \subfigure[Forwarding Graph for EC4] {
+        \begin{tikzpicture}
+            \node[roundnode] (sw3) {SW3};
+            \node[roundnode] (sw0) [left=of sw3] {SW0};
+            \node[roundnode] (sw1) [above left=of sw0] {SW1};
+            \node[roundnode] (sw2) [below left=of sw0] {SW2};
+            \node[squarenode] (ec4) [right=of sw3] {EC4: 11.1.*.*};
 
-\draw[->-] (sw0) -- node [near start, above] {2} node[near end, above] {2} (sw3);
-\draw[->-] (sw1) -- node [near start, above] {1} node[near end, above] {0} (sw0);
-\draw[->-] (sw2) -- node [near start, above] {1} node[near end, above] {1} (sw0);
-\draw[->-] (sw3) -- node [near start, above] {0} (ec4);
-\end{tikzpicture}
-\label{OBS:Fig:ExampleForwardingEC4}
+            \draw[->-] (sw0) -- node [near start, above] {2} node[near end, above] {2} (sw3);
+            \draw[->-] (sw1) -- node [near start, above] {1} node[near end, above] {0} (sw0);
+            \draw[->-] (sw2) -- node [near start, above] {1} node[near end, above] {1} (sw0);
+            \draw[->-] (sw3) -- node [near start, above] {0} (ec4);
+        \end{tikzpicture}
+    \label{OBS:Fig:ExampleForwardingEC4}
 }
-\caption{Forward Graph for Each EC}
-\label{OBS:Fig:ExampleForwardingGraphs}
+    \caption{Forward Graph for Each EC}
+    \label{OBS:Fig:ExampleForwardingGraphs}
 \end{figure*}
 
 \begin{table*}[t]
-\caption{Forwarding Rules in the 3-ary Tree Network}
-\begin{center}
-\begin{tabular}{c|clc}
-\hline
-Switch & Priority & Match Field & Action\\
-\hline
-\hline
-\multirow{3}{2em}{SW0} & 10 & NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
+    \caption{Forwarding Rules in the 3-ary Tree Network}
+    \begin{center}
+        \begin{tabular}{c|clc}
+            \hline
+            Switch & Priority & Match Field & Action\\
+            \hline
+            \hline
+            \multirow{3}{2em}{SW0} & 10 & NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & NW\_DST=11.1.*.* & FWD: OUT\_PORT=2 \\
-\hline
-\multirow{3}{2em}{SW1} & 10 & IN\_PORT=1, NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
+            \hline
+            \multirow{3}{2em}{SW1} & 10 & IN\_PORT=1, NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=0, NW\_DST=11.1.*.* & FWD: OUT\_PORT=1 \\
-\hline
-\multirow{3}{2em}{SW2} & 10 & IN\_PORT=0, NW\_DST=10.1.*.* & FWD: OUT\_PORT=1 \\
+            \hline
+            \multirow{3}{2em}{SW2} & 10 & IN\_PORT=0, NW\_DST=10.1.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=1, NW\_DST=10.*.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=11.1.*.* & FWD: OUT\_PORT=1 \\
-\hline
-\multirow{3}{2em}{SW3} & 10 & IN\_PORT=1, NW\_DST=11.1.*.* & FWD: OUT\_PORT=0 \\
+            \hline
+            \multirow{3}{2em}{SW3} & 10 & IN\_PORT=1, NW\_DST=11.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.1.*.* & FWD: OUT\_PORT=1 \\
-\hline
-\end{tabular}
-\end{center}
-\label{OBS:Tab:OriginalFlowTable}
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{OBS:Tab:OriginalFlowTable}
 \end{table*}
 
 \begin{table*}[t]
-\caption{Forwarding Rules on the ``Big OpenFlow Switch"}
-\begin{center}
-\begin{tabular}{c|clc}
-\hline
-Switch & Priority & Match Field & Action\\
-\hline
-\hline
-\multirow{4}{2em}{SW}  & 10 & NW\_DST=10.0.*.* & FWD OUT\_PORT=1 \\
+    \caption{Forwarding Rules on the ``Big OpenFlow Switch"}
+    \begin{center}
+        \begin{tabular}{c|clc}
+            \hline
+            Switch & Priority & Match Field & Action\\
+            \hline
+            \hline
+            \multirow{4}{2em}{SW}  & 10 & NW\_DST=10.0.*.* & FWD OUT\_PORT=1 \\
                        & 10 & NW\_DST=10.1.*.* & FWD OUT\_PORT=0 \\
                        & 10 & NW\_DST=11.1.*.* & FWD OUT\_PORT=2 \\
                        & 10 & NW\_DST=10.2.0.0-10.255.255.255 & FWD OUT\_PORT=1 \\
-\hline
-\end{tabular}
-\end{center}
-\label{OBS:Tab:CompressedFlowTable}
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{OBS:Tab:CompressedFlowTable}
 \end{table*}
 
 In this section, we describe our model abstraction technique to transform an SDN network model to a big-switch model with a concrete network example.
@@ -149,10 +149,10 @@ four \textbf{disjoint} ECs based on the NW\_DST field as follows. Note that the 
 since it is not a packet-dependent, but topology-dependent field.
 
 \begin{itemize}
-\item Packets in EC1 are destined to the network address 10.0.*.*.
-\item Packets in EC2 are destined to hosts with address 10.1.*.*.
-\item Packets in EC3 are destined to the address range from 10.2.0.0 to 10.255.255.255
-\item Packets in EC4 are destined to the subnet 11.1.*.*.
+    \item Packets in EC1 are destined to the network address 10.0.*.*.
+    \item Packets in EC2 are destined to hosts with address 10.1.*.*.
+    \item Packets in EC3 are destined to the address range from 10.2.0.0 to 10.255.255.255
+    \item Packets in EC4 are destined to the subnet 11.1.*.*.
 \end{itemize}
 
 After identifying all the ECs from the rule set, we generate \textit{forwarding graph} for each EC, which models how packets within an EC are forwarded through the network~\cite{Veriflow}.
@@ -177,17 +177,17 @@ whereas in the original SDN network, the total number of rules is $O(S\times P)$
 where $S$ is the number of switches and $P$ is the number of address prefixes.
 
 \begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\node[roundnode, minimum size=15mm, align=center] (sw) {Big\\Switch};
-\node[squarenode, align=center] (ec13) [below=1.3cm of sw] {10.0.0.10/8};
-\node[squarenode] (ec2) [below left=2cm of sw] {10.1.0.10/16};
-\node[squarenode] (ec4) [below right=2cm of sw] {11.1.0.10/16};
+    \centering
+    \begin{tikzpicture}
+        \node[roundnode, minimum size=15mm, align=center] (sw) {Big\\Switch};
+        \node[squarenode, align=center] (ec13) [below=1.3cm of sw] {10.0.0.10/8};
+        \node[squarenode] (ec2) [below left=2cm of sw] {10.1.0.10/16};
+        \node[squarenode] (ec4) [below right=2cm of sw] {11.1.0.10/16};
 
-\draw[-, line width=1.2pt] (sw) -- node [near start, above] {0} (ec2);
-\draw[-, line width=1.2pt] (sw) -- node [near start, right] {1} (ec13);
-\draw[-, line width=1.2pt] (sw) -- node [near start, above] {2} (ec4);
-\end{tikzpicture}
-\caption{Compressed SDN Network for Scalable Simulation}
-\label{OBS:Fig:ExampleBigSwitch}
+        \draw[-, line width=1.2pt] (sw) -- node [near start, above] {0} (ec2);
+        \draw[-, line width=1.2pt] (sw) -- node [near start, right] {1} (ec13);
+        \draw[-, line width=1.2pt] (sw) -- node [near start, above] {2} (ec4);
+    \end{tikzpicture}
+    \caption{Compressed SDN Network for Scalable Simulation}
+    \label{OBS:Fig:ExampleBigSwitch}
 \end{figure}

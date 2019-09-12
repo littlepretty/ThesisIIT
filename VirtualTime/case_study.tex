@@ -24,24 +24,24 @@ while in Figure~\ref{VT:Fig:FattreeTopoExampleStride4}, we see that 2 TCP flows 
 which is very common case.
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExample.eps}
-\caption{A Fat-Tree Data Center Network with Degree-4}
-\label{VT:Fig:FattreeTopoExample}
+    \centering
+    \includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExample.eps}
+    \caption{A Fat-Tree Data Center Network with Degree-4}
+    \label{VT:Fig:FattreeTopoExample}
 \end{figure}
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExampleStride1.eps}
-\caption{Worst-case TCP Flows with Stride Step 1}
-\label{VT:Fig:FattreeTopoExampleStride1}
+    \centering
+    \includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExampleStride1.eps}
+    \caption{Worst-case TCP Flows with Stride Step 1}
+    \label{VT:Fig:FattreeTopoExampleStride1}
 \end{figure}
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExampleStride4.eps}
-\caption{Common case TCP Flows with Stride Step 4}
-\label{VT:Fig:FattreeTopoExampleStride4}
+    \centering
+    \includegraphics[width=0.8\textwidth]{VirtualTime/figures/TopoFatTreeExampleStride4.eps}
+    \caption{Common case TCP Flows with Stride Step 4}
+    \label{VT:Fig:FattreeTopoExampleStride4}
 \end{figure}
 
 We first set all the link bandwidth (switch-to-switch and switch-to-host) to 100 Mbps,
@@ -55,12 +55,12 @@ As shown in Figure~\ref{VT:Fig:FatTreeIndividualBw100M}, every flow's throughput
 affected by the hash collision limitation of ECMP in the stride-4 scenario.
 
 \begin{figure}[ht]
-\centering
-	\subfigure[Average TCP Flow Throughput]{\epsfig{file=VirtualTime/figures/FattreeAvgAggBw100M.eps, width=0.45\textwidth}
-	\label{VT:Fig:FatTreeAvgBw100M}}
-	\subfigure[Throughput of Individual TCP Flow]{\epsfig{file=VirtualTime/figures/FattreeFlowDistBw100M.eps, width=0.45\textwidth}
-	\label{VT:Fig:FatTreeIndividualBw100M}}
-\caption[Emulate ECMP with Low Link Bandwidth]{Mininet Emulation Results: ECMP Limitation in a Fat-tree-based Data Center Network with 100 Mbps Link Bandwidth}
+    \centering
+    \subfigure[Average TCP Flow Throughput]{\epsfig{file=VirtualTime/figures/FattreeAvgAggBw100M.eps, width=0.45\textwidth}
+    \label{VT:Fig:FatTreeAvgBw100M}}
+    \subfigure[Throughput of Individual TCP Flow]{\epsfig{file=VirtualTime/figures/FattreeFlowDistBw100M.eps, width=0.45\textwidth}
+    \label{VT:Fig:FatTreeIndividualBw100M}}
+    \caption[Emulate ECMP with Low Link Bandwidth]{Mininet Emulation Results: ECMP Limitation in a Fat-tree-based Data Center Network with 100 Mbps Link Bandwidth}
 \end{figure}
 
 However, the link bandwidth configuration in the previous experiments are not realistic.
@@ -75,12 +75,12 @@ We plotted the average flow throughput in Figure~\ref{VT:Fig:FatTreeAvgBw10G} an
 individual flow throughput in Figure~\ref{VT:Fig:FatTreeIndividualBw10G}.
 
 \begin{figure}[ht]
-\centering
+    \centering
     \subfigure[Average TCP Flow Throughput]{\epsfig{file=VirtualTime/figures/FattreeAvgAggBw10G.eps, width=0.45\textwidth}
-	\label{VT:Fig:FatTreeAvgBw10G}}
-	\subfigure[Throughput of Individual TCP Flow]{\epsfig{file=VirtualTime/figures/FattreeFlowDistBw10G.eps, width=0.45\textwidth}
-	\label{VT:Fig:FatTreeIndividualBw10G}}
-\caption[Emulate ECMP with High Link Bandwdith]{Mininet Emulation Results with Virtual Time: ECMP Limitation in a Fat-tree-based Data Center Network with 10 Gbps Link Bandwidth}
+    \label{VT:Fig:FatTreeAvgBw10G}}
+    \subfigure[Throughput of Individual TCP Flow]{\epsfig{file=VirtualTime/figures/FattreeFlowDistBw10G.eps, width=0.45\textwidth}
+    \label{VT:Fig:FatTreeIndividualBw10G}}
+    \caption[Emulate ECMP with High Link Bandwdith]{Mininet Emulation Results with Virtual Time: ECMP Limitation in a Fat-tree-based Data Center Network with 10 Gbps Link Bandwidth}
 \end{figure}
 
 In the case of stride-1, there were very few collisions among flows.
