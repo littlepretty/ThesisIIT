@@ -1,4 +1,4 @@
-\section{Evaluation}
+\Section{Evaluation}
 \label{OBS:Sec:Evaluation}
 
 \begin{figure*}[ht]
@@ -60,7 +60,7 @@
     \label{OBS:Fig:BSOverhead}
 \end{figure}
 
-\subsection{Network Forwarding Logic Equivalence}
+\Subsection{Network Forwarding Logic Equivalence}
 \label{OBS:SubSec:PreserveForwardingLogic}
 We perform experimental evaluation of our network model abstraction technique
 that transforms an SDN-based network to one-big-switch model.
@@ -126,7 +126,8 @@ Note that the brightness of the element in the matrix is proportional to $\mathc
 i.e., the number of successfully delivered packets from host $i$ to host $j$.
 %It is easy to see that $\mathcal{R}_1$ and $\mathcal{R}_2$ are identical for all experiment settings.
 
-\subsection{Performance Gain}
+\Subsection{Performance Gain}
+We show performance gain with two metrics.
 
 \textbf{Number of OpenFlow Rules.} We compare the total number of rules installed
 on the switches in both $net_1$ and $net_2$ with the same experimental settings
@@ -161,7 +162,7 @@ We can see that simulating the big-switch-based network is 3.42 to 6.68 times
 faster than simulating the original SDN-based network.
 
 
-\subsection{Model Abstraction Execution Time}
+\Subsection{Model Abstraction Execution Time}
 We discussed the asymptotic time complexity of our model abstraction technique in 
 Section~\ref{OBS:Sec:Design}.
 We now evaluate the execution time for transforming an SDN-based network to a big-switch-based network.
@@ -175,3 +176,4 @@ The fast model abstraction execution time is useful.
 As the network state keeps evolving, it is essential to constantly update the abstracted big-switch model to reflect the changes, preferably in an online fashion.
 In fact, the three-step approach allows us to incrementally update the big-switch model and requires far less execution time, i.e.,
 we only need to update a small set of rules that are different in the new network snapshot.
+

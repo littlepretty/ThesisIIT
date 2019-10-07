@@ -1,4 +1,4 @@
-\section{System Overview of \sysname}
+\Section{System Overview of \sysname}
 \label{MG:Sec:System}
 
 %Before that, let's take an overview of the components in \sysname in the pipeline order.
@@ -10,17 +10,15 @@ This section overviews the three main components of \sysname, whose workflow is 
     \label{MG:Fig:SystemPipeline}
 \end{figure*}
 
-\subsection{Control Flow Graph}
+\Subsection{Control Flow Graph}
 \label{MG:Subsec:ConstructCfg}
-%Given a cross-platform assembly code, 
-
 \sysname relies on the state-of-the-art tools, such as IDA Pro~\cite{bib:idapro}, to extract CFGs from malware code.
 In a CFG, a vertex represents a basic block, which contains a straight sequence of code or assembly instructions without any control flow transition except at its exit.
 Two vertices $(u, v)$ are connected by a directed edge $u \rightarrow v$ if either the last instruction in $u$ falls through the first line of code in $v$,
 or there is a jump instruction in $u$ that is destined to some instructions (e.g., jump target) in $v$.
 The implementation details on how to build the CFG from disassembled execution code will be given in Section~\ref{MG:SubSec:BuildCfg}.
 
-\subsection{Attributed Control Flow Graph}
+\Subsection{Attributed Control Flow Graph}
 \label{MG:SubSec:Cfg2Acfg}
 The CFG representation of software program is generic for the purpose of malware classification in several ways.
 First, this type of representation transcends specific programming languages in which the programs are written or hardware platforms for which the programs are developed.
@@ -75,9 +73,8 @@ The task of such attribute aggregation is accomplished with DGCNN, which shall b
 %It also includes structural information of the vertex, such as the number of offspring and betweenness.
 
 
-\subsection{Deep Graph Convolution Neural Network}
+\Subsection{Deep Graph Convolution Neural Network}
 \label{MG:Subsec:DGCNN}
-
 Unlike image or text-based data, graph-based data are of variable sizes and are thus not naturally ordered tensors.
 %Therefore, a gap exists between the ACFG and the optimal features on the basis of which a machine-learning-powered detection engine makes malware prediction. In our pipeline, this gap is bridged by 
 To address this challenge, we use the state-of-the-art deep neural network that can automatically learn discriminative latent features from malware data abstracted as ACFGs.
@@ -86,3 +83,4 @@ The transformation algorithm first recursively propagates the weighted attribute
 Next, it sorts the vertices in the order of their feature descriptors.
 After the sorting step, the graphs with variant sizes are embedded into fixed-size vectors, which are amenable to ML-based classification.
 In the next section, we shall elaborate on these operations as well as our extensions based on formal mathematical descriptions.
+

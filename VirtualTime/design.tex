@@ -1,7 +1,7 @@
-\section{System Architecture Design}
+\Section{System Architecture Design}
 \label{VT:Sec:Architecture}
 
-\subsection{System Overview}
+\Subsection{System Overview}
 Figure~\ref{VT:Fig:ContainerVirtualTime} depicts the architecture of our virtual time system within a Linux-container-based network emulator. 
 Linux container~\cite{LXC} is a lightweight virtualization technique that enables multiple instances of Linux OS sharing the kernel. 
 Linux container has less overhead than full or para-virtualization platforms, such as Xen, QEMU, or VMware,
@@ -56,7 +56,7 @@ We provide a set of simple APIs to (1) initialize containers with virtual time, 
 The system returns precise virtual time to container processes and transparently to all their child processes while returning the ordinary system time to other processes. 
 We have integrated the system with Mininet. The implementation details are discussed in Section~\ref{VT:Sec:Implementation}, and we have madee our code base available to public on GitHub\footnote{see \href{https://github.com/littlepretty/VirtualTimeForMininet}{VirtualTimeForMininet}}. 
 
-\subsection{Adaptive Time Dilation}
+\Subsection{Adaptive Time Dilation}
 The key insight of virtual time is to trade time with available system resources.
 The execution time can be unnecessarily long with an overestimated TDF. 
 It is difficult to avoid that with a fixed TDF when the resource demands vary substantially during the emulation. 

@@ -1,9 +1,9 @@
-\section{Experimental Evaluation}
+\Section{Experimental Evaluation}
 \label{MG:Sec:Experiment}
 
 We evaluate the performance of \sysname using two large malware datasets, each with more than 10,000 samples, and present our experimental results in this section.
 
-\subsection{Malware Datasets}
+\Subsection{Malware Datasets}
 The first dataset, which we refer to as the \textit{MSKCFG} dataset, includes the CFGs derived from the malware files used in the 2015 Microsoft Malware Classification Challenge hosted by Kaggle~\cite{MsAcfgDataset}. The dataset contains samples that fall into nine families: \{Ramnit, Lollipop, Kelihos\_ver3, Vundo, Simda, Tracur, Kelihos\_ver1, Obfuscator.ACY, Gatak\}.
 Figure~\ref{MG:Fig:MSKCFGLabelDist} presents the number of samples in each of these nine malware families in the dataset.
 %The identification of benign code is not in the scope of the contest, and all the input files are supposed to be malicious.
@@ -106,7 +106,7 @@ Secondly, testing MAGIC on datasets collected from independent sources also allo
     \end{center}
 \end{table}
 
-\subsection{Model Training and Evaluation}
+\Subsection{Model Training and Evaluation}
 As the malware families are different in the two datasets, we need to create two different \sysname instances to classify their malware samples separately. However, MAGIC uses the same way to train DGCNN and tune its hyperparameters for both datasets.
 The first step is hyperparameter tuning.
 Table~\ref{MG:Tab:Hyperparameters} lists the hyperparameters used in both the deep neural network itself (e.g., the sizes of the graph convolution layers) and the algorithm for training the model (e.g., batch size and learning rate).
@@ -149,7 +149,7 @@ In the following, we report the cross-validation scores for the two datasets.
     \label{MG:Fig:YANCFGLabelDist}
 \end{figure}
 
-\subsection{Results on the MSKCFG Dataset}
+\Subsection{Results on the MSKCFG Dataset}
 The best cross-validation scores (precision, recall and F1) for the MSKCFG dataset are shown in Figure~\ref{MG:Fig:MSKCFGScores}, and the exact score values are listed in Table~\ref{MG:Tab:MSKCFGScores}.
 The standard variances are not listed because the scores' variations among five different cross-validation folds are negligible ($<0.004$).
 % Table~\ref{tab:MSKCFGConfusionMatrix} details the corresponding confusion table.
@@ -251,7 +251,7 @@ As an alternative work that also applies deep neural network, our DGCNN-based ap
 % \end{table*}
 
 
-\subsection{Results on the YANCFG Dataset}
+\Subsection{Results on the YANCFG Dataset}
 \sysname's best cross validation scores on the YANCFG dataset are depicted in Figure~\ref{MG:Fig:YANCFGScores} and the exact values of these scores are listed in Table~\ref{MG:Tab:YANCFGScores}.
 % Table~\ref{tab:YANCFGScores} is the corresponding confusion table on the 20\% holdout set.
 We observe in Figure~\ref{MG:Fig:YANCFGScores} that \sysname achieves F1-scores higher than 0.9 for nine of the 13 binary families including \{Bagle, Benign, Bifrose, Hupigon, Koobface, Swizzor, Vundo, Zbot, Zlob\}.
@@ -271,12 +271,7 @@ Moreover, the amount of absolute improvement is greater than or equal to 0.2 for
 Lastly, it is noted that both approaches performed relatively poorly on the Ldpinch and Lmir malware families. Still, the DGCNN-based approach used by \sysname improves the work in \cite{YanDataset} by 70\% and 35\% in terms of the F1-score for Ldpinch and Lmir, respectively.
 
 
-\subsection{Discussion}
-% We break down the major execution overhead of \sysname, XGBoost\cite{NovelFeatureFusion}, and ESVC\cite{YanDataset} into three parts: feature extraction time, classifier training time, and malware prediction time.
-% In order to extract 1,804 features from both byte code files and disassembled code, it takes XGBoost\cite{NovelFeatureFusion} around 48 hours (173,264 seconds) to process the entire MSKCFG dataset on a laptop with a quad-core 2 GHz and 8GB RAM.
-% In contrast, building ACFGs for the MSKCFG dataset with MAGIC takes around 17 hours. %, as mentioned at the beginning of this section. 
-% The execution time spent on feature collection and extraction was not mentioned in \cite{YanDataset}.
-
+\Subsection{Discussion}
 We break down the major execution overhead of \sysname into three parts: feature extraction time, classifier training time, and malware prediction time.
 Building ACFGs for the MSKCFG dataset with MAGIC takes less than 6 seconds on average.
 We gathered the training and testing running time over 20 runs to evaluate \sysname.

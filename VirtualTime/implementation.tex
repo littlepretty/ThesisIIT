@@ -1,4 +1,4 @@
-\section{Implementation}
+\Section{Implementation}
 \label{VT:Sec:Implementation}
 
 The implementation of the virtual time system and its integration with Mininet-Hifi (the latest version of Mininet) is composed of three parts,
@@ -14,7 +14,7 @@ Third, we discuss our design to enable transparent support of virtual time for a
     \label{VT:Fig:VTMininetHifi}
 \end{figure}
 
-\subsection{Modification in Linux Kernel}
+\Subsection{Modification in Linux Kernel}
 \paragraphbe{Timing-related Kernel Modifications.}
 \label{VT:SubSec:ExtendLinuxKernel}
 Our implementation is based on a recent Linux kernel 3.16.3 with no third-part library dependency.
@@ -193,7 +193,7 @@ In the earlier example with TDF set to 8, the experiment will run 8 times slower
 Note that we only tailored HTB in \texttt{tc}, which is the default \texttt{qdisc} used by Mininet. 
 We will generalize the mechanism to other \texttt{qdiscs} including HFSC (Hierarchical Fair Service Curve) and TBF (Token Bucket Filter) in the future.
 
-\subsection{Modification in Network Emulator}
+\Subsection{Modification in Network Emulator}
 \paragraphbe{Virtual-Time-Enabled Mininet.}
 \label{VT:SubSec:ImplementMininet}
 %Mininet uses Linux's container \cite{LXC} to enable scalable network emulation. 
@@ -283,7 +283,7 @@ In contrast, \texttt{MininetMonitor} runs as a lightweight background thread in 
 and \texttt{DilationAdaptor} is simply a python object that Mininet has a reference to. 
 The communication in our system is through synchronized queues and method invocations, which is much faster. 
 
-\subsection{Virtual Time Support for Network Applications}
+\Subsection{Virtual Time Support for Network Applications}
 \label{VT:SubSec:ModificationApplications}
 Network applications running inside containers (e.g., \texttt{iperf3}~\cite{iperf3} or \texttt{ping}) should also use virtual time. 
 We do not need to modify the application code because they are running as child processes of Mininet's hosts. 
@@ -298,3 +298,4 @@ and the \texttt{vsyscall} mechanism to reduce the overhead of context switches c
 for example, \texttt{gettimeofday} and \texttt{time}~\cite{VDSO}. 
 Therefore, applications may bypass our virtual-time-based system calls unless we explicitly use the \texttt{syscall} function.
 Our solution is to disable vDSO with respect to \texttt{\_\_vdso\_gettimeofday} in order to transparently offer virtual time to applications in the containers.
+

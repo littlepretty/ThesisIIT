@@ -1,14 +1,5 @@
-\section{SDN Model Abstraction}
+\Section{SDN Model Abstraction}
 \label{OBS:Sec:Design}
-
-\begin{comment}
-    The overview of our model abstraction approach for SDN networks is shown in Figure~\ref{OBS:Fig:BigSimOverview}.
-    Through a three-step systematic process, we are able to take
-    a snapshot of an SDN network $SN$ as the input, transform the network devices in an SDN network to a single OpenFlow switch,
-    $BS$ that preserves the forwarding logic of the original network.
-    In this section, we elaborate the algorithmic design in each step of the model abstraction.
-    %We have sketched the process of how to replace a OpenFlow-switch-connected network with a single OpenFlow switch in section~\ref{Sec:MotivationalExample}.
-\end{comment}
 
 Our objective is to effectively transform a static SDN data plane configuration (i.e., a snapshot of the network state)
 to ``one-big-switch'' model, which preserves the same end-to-end forwarding behavior.
@@ -40,29 +31,14 @@ We describe each step in details in the remainder of the section.
 
 %We assume that both the original network and abstracted network use OpenFlow switches, and the switches compare the incoming packet to the installed rule with highest priority and then apply the action of that rule. The simplicity of OpenFlow switches enables us to analyze the behavior of the original network and synthesis the configuration of the ``big switch".
 
-\subsection{Identifying Equivalence Classes}
+\Subsection{Identifying Equivalence Classes}
 \label{OBS:Sec:IdentifyEC}
-
 By aggregating and slicing forwarding rules in an SDN network according to ECs, one can obtain a compact representation of the network state in terms of forwarding behavior.
 We first give the definition of equivalence class (EC), and then present the data structure and algorithms to partition the packets into ECs.
 \begin{definition}
     An equivalence class is a set of packets that experience identical forwarding action at \textbf{any} network device in the network.
     \label{OBS:Def:EC}
 \end{definition}
-
-\begin{comment}
-    %\kevin{add to one or two sentences about how to find ECs and how to aggregate ECs before the structure}
-    By its definition, ECs can be found by aggregate forwarding rules on different switches
-    and group them by the match field.
-    We aggregate forwarding rules using a trie structure as inspired by VeriFlow~\cite{Veriflow}.
-    A trie node has three child nodes, i.e., zero, one or wildcard, that represent three possible values for performing a bit-to-bit rule matching.
-    The entire tree is composited by several sub-tries, each representing one packet header field.
-    For example, consider the tree-topology network in Section~\ref{OBS:Sec:MotivatingExample},
-    the trie only contains one sub-trie representing the $NW\_DST$ header field (i.e., the network destination address).
-    Note that an EC can be defined by multiple fields. For example, we can also match the source address of the packet (e.g., $NW\_SRC$)
-    as well as the service type of the traffic ($TCP\_SRC$). The resulting trie now has three sub-tries.
-    %Here we give solutions to two problems that VeriFlow neglected.
-\end{comment}
 
 Each packet is uniquely identified by its header field values, which are matched against the forwarding rules in the OpenFlow switches
 to determine the appropriate action.
@@ -273,9 +249,8 @@ We then use a hash table $H$ to combined the ECs by hashing each EC $x$ to $C_x$
 The minimal size of ECs is the number of unique keys in $H$.
 Note that in the subsequent algorithmic designs, iterating through all ECs refers to iterating through the first ECs in each set $H[key]$.%, $\forall key \in H$.
 
-\subsection{Generating Forwarding Graphs}
+\Subsection{Generating Forwarding Graphs}
 \label{OBS:Sec:GenerateFG}
-
 In the second step, we compute a forwarding graph for each EC, and then effectively reduce the size of the forwarding graph to improve efficiency for the third step.
 
 First, we define a function $FG(\alpha)$ that maps an EC $\alpha$ to a corresponding forwarding graph. A forwarding graph is a directed graph that represents how packets belonging to the same EC are processed by the network. A node $u$ in the forwarding graph is a networking device, and an edge $(u, v)$ in the graph means that device $u$ forwards the packets to device $v$ in the network.
@@ -350,9 +325,8 @@ i.e., the third step of our model abstraction process (see Section~\ref{OBS:Sec:
         %(2) increasing the delay of other packets on the basis of the amount of looping packets
 \end{itemize}
 
-\subsection{Populating Flow Tables on the Big-Switch Model}
+\Subsection{Populating Flow Tables on the Big-Switch Model}
 \label{OBS:Sec:PopulateFlowTable}
-
 We develop an algorithm to generate OpenFlow rules on the big switch to abstract the forwarding behavior (see Algorithm~\ref{OBS:Alg:GenAllRules}).
 %by calling \texttt{generate\_rules}, as described in Algorithm~\ref{Alg:GenAllRules}.
 We maintain a hash table $PortMap$ to map the end ports of the edge switches to the ports of the big switch.

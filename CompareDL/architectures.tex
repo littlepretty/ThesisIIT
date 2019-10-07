@@ -1,10 +1,10 @@
-\section{Deep Learning Models for Network Intrusion Detection}
+\Section{Deep Learning Models for Network Intrusion Detection}
 \label{CDL:Sec:Architectures}
 
 We explore a bunch of deep learning models that are promising to the
 network intrusion detection problem, including multilayer perceptron, restricted boltzmann machine, sparse autoencoder, and wide and deep learning with embeddings. We develop a Python library, NetLearner~\cite{NetLearner}, which allows us to build and train those deep learning models using TensorFlow~\cite{TensorFlow}.
 
-\subsection{Multilayer Perceptron}
+\Subsection{Multilayer Perceptron}
 \label{CDL:SubSec:MLP}
 Multilayer perceptron (MLP) is a fully connected feed-forward neural network with multiple hidden layers.
 Each layer consists of non-linear neural units.
@@ -23,7 +23,7 @@ During the training, the learning rate decays from 0.1 exponentially with the ba
 We do not include regularization in the model, but we apply dropout of probability 0.2 to prevent over-fitting.
 
 
-\subsection{Restricted Boltzmann Machine}
+\Subsection{Restricted Boltzmann Machine}
 Restricted Boltzmann machine (RBM)~\cite{DeepBeliefNets} is a type of energy-based models, which associate a scalar energy to each configuration vector of the variables in the network.
 In an energy-based model, learning is the process of configuring the network weights to minimize the average energy over the training data.
 Both Boltzmann machine and RBM consist of a layer of hidden units connected to a layer of visible units.
@@ -121,7 +121,7 @@ is usually denoted as CD$n$.
 
 \fi
 
-\subsection{Autoencoders}
+\Subsection{Autoencoders}
 An autoencoder is an unsupervised neural network with one hidden layer that sets the output layer to be equal to the input.
 However, to prevent the network from learning the meaningless identity function, we have to place extra constraints on the network,
 which generates different flavors of autoencoders.
@@ -221,7 +221,7 @@ The sparsity penalty term is integrated into the cost function by adding another
 \fi
 
 \iffalse
-\subsection{Generative Adversarial Nets}
+\Subsection{Generative Adversarial Nets}
 As another generative model, Generative Adversarial Nets (GAN)\cite{GAN} adopts a novel training framework,
 in which two models are trained simultaneously and adversarially.
 The generative model $G(z;\theta_g)$ aims to capture the probability distribution of the available unlabelled dataset,
@@ -275,7 +275,7 @@ Currently, we are interested in using GAN or AC-GAN to generate fake traffic.
 In the future, we will also attempt the semi-supervised classification framework with AC-GAN.
 \fi
 
-\subsection{Wide and Deep Learning with Embeddings}
+\Subsection{Wide and Deep Learning with Embeddings}
 \label{SubSec:WD}
 The categorical and integer features are extremely sparse in the network intrusion datasets.
 %For illustration reason, we plot the histogram of the ``dloss" integer feature in UNSW-NB15 dataset,

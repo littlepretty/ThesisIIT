@@ -1,10 +1,9 @@
-\section{Algorithm Description}
+\Section{Algorithm Description}
 \label{MG:Sec:DGCNN}
 
 Our work on applying DGCNN for malware classification in \sysname has been inspired by the deep learning model proposed in~\cite{Dgcnn}. In this section, we first introduce how DGCNN aggregates attributes through the neighborhood defined by the graph structure. We then discuss how to extend the existing DGCNN model with our own modifications. To explain the rationale of the DGCNN-based malware classification algorithm clearly, we walk through an example graph with five vertices as shown in Figure~\ref{MG:Fig:ExampleGraph}.
 
-\subsection{Primer on DGCNN}
-
+\Subsection{Primer on DGCNN}
 \textbf{Notations.} We denote the adjacency matrix of a graph $G=(V, E)$ of $n$ vertices as $\mathbf{A} \in \mathbb{Z} ^{n\times n}$.
 Note that $G$ is a directed graph, and $\mathbf{A}$ is not necessarily symmetric.
 To allow the attributes of a vertex to be propagated back to the vertex itself, we define the augmented adjacency matrix $\tilde{\mathbf{A}} = \mathbf{A} + \mathbf{I}$.
@@ -84,7 +83,7 @@ If $F$ is the number of filters in the last one-dimension convolution layer, the
     \label{MG:Fig:ExampleSortpool}
 \end{figure*}
 
-\subsection{WeightedVertices Layer}
+\Subsection{WeightedVertices Layer}
 In the first extension to DGCNN, we observe that the Conv1D layer following the sortpooling layer can alternatively be of kernel size $k$, stride size $k$, and single channel.
 Mathematically, a single channel Conv1D layer can be represented as a row of parameters $W \in \mathbb{R}^{1 \times k}$.
 Its output $E \in \mathbb{R}^{1 \times \sum_{1}^{h}c_t}$, when fed with \textit{transposed} $\mathbf{Z}^{sp}$, will be equivalent to
@@ -115,7 +114,7 @@ We replace the original Conv1D layer with the WeightVertices layer, because the 
     \label{MG:Fig:ExampleWeightedVertice}
 \end{figure*}
 
-\subsection{AdaptiveMaxPooling: An Alternative to Sortpooling}
+\Subsection{AdaptiveMaxPooling: An Alternative to Sortpooling}
 The intuition behind sorting from the deeper layer is to treat its output as more refined WL colors\cite{WlAlgorithm, WlGraphKernel}.
 The inner sorting inside the channels of a fixed layer output is, however, less reasonable.
 Besides, the Conv1D addendum is only aggregating the feature descriptors of per vertex and per convolution channel separately.

@@ -1,4 +1,4 @@
-\section{Evaluation}
+\Section{Evaluation}
 \label{VT:Sec:Experiments}
 
 In this section, we give experimental results to validate our implementation of the virtual time supported Mininet-Hifi network emulator.
@@ -11,7 +11,7 @@ The benchmark scores of this machine's CPU and FPU are: 1.52 seconds for Blowfis
 0.63 seconds for FFT and 2.56 seconds for Raytracing. Our virtual-time-enabled Mininet was built on the latest version of Mininet (2.1.0),
 also named Mininet-Hifi, at the time of development.
 
-\subsection{Fidelity}
+\Subsection{Fidelity}
 We first evaluate how our virtual time system improves Mininet's fidelity through a basic network scenario:
 a single TCP flow transmission through a chain of switches in an emulated SDN network.
 As shown in Figure~\ref{VT:Fig:ChainTopoExample}, the network topology consists of a client-server pair connected by a chain of Open vSwitch switches in Mininet.
@@ -46,7 +46,7 @@ With virtual time, the throughputs measured in Mininet closely match the real te
 without virtual time ($TDF = 1$), the ramp up speed was much slower, in particular,
 22 seconds ($TDF = 1$) rather than 4 seconds ($TDF = 4$), and the throughput was incorrectly stabilized below 6.1 Gbps.
 
-\subsection{Scalability}
+\Subsection{Scalability}
 Virtual time also improves the scale of networks that one can emulate without losing fidelity.
 In this set of experiments, we used the same switch chain topology in Figure~\ref{VT:Fig:ChainTopoExample},
 and set the link bandwidth to 4 Gbps. We want to investigate, with virtual time,
@@ -99,7 +99,7 @@ and our approach is to explore the adaptive time dilation scheduling, whose eval
     \caption{Scalability Evaluation Experimental Results}
 \end{figure}
 
-\subsection{Adaptive TDF Scheduling}
+\Subsection{Adaptive TDF Scheduling}
 We design a set of emulation experiments consisting of multiple TCP flows to evaluate the adaptive TDF scheduling algorithm.
 The network topology has a simple linear structure as shown in Figure~\ref{VT:Fig:LinearTopoExample} and consists of 100 hosts and 99 switches.
 All the links are of 100 Mbps bandwidth and 1 ms delay.
@@ -178,7 +178,7 @@ Our adaptive time dilation scheduler managed to reduce 46\% of the running time 
     \label{VT:Tab:CompareRunTime}
 \end{table*}
 
-\subsection{System Overhead}
+\Subsection{System Overhead}
 Our virtual time system introduces overhead with the following two reasons:
 (1) the computation cost in Algorithm~\ref{VT:Alg:VirtualTimeKeeping} and
 (2) the pauses of emulation when changing containers' TDFs.
@@ -212,4 +212,5 @@ is a few orders of magnitude less than the number of calls to \texttt{gettimeofd
     \end{tabular}
     \label{VT:Tab:Overhead}
 \end{table*}
+
 

@@ -1,5 +1,6 @@
-\section{Case Study: Limitation of ECMP Routing}
+\Section{Case Study: Limitation of ECMP Routing}
 \label{VT:Sec:CaseStudy}
+
 Network emulation testbeds are widely used to test and evaluate designs of network applications and
 protocols with the goal of discovering design limitations and implementation faults before the real system deployment.
 In this section, we present a case study to demonstrate how our virtual-time-enabled Mininet has been utilized to
@@ -84,7 +85,7 @@ individual flow throughput in Figure~\ref{VT:Fig:FatTreeIndividualBw10G}.
 \end{figure}
 
 In the case of stride-1, there were very few collisions among flows.
-Hence, the network performance ought to be close to the ideal throughput, i.e., 160 Gbps bisection bandwidth and 10 Gbps average bandwidth between each pair.
+Hence, the network performance ought to be close to the ideal throughput, i.e., 160 Gbps biSsection bandwidth and 10 Gbps average bandwidth between each pair.
 In the experiments that $TDF=4$, the average throughput is above 9.0 Gbps, which is close to the theoretical value,
 and also match well with the results obtained from the physical testbed built upon 37 machines~\cite{Hedera}.
 In the experiments that $TDF=1$, however, the throughput barely reaches 3.8 Gbps because of the limited system resources that Mininet can utilize.
@@ -103,4 +104,5 @@ However, we cannot use the result to experimentally demonstrate the limitation o
 It is hard to distinguish whether the throughput drop was caused by insufficient resources to handle 10 Gbps or the limitation of ECMP,
 given the fact that the throughput was already too low in the collision-free case.
 Without a correct baseline (benchmark for the collision-free scenario), it is difficult to perform further analysis and qualify the limitation.
+
 

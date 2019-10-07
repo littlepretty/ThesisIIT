@@ -1,9 +1,9 @@
-\section{Implementation}
+\Section{Implementation}
 \label{MG:Sec:Implement}
 
 In this section, we discuss a few implementation details, which include how we derive CFGs from dissembled code, what kind of loss functions are used in model training, and the open source MAGIC project.
 
-\subsection{Details in Building CFG}
+\Subsection{Details in Building CFG}
 \label{MG:SubSec:BuildCfg}
 To build a control flow graph from disassembled code in possibly different formats, we first pre-process the input files so that the resulting program $P$ is a one-to-one mapping from \textit{sorted addresses} to \textit{assembly instructions}, e.g., $P: \mathbf{Z}^+ \rightarrow \mathbf{I}$.
 
@@ -78,7 +78,7 @@ The final step creates an edge (potentially a new block) for any branching opera
     \label{MG:Alg:SecondPass}
 \end{algorithm}
 
-\subsection{Loss Functions Used in Model Training}
+\Subsection{Loss Functions Used in Model Training}
 Another technical advantage of \sysname is its support for the end-to-end deep neural network training.
 Regardless of how we change the layer configurations, i.e., whether to use the sort pooling layer or the adaptive max pooling layer, the model's output is always the prediction of the observed input.
 Therefore, the training procedure always minimizes the mean negative logarithmic loss, which is defined as
@@ -90,8 +90,7 @@ $y_{i, c}$ is 1 if the $i$th sample belongs to malware family $c$,
 and $p_{i, c}$ is the predicted probability that $i$th sample is in family $c$ in the output of the model.
 We adopt the Adam optimization algorithm \cite{Adam} implemented in PyTorch \cite{PyTorch} to auto-generate the gradient of the model parameters and update the parameters in the DGCNN (e.g. $W^t, 1 \leq t \leq h$ in graph convolution layers) accordingly.
 
-\subsection{Open Source \sysname Project}
-%Depending on the DGCNN-based classifier, 
+\Subsection{Open Source \sysname Project}
 For malware classification tasks, \sysname runs either in the training mode or in the prediction mode.
 In the training stage, we repeatedly activate only the first half of the pipeline to obtain a large amount of labeled CFGs.
 Then, a DGCNN and its classifier are trained using the stochastic gradient descent on the labeled CFGs in a batch mode.
@@ -105,3 +104,4 @@ The second part handles the training, tuning, and evaluation of the extended DGC
 For example, we developed the adaptive pooling layer and the WeightedVertices layer.
 Besides, MAGIC supports automatic and exhaustive hyper-parameter tuning, cross-validation, training and prediction using GPUs.
 We will make \sysname's codebase publicly available at Github in the near future.
+

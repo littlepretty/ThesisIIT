@@ -1,4 +1,4 @@
-\section{Virtual Time System}
+\Section{Virtual Time System}
 \label{VT:Sec:RelatedWorks}
 
 Virtual time has been investigated to improve the scalability and fidelity of virtual-machine-based network emulation. 
@@ -18,7 +18,7 @@ The differences are (1) we are the first to apply virtual time in the context of
 (2) our system has a wider coverage of system calls interacting in virtual time,
 and (3) our system has an adaptive time dilation scheduler to balance speed and fidelity for emulation experiments.
 
-\subsection{Adaptive Virtual Time Scheduling}
+\Subsection{Adaptive Virtual Time Scheduling}
 The key insight of virtual time is to trade time with system resources. 
 Therefore, a primary drawback is the proportionally increased execution time.
 To determine an appropriate TDF, VENICE~\cite{VirtualTimeMachine} proposes a static management scheme to forecast the recourse demand. 
@@ -31,7 +31,7 @@ while our system supports more scalable experiments on a single machine with Lin
 TimeJails requires a special protocol to prioritizing TDF request message in local area networks,
 while the communication overhead of our system is much lower, either through synchronized queues or method invocations among extended modules in the emulator.
 
-\subsection{SDN Emulation and Simulation}
+\Subsection{SDN Emulation and Simulation}
 OpenFlow~\cite{Openflow} is the first standard communications interface defined between the control and forwarding planes of an SDN architecture. 
 Examples of OpenFlow-based SDN emulation testbeds include Mininet~\cite{LaptopSDN},
 Mininet-HiFi~\cite{ReproNetExprCBE}, EstiNet~\cite{EstiNet}, ns-3~\cite{NS-3}, fs-sdn~\cite{FSSDN}, OpenNet~\cite{OpenNet}, and S3FNet~\cite{jin2013parallel}.

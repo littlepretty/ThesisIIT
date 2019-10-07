@@ -1,16 +1,4 @@
-% We introduce related works on deep learning based malware classification and deep neural networks for graph data.
-
-% \subsection{Weakness of Existing Malware Detection Approaches}
-% In the solution that wins the 2015 Microsoft Malware Classification Challenge\cite{MsWinner}, one set of useful features are the intensities of the first 800 pixels.
-% While viewing malware binary as gray-scale images make some sense in some ways and was adopted by a number of existing classification methods,
-% why care about the first 800 pixels' intensities in particular, say why not 400?
-% Some existing approaches\cite{GraphMalwareDetect, QgramMalwareDetect} require collecting execution traces of the in-question executable;
-% this is also impossible if the given PE-header is stripped.
-% As in the Microsoft Malware Classification Challenge case,
-% malware developers can easily counter the first-800-pixel-intensity features by padding certain pixels that statistically close to these in normal binaries.
-% Similar mechanism can be conveniently employed to confuse the detection approaches that heavily relies on opcode n-grams\cite{NgramMalwareDetect, QgramMalwareDetect, McBoost}.
-
-\section{Deep Learning Based Malware Detection}
+\Section{Deep Learning Based Malware Detection}
 
 As an important problem in cybersecurity, malware detection and classification have drawn the attentions of many researchers from both communities of cybersecurity and data mining~\cite{MalDetectSurvey1, MalDetectSurvey2}.
 There has been a recent trend of applying deep learning techniques for malware defense tasks and these works largely fall into two categories.
@@ -28,7 +16,7 @@ For example, to find similar success of convolution neural network in the applic
 %Many existing works including our work that apply deep learning to malware detection is a hybrid of the two categories.
 Our work takes a hybrid approach that intersects with the works in both categories. First, our work improves the accuracy of malware classification using not only the features that can be explicitly expressed with numeric values (i.e., attributes extracted from basic blocks) but also those that are inherent within the structure of the program (i.e., control flow graphs). On the other hand, deep learning models are not used as black boxes in our work, as we have proposed modifications to the standard DGCNN that are better tailored to the malware classification problem.
 
-\section{Deep Learning Models for Graph-Represented Data}
+\Section{Deep Learning Models for Graph-Represented Data}
 
 %As people in today's world are increasingly connected by computer network and social network, data collected from our digital lives are also organized in networks or graphs.
 %Motivated by the increasingly available graphical datasets, researchers in artificial intelligence and data science community are studying how neural network can help computers to efficiently learn the inherent relationships that reside in graph's unordered connectivity.
