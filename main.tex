@@ -58,7 +58,9 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 \usepackage[hyphens]{url}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{breaklinks=true}
+\urlstyle{same}
 \usepackage{epigraph}
 \usepackage{cite}
 
@@ -317,7 +319,8 @@ Software-Defined Networking Design and Security Applications
 %
 % you have two options: 1) create bibliography manually,
 % 2) create bibliography automatically. See BibliographyHelp.pdf file for details.
+\Urlmuskip=0mu plus 1mu\relax
 \bibliographystyle{ieee}
-\bibliography{mybib}
+\bibliography{mybib_bibertool}
 
 \end{document}  % end of document

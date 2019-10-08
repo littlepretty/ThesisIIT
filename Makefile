@@ -16,6 +16,7 @@ NAME=main
 .PHONY: clean, view
 
 conf:
+	biber --tool --configfile=biber-tool.conf mybib.bib
 	$(LATEX)    $(NAME).tex
 	$(BIBTEX)   $(NAME).aux
 	$(LATEX)    $(NAME).tex
