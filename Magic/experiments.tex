@@ -42,66 +42,48 @@ Secondly, testing MAGIC on datasets collected from independent sources also allo
 
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{l|r}
+         \caption{Hyperparameters and Search Ranges during Tuning}
+         \begin{tabular}{lr}
+            \hline
             \hline
             Hyperparameter & Choice or Value Range \\
             \hline
-            \hline
             Pooling Type & [Adaptive Pooling, Sort Pooling] \\
-            \hline
             Pooling Ratio & [0.2, 0.64] \\
-            \hline
             Graph Convolution Size & [(32, 32, 32, 1)\tablefootnote{Only for sort pooling}, (32, 32, 32, 32), (128, 64, 32, 32)] \\
-            \hline
             Remaining Layer\tablefootnote{Applicable only when set \textit{pooling type} to sort} & [1D Convolution Layer, WeightVertices Layer] \\
-            \hline
             2D Convolution Channels\tablefootnote{Applicable only when set \textit{pooling type} to adaptive pooling} & [16, 32] \\
-            \hline
             1D Convolution Channel Pairs\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [(16, 32)] \\
-            \hline
             1D Convolution Kernel Size\tablefootnote{Applicable only when set \textit{pooling type} to sort pooling and \textit{remaining layer} to 1D convolution} & [5, 7] \\
-            \hline
             Dropout Rate & [0.1, 0.5] \\
-            \hline
             Batch Size & [10, 40] \\
-            \hline
             Weight L2 Regularization Factor & [0.0001, 0.0005] \\
             \hline
         \end{tabular}
-        \caption{Hyperparameters and Search Ranges during Tuning}
         \label{MG:Tab:Hyperparameters}
     \end{center}
 \end{table}
 
 \begin{table}
     \begin{center}
-        \begin{tabular}{l|r|r}
+         \caption{Optimal Hyperparameters Obtained from Tuning}
+         \begin{tabular}{lrr}
+            \hline
             \hline
             Hyperparameter & For MSKCFG & For YANCFG \\
             \hline
-            \hline
             Pooling Type & Adaptive Pooling &  Adaptive Pooling\\
-            \hline
             Pooling Ratio & 0.64 & 0.2 \\
-            \hline
             Graph Convolution Size & (128, 64, 32, 32) & (32, 32, 32, 32)\\
-            \hline
             Remaining Layer & Not Applicable &  Not Applicable \\
-            \hline
             2D Convolution Channels & 16 & 16 \\
-            \hline
             1D Convolution Channel Pairs & Not Applicable & Not Applicable \\
-            \hline
             1D Convolution Kernel Size & Not Applicable & Not Applicable\\
-            \hline
             Dropout Rate & 0.1 & 0.5 \\
-            \hline
             Batch Size & 10 & 40\\
-            \hline
             Weight L2 Regularization Factor & 0.0001 & 0.0005\\
             \hline
         \end{tabular}
-        \caption{Optimal Hyperparameters Obtained from Tuning}
         \label{MG:Tab:BestHyperparameters}
     \end{center}
 \end{table}
@@ -164,10 +146,10 @@ For all nine malware families, our best model has achieved good validation score
 \begin{table}
     \caption{Performances of \sysname on the MSKCFG Dataset.}
     \begin{center}
-        \begin{tabular}{l|rrr}
+        \begin{tabular}{lccc}
+            \hline
             \hline
             Family       &  Precision &    Recall &        F1 \\
-            \hline
             \hline
             Ramnit       &   0.962378 &  0.991289 &  0.976615 \\
             Lollipop       &   0.995960 &  0.997550 &  0.996754 \\
@@ -212,10 +194,10 @@ As an alternative work that also applies deep neural network, our DGCNN-based ap
 \begin{table*}
     \caption{Cross Validation Metric Comparison on the Microsoft Dataset.}
     \begin{center}
-        \begin{tabular}{l|rr}
+        \begin{tabular}{lcc}
+            \hline
             \hline
             Approach Brief Description                                           & Mean Logarithmic Loss     & Accuracy \\
-            \hline
             \hline
             \sysname                                                                &               0.0543      &   99.25 \\
             XGBoost with Heavy Feature Engineering\cite{NovelFeatureFusion}         &               0.0197      &   99.42 \\
@@ -298,10 +280,10 @@ We plan to test our models with the latest malware samples in our future work.
 \begin{table}
     \caption{Performance of \sysname on the YANCFG Dataset.}
     \begin{center}
-        \begin{tabular}{l|rrr}
+        \begin{tabular}{lccc}
+            \hline
             \hline
             Family &  Precision &    Recall &  F1 Score \\
-            \hline
             \hline
             Bagle &   0.863636 &  0.950000 &  0.904762 \\
             Benign &   0.954128 &  0.962963 &  0.958525 \\

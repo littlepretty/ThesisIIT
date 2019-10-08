@@ -119,7 +119,7 @@ due to the high recall values $\geq$ 97\%, and the deep learning models have bet
     \centering
     \caption{Per-class Precision/Recall on the NSL-KDD Task}
     \label{CDL:Tab:PrecisionRecall}
-    \begin{tabular}{c|c|ccccc}
+    \begin{tabular}{lcccccc}
         \hline
         \hline
                              &            & \multicolumn{5}{c}{Traffic Class} \\
@@ -127,23 +127,19 @@ due to the high recall values $\geq$ 97\%, and the deep learning models have bet
                              &            & Normal & DoS   & Probe & U2R   & R2L \\
         \hline
         \multirow{2}{*}{SVM} & Precision  & 72.82  & 75.27 & 93.85 &  6.32 & 96.65 \\
-        \cline{2-2}
                              & Recall     & 96.18  & 72.16 & 82.16 &  6.06 & 13.34 \\
-        \hline
+        \cline{1-2}
         \multirow{2}{*}{MLP} & Precision  & 69.18  & 95.49 & 85.58 & 59.52 & 92.01 \\
-        \cline{2-2}
                              & Recall     & 96.66  & 82.31 & 69.28 &  6.31 & 15.03 \\
-        \hline
+        \cline{1-2}
         \multirow{2}{*}{RBM} & Precision  & 69.41  & 95.41 & 85.23 & 41.51 & 93.86 \\
         \cline{2-2}
                              & Recall     & 96.81  & 83.89 & 64.74 &  5.56 & 15.48 \\
-        \hline
+        \cline{1-2}
         \multirow{2}{*}{SAE} & Precision  & 70.20  & 95.63 & 84.70 & 65.00 & 87.76 \\
-        \cline{2-2}
                              & Recall     & 96.92  & 83.34 & 70.56 &  3.28 & 16.29 \\
-        \hline
+        \cline{1-2}
         \multirow{2}{*}{WnD} & Precision  & 70.08  & 95.59 & 84.02 & 60.34 & 91.57 \\
-        \cline{2-2}
                              & Recall     & 96.88  & 83.64 & 67.84 &  4.53 & 15.34 \\
         \hline
     \end{tabular}

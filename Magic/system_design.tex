@@ -38,9 +38,10 @@ Initially the attributes computed at a vertex do not contain any structural info
 Table~\ref{MG:Tab:UsedAttributes} lists the attributes implemented in our prototype system, although more attributes can be conveniently added to further improve malware classification performance.
 
 \begin{table}[htbp]
-    \caption{Block-level Attributes Used in \sysname}
     \begin{center}
-        \begin{tabular}{c|l}
+        \caption{Block-level Attributes Used in \sysname}
+        \begin{tabular}{lr}
+            \hline
             \hline
             Attribute Type & Attribute Description \\
             \hline
@@ -54,7 +55,6 @@ Table~\ref{MG:Tab:UsedAttributes} lists the attributes implemented in our protot
             & \# Termination Instructions      \\
             & \# Data Declaration Instructions \\
             & \# Total Instructions            \\
-            \hline
             \multirow{2}{*}{From Vertex Structure} & \# Offspring, i.e., Degree \\
             & \# Instructions in the Vertex    \\
             \hline

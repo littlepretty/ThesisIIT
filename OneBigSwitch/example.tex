@@ -85,23 +85,20 @@
 \begin{table*}[t]
     \caption{Forwarding Rules in the 3-ary Tree Network}
     \begin{center}
-        \begin{tabular}{c|clc}
+        \begin{tabular}{lccc}
+            \hline
             \hline
             Switch & Priority & Match Field & Action\\
-            \hline
             \hline
             \multirow{3}{2em}{SW0} & 10 & NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & NW\_DST=11.1.*.* & FWD: OUT\_PORT=2 \\
-            \hline
             \multirow{3}{2em}{SW1} & 10 & IN\_PORT=1, NW\_DST=10.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=0, NW\_DST=11.1.*.* & FWD: OUT\_PORT=1 \\
-            \hline
             \multirow{3}{2em}{SW2} & 10 & IN\_PORT=0, NW\_DST=10.1.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=1, NW\_DST=10.*.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=11.1.*.* & FWD: OUT\_PORT=1 \\
-            \hline
             \multirow{3}{2em}{SW3} & 10 & IN\_PORT=1, NW\_DST=11.1.*.* & FWD: OUT\_PORT=0 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.*.*.* & FWD: OUT\_PORT=1 \\
                        & 1  & IN\_PORT=0, NW\_DST=10.1.*.* & FWD: OUT\_PORT=1 \\
@@ -114,10 +111,10 @@
 \begin{table*}[t]
     \caption{Forwarding Rules on the ``Big OpenFlow Switch"}
     \begin{center}
-        \begin{tabular}{c|clc}
+        \begin{tabular}{lccc}
+            \hline
             \hline
             Switch & Priority & Match Field & Action\\
-            \hline
             \hline
             \multirow{4}{2em}{SW}  & 10 & NW\_DST=10.0.*.* & FWD OUT\_PORT=1 \\
                        & 10 & NW\_DST=10.1.*.* & FWD OUT\_PORT=0 \\

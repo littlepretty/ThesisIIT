@@ -35,19 +35,22 @@ The new attacks in UNSW-NB15 are analysis, backdoor, exploits, fuzzers, generic,
 In this paper, we consider the 2-class classification problem for the UNSW-NB15 dataset. The task is to predict whether a given flow record is normal or malicious.
 
 \begin{table}[ht]
-\centering
-\caption[Network Intrusion Detection Datasets]{Popular Datasets used in Deep Learning v.s. Available Network Intrusion Detection Datasets}
-\label{CDL:Tab:Datasets}
-\begin{tabular}{c|c|r|r|r}
-\multicolumn{1}{c|}{Domain}                          & Dataset       & Training Examples & Testing Examples & Feature Dimension \\
-\hline
-\hline
-\multirow{6}{*}{Image}                               & MNIST         & 60,000            & 10,000           & 784     \\
-                                                     & SVHN          & 73,257            & 26,032           & 3072    \\
-                                                     & CIFAR-10      & 50,000            & 10,000           & 3072    \\
-                                                     & ImageNet      & $\approx$1.2 M    & $\approx$ 0.2 M  & 196,608 \\
-\hline
-\multicolumn{1}{c|}{\multirow{2}{*}{NIDS}}           & UNSW-NB15     & 175,341           & 82,332            & 42      \\
-\multicolumn{1}{l|}{}                                & NSL-KDD       & 125,973           & 22,544            & 41      
-\end{tabular}
+    \centering
+    \caption[Network Intrusion Detection Datasets]{Image Datasets v.s. Network Intrusion Detection (NIDS) Datasets}
+    \label{CDL:Tab:Datasets}
+    \begin{tabular}{lcccc}
+        \hline
+        \hline
+        \multicolumn{1}{l}{Domain}                          & Dataset       & Training Examples & Testing Examples & Feature Dimension  \\
+        \hline
+        \multirow{4}{*}{Image}                              & MNIST         & 60,000            & 10,000           & 784                \\
+                                                            & SVHN          & 73,257            & 26,032           & 3072               \\
+                                                            & CIFAR-10      & 50,000            & 10,000           & 3072               \\
+                                                            & ImageNet      & $\approx$1.2 M    & $\approx$ 0.2 M  & 196,608            \\
+        \cline{1-2}
+        \multicolumn{1}{l}{\multirow{2}{*}{NIDS}}           & UNSW-NB15     & 175,341           & 82,332            & 42                \\
+        \multicolumn{1}{l}{}                                & NSL-KDD       & 125,973           & 22,544            & 41                \\
+        \hline
+    \end{tabular}
 \end{table}
+

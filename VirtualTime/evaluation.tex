@@ -158,15 +158,13 @@ Our adaptive time dilation scheduler managed to reduce 46\% of the running time 
 \begin{table*}
     \centering
     \caption{Comparison of Emulation Execution Time}
-    \begin{tabular}{c|c|c|c} 
+    \begin{tabular}{lccc} 
+        \hline
         \hline
         & No Virtual Time & Adaptive Virtual Time & Fixed Virtual Time \\ 
         \hline
-        \hline
         Running Time (s)  & 240.730 & 1332.242 & 2434.910 \\ 
-        \hline
         Average TDF & 1.000 & 5.900 & 11.000 \\ 
-        \hline
         %Slow Down Ratio & 1.204 & 5.534 & 10.115 \\
         Slow Down Ratio & 1.000 & 5.534 & 10.115 \\
         %\hline
@@ -200,13 +198,12 @@ is a few orders of magnitude less than the number of calls to \texttt{gettimeofd
 \begin{table*}
     \centering
     \caption{Lightweight Virtual Time System: Overhead of System Calls}
-    \begin{tabular}{c|c|c|c}
+    \begin{tabular}{lccc}
+        \hline
         \hline
         & No Virtual Time & Virtual Time & Avg Overhead / System Call \\%& Overhead Rate in E  \\ 
         \hline
-        \hline
         \texttt{gettimeofday}  & 0.0532 $\mu$s & 0.0661 $\mu$s & 0.0129 $\mu$s\\% & $3.0 \times 10^{-4}$\\ 
-        \hline
         \texttt{setTDF} & 0  & 0.0628 $\mu$s & 0.0628 $\mu$s\\% & $3.65\times 10^{-9}$ \\ 
         \hline
     \end{tabular}
