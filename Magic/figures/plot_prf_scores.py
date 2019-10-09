@@ -35,15 +35,16 @@ def plotPrfScores(data, scorePath):
     plt.grid(which='both', axis='both', ls='-.')
     plt.legend()
     leftDist = 0.10 if data == 'YanAcfg' else 0.14
-    plt.subplots_adjust(left=leftDist, bottom=0.16, right=0.96, top=0.97)
+    bottomDist = 0.16 if data == 'YanAcfg' else 0.18
+    plt.subplots_adjust(left=leftDist, bottom=bottomDist, right=0.96, top=0.97)
     plt.savefig('%sScores.eps' % data, format='eps')
     log.info(f'Figure for {data} saved to {data}sScores.eps')
 
 
 if __name__ == '__main__':
     scorePaths = {
-        # 'MsAcfg': '../../MSACFG/Nov16TrainValidScores/MSACFG_valid_pr_scores.csv',
-        'YanAcfg': 'YANACFG_valid_pr_scores.csv',
+        'MsAcfg': 'MSACFG_valid_pr_scores.csv',
+        # 'YanAcfg': 'YANACFG_valid_pr_scores.csv',
     }
     for (name, path) in scorePaths.items():
         plotPrfScores(name, path)
