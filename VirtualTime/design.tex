@@ -54,7 +54,8 @@ Note that our design cannot scale the capacity of hardware components such as ma
 The integration with Mininet, and potentially other container-based software is straightforward. 
 We provide a set of simple APIs to (1) initialize containers with virtual time, and (2) inquire virtual time at run time. 
 The system returns precise virtual time to container processes and transparently to all their child processes while returning the ordinary system time to other processes. 
-We have integrated the system with Mininet. The implementation details are discussed in Section~\ref{VT:Sec:Implementation}, and we have madee our code base available to public on GitHub\footnote{see \href{https://github.com/littlepretty/VirtualTimeForMininet}{VirtualTimeForMininet}}. 
+We have integrated the system with Mininet. The implementation details are discussed in Section~\ref{VT:Sec:Implementation}.
+% and we have made our code base available to public on GitHub\footnote{see \href{https://github.com/littlepretty/VirtualTimeForMininet}{VirtualTimeForMininet}}.
 
 \Subsection{Adaptive Time Dilation}
 The key insight of virtual time is to trade time with available system resources.

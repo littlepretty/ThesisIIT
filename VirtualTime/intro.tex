@@ -1,7 +1,7 @@
 \Section{Virtual Time Support for Network Emulation}
 \label{VT:Sec:Intro}
 
-Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
+Linux-container-based network emulation combines many desired features of software simulators and physical testbeds.
 Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
 Specifically, we address one of the key issues of this attractive methodology.
 An ordinary Linux-container based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
@@ -13,7 +13,7 @@ The idea of virtual time has been explored in the form of time-dilation-based~\c
 VM-scheduling-based~\cite{VirtTimeOpenVZ, SliceTime} designs, and has been applied to various virtualization platforms including Xen~\cite{DieCast},
 OpenVZ~\cite{VirtTimeOpenVZ}, and Linux Container~\cite{TimeKeeper}.
 In this work, we take a time-dilation-based approach to build a lightweight virtual time system in Linux container,
-and have integrated the system to Mininet for scalability and fidelity enhancement.
+and have integrated the system to Mininet~\cite{Mininet} for scalability and fidelity enhancement.
 The time dilation factor (TDF) is defined as the ratio between the rate at which wall-clock time has
 passed to the emulated host's perception of time~\cite{ToInfinityBeyond}.
 A TDF of 10 means that for every ten seconds of real time, applications running in a time-dilated emulated host perceive the time advancement as one second.

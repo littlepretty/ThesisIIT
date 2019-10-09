@@ -159,8 +159,14 @@ The virtual time interface consists of two extra file entries under \texttt{/pro
         A value 1 freezes the entire process group and a value 0 resumes all the processes in this group.
 \end{itemize}
 
-We make a distinction between regular processes and virtual-time enabled processes. In other words, the \texttt{/proc/\$pid/freeze} entry is only valid only if \texttt{/proc/\$pid/dilation}  already has a non-zero value. The emulator can enable a container with virtual time by writing 1000 to the \texttt{dilation} proc file entry. This will turn on the freeze/unfreeze capability without unnecessarily modifying the clock speed. In this work, we use a process calling system call \texttt{unshare()} with flag \texttt{CLONE\_NEWTIME} to enable virtual time.
+We make a distinction between regular processes and virtual-time enabled processes.
+The \texttt{/proc/\$pid/freeze} entry is only valid only if \texttt{/proc/\$pid/dilation} already has a non-zero value.
+The emulator can enable a container with virtual time by writing 1000 to the \texttt{dilation} proc file entry.
+This will turn on the freeze/unfreeze capability without unnecessarily modifying the clock speed.
+In this work, we use a process calling system call \texttt{unshare()} with flag \texttt{CLONE\_NEWTIME} to enable virtual time.
 This design is motivated and tailored to be compatible with Mininet's programming interface.
+
+
 \paragraphbe{Process-related Kernel Modifications.}
 To enable the virtual time perception to processes running in a network emulator, we added the following new system calls.
 \begin{itemize}

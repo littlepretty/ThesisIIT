@@ -81,7 +81,7 @@ and our approach is to explore the adaptive time dilation scheduling, whose eval
     \caption{Network Topologies Used in Virtual Time Evaluation}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \subfigure[TCP Throughput with Different Link Bandwidths]{{\epsfig{file=VirtualTime/figures/Perf40SwDiffBw.eps, width=0.45\textwidth}}
     \label{VT:Fig:Perf40SwDiffBw}}
@@ -90,7 +90,7 @@ and our approach is to explore the adaptive time dilation scheduling, whose eval
     \caption{Fidelity Evaluation Experimental Results}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \subfigure[TCP Throughput]{{\epsfig{file=VirtualTime/figures/ScaleDiff100Sw4GbLink.eps, width=0.45\textwidth}}
     \label{VT:Fig:ScaleDiffSw4GbLink}}
@@ -140,7 +140,7 @@ and the rate of execution time in wall clock to the emulation time (200 seconds)
 We can see that case 3 ($TDF = 11$) is around 10 times slower than case 1 ($TDF = 1$) in order to guarantee fidelity.
 Our adaptive time dilation scheduler managed to reduce 46\% of the running time as compared to case 3 with little fidelity loss. 
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \subfigure[TCP Throughput without Virtual Time]{{\epsfig{file=VirtualTime/figures/5FlowsNoVT.eps, width=0.45\textwidth}}
     \label{VT:Fig:5FlowsNoVT}}
@@ -155,7 +155,7 @@ Our adaptive time dilation scheduler managed to reduce 46\% of the running time 
     \label{VT:Fig:Adaptive}
 \end{figure}
 
-\begin{table*}
+\begin{table*}[t]
     \centering
     \caption{Comparison of Emulation Execution Time}
     \begin{tabular}{lccc} 
@@ -195,7 +195,7 @@ Since the number of TDF changes issued by the current adaptive TDF scheduling al
 is a few orders of magnitude less than the number of calls to \texttt{gettimeofday}
 (e.g., only 14 TDF transitions occurred per host over the period of 1,332 seconds in the earlier adaptive TDF experiment), that overhead is also negligible.
 
-\begin{table*}
+\begin{table*}[t]
     \centering
     \caption{Lightweight Virtual Time System: Overhead of System Calls}
     \begin{tabular}{lccc}
