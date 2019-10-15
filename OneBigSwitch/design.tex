@@ -127,7 +127,7 @@ The output is the set of affected intervals, and we can run Algorithm~\ref{OBS:A
     \label{OBS:Alg:GenDisjointECs}
 \end{algorithm}
 
-\begin{algorithm}[h]
+\begin{algorithm}[t]
     \DontPrintSemicolon
     \KwIn{$nodes = $ Switches containing rules for EC $x$ \newline
     $topo = $ Network topology}
@@ -156,16 +156,23 @@ The output is the set of affected intervals, and we can run Algorithm~\ref{OBS:A
             report forwarding loop\;\label{OBS:Alg:LineLoopPath}
         }
     }\;
-    \ForEach{$n \in$ \upshape neighbors of $SRC^x$} {\label{OBS:Alg:LineStartDFS1}
-    \If {\upshape $n$ is \textbf{NOT} visited} {
-        $inport \gets$ input port number from $SRC^x$ to $n$\;
-        \Traverse{$n$, $src=$\upshape($n$, $inport$), $snk=$NULL}\;
-    }
-    }\label{OBS:Alg:LineStartDFS2}
     \caption{Generating a Forwarding Graph for EC $x$\label{OBS:Alg:GenForwardingGraph}}
 \end{algorithm}
 
-\begin{algorithm}[h]
+\begin{algorithm}[t]
+    \DontPrintSemicolon
+    \SetKwFunction{Traverse}{traverse}
+    \ForEach{$n \in$ \upshape neighbors of $SRC^x$} {
+        \If {\upshape $n$ is \textbf{NOT} visited} {
+            $inport \gets$ input port number from $SRC^x$ to $n$\;
+            \Traverse{$n$, $src=$\upshape($n$, $inport$), $snk=$NULL}\;
+        }
+    }
+    \label{OBS:Alg:LineStartDFS}
+    \caption{Depth-first-search Style Graph Generation}
+\end{algorithm}
+
+\begin{algorithm}[t]
     \DontPrintSemicolon
     \KwData{$PortMap$, which maps a $port$ on $sw$ to a $port$ on the big switch\newline
     $global\_port$, for port number assignment, and is initialized to 0}
@@ -298,7 +305,7 @@ We distinguish two kinds of port on an edge switch:
 \end{itemize}
 
 We add an edge from $SRC^x$ to a $src$, if the source node has a forwarding rule $r$ that matches EC $x$, or the $IN\_PORT$ field of rule $r$ on the source node is an end port.
-Otherwise, we do not initiate a traverse (see line~\ref{OBS:Alg:LineStartDFS1} to~\ref{OBS:Alg:LineStartDFS2} in Algorithm~\ref{OBS:Alg:GenForwardingGraph}).
+Otherwise, we do not initiate a traverse, as illustrated in Algorithm~\ref{OBS:Alg:LineStartDFS}.
 Correspondingly, we add an edge from a $snk$ to the super sink $SNK^x$, if the following two conditions are satisfied:
 \begin{enumerate}
     \item the sink node is an edge switch in the network;
