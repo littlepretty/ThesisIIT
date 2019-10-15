@@ -60,7 +60,7 @@ Each non-overlapping interval identifies the packets belonging to an equivalence
 (Section~\ref{OBS:Sec:GenerateFG}) and the big-switch rule generation (Section~\ref{OBS:Sec:PopulateFlowTable}).
 The details of the second and third steps for EC identification are presented as follows.
 
-\paragraphbe{Splitting Overlapping Intervals}
+\paragraphb{Splitting Overlapping Intervals.}
 By traversing from the root node to all leaf nodes, we obtain a set of packet header intervals that match all the rules along the traversal.
 Each interval is represented by a pair of starting and ending values as $A, B$ and $C$ as shown in Figure~\ref{OBS:Fig:DisjointECsAsInterval}.
 We split this set of intervals, $I$, to a list of non-overlapping intervals, each of which forms an EC.
@@ -193,7 +193,7 @@ The output is the set of affected intervals, and we can run Algorithm~\ref{OBS:A
     \caption{Generating Forwarding Rules for EC $x$ on the Big-Switch Model \label{OBS:Alg:GenAllRules}}
 \end{algorithm}
 
-\paragraphbe{Combining Equivalence Classes}
+\paragraphb{Combining Equivalence Classes.}
 We can further union certain ECs obtained from Algorithm~\ref{OBS:Alg:GenDisjointECs},
 if they essentially represent identical packet forwarding behavior (see the definition of ECs).
 For example, $EC_2$ and $EC_4$ in Figure~\ref{OBS:Fig:DisjointECsAsInterval} can be combined as one EC,
@@ -268,7 +268,7 @@ Figure~\ref{OBS:Fig:ForwardingGraphECX} depicts the generalized forwarding graph
     \label{OBS:Fig:ForwardingGraphECX}
 \end{figure*}
 
-\paragraphbe{Network Traversal for Forwarding Graph Generation.}
+\paragraphb{Network Traversal for Forwarding Graph Generation.}
 We develop a forwarding graph generation algorithm as shown in Algorithm~\ref{OBS:Alg:GenForwardingGraph}.
 The notations are defined as follows.
 $FG(x)$ denotes the forwarding graph for a particular equivalence class x.
@@ -305,7 +305,7 @@ Correspondingly, we add an edge from a $snk$ to the super sink $SNK^x$, if the f
     \item the $OUT\_PORT$ field determined by the rule's action on the sink node is an end port.
 \end{enumerate}
 
-\paragraphbe{Network Traversal Outcomes}
+\paragraphb{Network Traversal Outcomes.}
 After running Algorithm~\ref{OBS:Alg:GenForwardingGraph}, we can discover three kinds of ``paths" in $FG(x)$
 that are useful for the forwarding rule generation process for the big-switch model,
 i.e., the third step of our model abstraction process (see Section~\ref{OBS:Sec:PopulateFlowTable}).

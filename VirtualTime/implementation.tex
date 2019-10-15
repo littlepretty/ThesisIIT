@@ -15,7 +15,8 @@ Third, we discuss our design to enable transparent support of virtual time for a
 \end{figure}
 
 \Subsection{Modification in Linux Kernel}
-\paragraphbe{Timing-related Kernel Modifications.}
+
+\paragraphb{Timing-related Kernel Modifications.}
 \label{VT:SubSec:ExtendLinuxKernel}
 Our implementation is based on a recent Linux kernel 3.16.3 with no third-part library dependency.
 To make a process have its own perception of time, we added the following four new fields in the \texttt{task\_struct} struct type.
@@ -167,7 +168,7 @@ In this work, we use a process calling system call \texttt{unshare()} with flag 
 This design is motivated and tailored to be compatible with Mininet's programming interface.
 
 
-\paragraphbe{Process-related Kernel Modifications.}
+\paragraphb{Process-related Kernel Modifications.}
 To enable the virtual time perception to processes running in a network emulator, we added the following new system calls.
 \begin{itemize}
     \item \texttt{virtualtimeunshare} is essentially the \texttt{unshare} system call with time dilation inputs.
@@ -188,7 +189,7 @@ Functions in \texttt{timekeeping.c} were modified to invoke \texttt{do\_dilateti
 in order to return the virtual time to system calls like \texttt{gettimeofday} and other kernel routines that request timing information.
 
 
-\paragraphbe{Networking-related Kernel Modifications.}
+\paragraphb{Networking-related Kernel Modifications.}
 In this work, we focus on capturing all the related system calls and kernel routings to support virtual time in Linux container with the application of Mininet. 
 One particular case related to Mininet is the usage of \texttt{tc}, a network quality-of-service control module in Linux~\cite{TrafficControl}. 
 For instance, we can use \texttt{tc} to rate-limit a link to 100 Mbps using Hierarchic Token Bucket (HTB) \texttt{qdisc} in Mininet. If the TDF is set to 8, the link bandwidth would be approximately 800 Mbps from the emulated hosts' viewpoints as we observed from the time-dilated \texttt{iperf3} application.
@@ -200,7 +201,8 @@ Note that we only tailored HTB in \texttt{tc}, which is the default \texttt{qdis
 We will generalize the mechanism to other \texttt{qdiscs} including HFSC (Hierarchical Fair Service Curve) and TBF (Token Bucket Filter) in the future.
 
 \Subsection{Modification in Network Emulator}
-\paragraphbe{Virtual-Time-Enabled Mininet.}
+
+\paragraphb{Virtual-Time-Enabled Mininet.}
 \label{VT:SubSec:ImplementMininet}
 %Mininet uses Linux's container \cite{LXC} to enable scalable network emulation. 
 Containers allow groups of process running on the same kernel to have independent views of system resources, such as process IDs, file systems and network interfaces. 
@@ -213,7 +215,7 @@ This way, a system-wide TDF can be conveniently set for all the emulated hosts. 
 To do that, we added a new option \texttt{-t} in \texttt{mnexec} to invoke the aforementioned system call \texttt{settimedilaitonfactor} to do the actual TDF adjustment. 
 The two modifications enable the integration of virtual time in Mininet, and also serve as the basis of the adaptive TDF management.
 
-\paragraphbe{Adaptive TDF Scheduling.}
+\paragraphb{Adaptive TDF Scheduling.}
 To optimize the performance of the virtual-time-enabled Mininet, we developed an adaptive TDF scheduler
 through two python modules \texttt{MininetMonitor} and \texttt{DilationAdaptor}
 (refer to Emulation Monitor and Time Dilation Adaptor in Figure~\ref{VT:Fig:ContainerVirtualTime})

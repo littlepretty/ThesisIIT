@@ -129,7 +129,7 @@ i.e., the number of successfully delivered packets from host $i$ to host $j$.
 \Subsection{Performance Gain}
 We show performance gain with two metrics.
 
-\textbf{Number of OpenFlow Rules.} We compare the total number of rules installed
+\paragraphb{Number of OpenFlow Rules.} We compare the total number of rules installed
 on the switches in both $net_1$ and $net_2$ with the same experimental settings
 in Section~\ref{OBS:SubSec:PreserveForwardingLogic}.
 The results are plotted in Figure~\ref{OBS:Fig:CompareNumRules} for networks with
@@ -143,9 +143,8 @@ For example, in the case of a network with depth = 4, and fanout = 3, 52,660 rul
 in the original network were reduced to 5,766 rules in the big-switch-based network.
 
 
-\textbf{Simulation Time.}
-Our approach significantly reduces network simulation model complexity in terms of
-the number of switches and the number of rules.
+\paragraphb{Simulation Time.} Our approach significantly reduces network simulation model complexity
+in terms of the number of switches and the number of rules.
 A key benefit is to reduce the time to run simulation experiments.
 
 We performed the same set of experiments on a network simulator, S3FNet~\cite{S3F}.
