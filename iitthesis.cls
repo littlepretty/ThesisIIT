@@ -125,11 +125,9 @@
 % -- It Creates Blank Page with Roman Page Number --
 %
 \def\nocopyrightpage{
-\pagestyle{plain}
-\pagenumbering{roman}
-\setcounter{page}{2}
-\begin{center}
-\end{center}
+\hbox{}
+\thispagestyle{empty}
+\newpage
 \clearpage
 }
 
