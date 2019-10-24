@@ -7,6 +7,18 @@ as well as the applications running inside the containers with no code modificat
 Experimental results show the promising fidelity and scalability improvement of Mininet with virtual time,
 particularly for high workload network scenarios. We have also used the platform to precisely
 evaluate the limitations of the ECMP routing in a realistic data center network with the results being validated by a physical testbed.
+Our virtual time system has been adopted and extended by other emulation testbeds.
+Minichain~\cite{Minichain}, a blockchain emulator designed to allow users to conduct
+high-fidelity emulation experiments of a blockchain system concerning both application behaviors
+and network characteristics at low cost, e.g., evaluating a new application design on a single laptop.
+The main and unique challenge Minichain must address is how to execute
+the heavy-duty proof-of-work based consensus algorithm with limited emulation resources.
+It turns out one can put proof-of-work based blockchain emulation into virtual time where time dilation factor is less than 1.
+As a result, emulation resources consumed by proof-of-work will decrease linearly as converged difficulty is scaled down linear.
+Another extension to our virtual time system is to make it possible to put
+multiple Linux embeded devices into virtual time and coordinates them~\cite{DistributedVT}.
+This is motivated by the synchronization need of general cyber-physical system,
+where physical components are simulated and cyber components are emulated.
 Future works include the investigation of other effective control algorithms to further improve the adaptive TDF scheduler,
 and the integration to network simulators based on virtual time for large-scale network analysis.
 
