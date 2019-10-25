@@ -1,9 +1,9 @@
 
 Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct our research work in three streams.
 
-First, we address one of the key issues in Linux-container-based network emulation (LCNE).
-Even though LCNE combines many desired features of software simulation and physical testbeds,
-it uses the system clock across all the containers even if a container is not being scheduled to run.
+First, we address one of the key issues of Linux-container-based network emulation.
+Even though it combines many desired features of software simulation and physical testbeds,
+Linux container-based network emulation uses the system clock across all the containers even if a container is not being scheduled to run.
 This leads to the issue of both performance and temporal fidelity, especially with high workloads.
 Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
 We develope a lightweight Linux-container-based virtual time system and integrate it to Mininet.
@@ -19,8 +19,7 @@ our abstracted model also preserves the end-to-end forwarding behavior of the or
 Third, motivated by the recent advancement and success of deep neural networks,
 we study the feasibility of deep learning technologies for enhancing the essential network-architecture-agnostic security building-block.
 We construct the detection engine with multiple advanced deep learning models and compare their performance.
-
-Fourth, we take a step further from the comparative study.
+We take a step further from the comparative study.
 Our study shows that existing machine learning-based host instruction detection methods rely on handcrafted features extracted from raw binary files or disassembled code.
 The diversity of such features created has made it hard to build generic malware classification systems that
 work effectively across different operational environments.
