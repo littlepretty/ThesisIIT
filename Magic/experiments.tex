@@ -121,13 +121,13 @@ In the following, we report the cross-validation scores for the two datasets.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/MsAcfgLabelDist.eps}}
-    \caption{Malware Family Distribution in MSKCFG Dataset.}
+    \caption{Malware Family Distribution in MSKCFG Dataset}
     \label{MG:Fig:MSKCFGLabelDist}
 \end{figure}
 
 \begin{figure}
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgLabelDist.eps}}
-    \caption{Malware Family Distribution in YANCFG Dataset.}
+    \caption{Malware Family Distribution in YANCFG Dataset}
     \label{MG:Fig:YANCFGLabelDist}
 \end{figure}
 
@@ -139,12 +139,12 @@ For all nine malware families, our best model has achieved good validation score
 
 \begin{figure}
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/MsAcfgScores.eps}}
-    \caption{Cross-Validation Scores of \sysname on the MSKCFG Dataset.}
+    \caption{Cross-Validation Scores of \sysname on the MSKCFG Dataset}
     \label{MG:Fig:MSKCFGScores}
 \end{figure}
 
 \begin{table}
-    \caption{Performances of \sysname on the MSKCFG Dataset.}
+    \caption{Performances of \sysname on the MSKCFG Dataset}
     \begin{center}
         \begin{tabular}{lccc}
             \hline
@@ -169,17 +169,17 @@ For all nine malware families, our best model has achieved good validation score
 Since Microsoft released the competition dataset in 2015, many researchers have used the dataset (completely or partially) to evaluate their techniques for malware detection and classification~\cite{NovelFeatureFusion, EnsembleDNN, AutoEncoderMicrosoft, FunctionCallGraph, StaticFeatures, PolySeqCls, AutoEncoderFeatureLearn, YuxinMalwareDnn}.
 We surveyed the works mentioned above and found that three of them cannot be directly compared with our results because they were using different metrics.
 %and found that unfortunately every work either performed the evaluation in a unique way or gave their evaluation results using divided metrics due to varying reasons, making three works not directly comparable to ours. 
-The works in \cite{EnsembleDNN} and \cite{YuxinMalwareDnn} used the Microsoft dataset in the context of \emph{malware detection}, where all the samples contained within it were treated as malicious, and then they were merged with a number of benign programs to construct a new dataset for malware detection.
+The works in \cite{EnsembleDNN} and \cite{YuxinMalwareDnn} used the MSKCFG dataset in the context of \emph{malware detection}, where all the samples contained within it were treated as malicious, and then they were merged with a number of benign programs to construct a new dataset for malware detection.
 As a result, their methods and performance metrics (two-class AUC, F1 score or accuracy) are not directly comparable to the approaches aimed at classifying malware samples into the corresponding families (e.g.,~\cite{NovelFeatureFusion, AutoEncoderMicrosoft, FunctionCallGraph, StaticFeatures, PolySeqCls, AutoEncoderFeatureLearn}), this work included. %, where models should predict the malware family that a sample belongs to.
 Note that without loss of generality, benign software can be treated as a special family.
 The work in~\cite{AutoEncoderMicrosoft} did not adopt the cross-validation methodology. Instead, the authors manually split the training dataset into 75\% training data and 25\% holdout testing data, and reported the mean square error, accuracy and confusion matrix over both training and testing data.
 The holdout set is not the test set provided by Microsoft. 
 Therefore, we did not compare our work with the evaluation results reported in \cite{EnsembleDNN}, \cite{YuxinMalwareDnn} and \cite{AutoEncoderMicrosoft}.
 
-Among the other five papers of malware classification, both \cite{FunctionCallGraph} and \cite{StaticFeatures} conducted the ten-fold cross validation over the Microsoft dataset, but only reported the overall accuracy.
+Among the other five papers of malware classification, both \cite{FunctionCallGraph} and \cite{StaticFeatures} conducted the ten-fold cross validation over the MSKCFG dataset, but only reported the overall accuracy.
 \cite{PolySeqCls} also performed a ten-fold cross validation but reported both the overall accuracy and logarithmic loss.
 Both \cite{NovelFeatureFusion} and \cite{AutoEncoderFeatureLearn} performed a five-fold cross validation and reported both the overall accuracy and logarithmic loss.
-Since the Microsoft dataset is not balanced across malware families, we compare \sysname with the five previous works that reported not only the overall accuracy but also the mean logarithmic loss, and the results are shown in Table~\ref{MG:Tab:CompareMicrosoftCv}.
+Since the MSKCFG dataset is not balanced across malware families, we compare \sysname with the five previous works that reported not only the overall accuracy but also the mean logarithmic loss, and the results are shown in Table~\ref{MG:Tab:CompareMicrosoftCv}.
 
 The methods listed in Table~\ref{MG:Tab:CompareMicrosoftCv} can be classified into either ensemble-learning or single-model based approaches.
 \cite{NovelFeatureFusion} extracts more than 1800 features and uses gradient boosting based classifier, and it achieves the best log-loss (0.0197) and accuracy (99.42\%) using the XGBoost classifier. 
@@ -192,7 +192,7 @@ As an alternative work that also applies deep neural network, our DGCNN-based ap
 %regarding log-loss (27.40\% improvement) and accuracy (1.5\% improvement).
 
 \begin{table*}
-    \caption{Cross Validation Metric Comparison on the Microsoft Dataset.}
+    \caption{Cross Validation Metric Comparison on the MSKCFG Dataset}
     \begin{center}
         \begin{tabular}{lcc}
             \hline
@@ -278,7 +278,7 @@ We plan to test our models with the latest malware samples in our future work.
 
 
 \begin{table}
-    \caption{Performance of \sysname on the YANCFG Dataset.}
+    \caption{Performance of \sysname on the YANCFG Dataset}
     \begin{center}
         \begin{tabular}{lccc}
             \hline
@@ -306,13 +306,13 @@ We plan to test our models with the latest malware samples in our future work.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgScores.eps}}
-    \caption{Cross-Validation Scores of \sysname on the YANCFG Dataset.}
+    \caption{Cross-Validation Scores of \sysname on the YANCFG Dataset}
     \label{MG:Fig:YANCFGScores}
 \end{figure}
 
 \begin{figure}
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/YanAcfgF1Improve.eps}}
-    \caption{F1 Score Improvements on the YANCFG Dataset.}
+    \caption{F1 Score Improvements on the YANCFG Dataset}
     \label{MG:Fig:YANCFGF1Improve}
 \end{figure}
 
