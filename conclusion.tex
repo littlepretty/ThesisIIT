@@ -1,5 +1,5 @@
 
-Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct our research work in three streams.
+Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct research works in three streams.
 
 First, we address one of the key issues of Linux-container-based network emulation.
 Even though it combines many desired features of software simulation and physical testbeds,
@@ -28,59 +28,29 @@ we explore new deep learning techniques to effectively yet efficiently classify 
 The resultant innovative system uses deep graph convolutional neural network to
 embed structural information inherent in control flow graphs for effective yet efficient malware classification.
 
-%\section{Future Work}
-%Malware detection with executable is promising
-%\cite{GatedConvNet, ACFG4BugSearch, GraphEmbedding, MalConvNvidia}.
-%When applying the machine learning algorithms or design customized neural networks, the following
-%should be taken into consideration as guidance:
-%\begin{enumerate}
-%\item The informative PE header of a particular Windows OS, is well-defined and also complicated.
-        %Minimal domain knowledge should be relied on since they are fragile;
-        %the author of the malware may intentionally leverage these rules to hide key part of the malicious code.
-%\item There are high amount of positional variation presented in the executable files.
-    %Since PE header 
-%\end{enumerate}
+Following each explored research direction respectively, we envision the following possible future works.
+First, for the virtual time system, we may find some use case that motivate us to integrate container-based emulation into an optimistic parallel discrete event simulation.
+For example, many high performance computing (HPC) researchers adopt optimistic parallel discrete event simulation~\cite{CodesSim}
+to evaluate the performance of HPC system's network layer, and how application layer is affected by network layer.
+When evaluating a HPC application's performance on dragonfly network,
+comparing to the current methodology that runs application as a sequence of discrete events extracted from traces collected when executed previously on possible different network topology,
+directly executing the application running on top of simulated target network topology may obtain more accurate results,
+and may even reveal interactive facts between application layer and network layer that pure simulation fails to capture.
+However, there is an obvious techinical challenge one needs to address in coordination of rollbackable simulation and emulation:
+when a rollback happens in optimistic parallel discrete event simulation, in order to maintain the correctness of the evaluation,
+the coordinator may require the emulation to rollback as well.
+The rollback operation for emulation includes both restore state variables and clock.
+Virtual time system could help the cordinator of simulation and emulation easily adjust the time of the emulated containers.
 
-%\begin{algorithm}[h]
-%\DontPrintSemicolon
-    %\KwIn
-    %{
-        %$D = $ binary code dataset. \newline
-        %$bc = $ a particular binary code file in $D$. \newline
-        %$g \equiv (V, E, x) = ACFG(bc) $ the ACFG of a particular binary code file. \newline
-        %$\mu_v = $ feature vector of a particular node in ACFG. \newline
-        %$nn \equiv $ neural network with parameters $W_1, P_1, P_2, W_2$.
-    %}
-    %\SetKwProg{Fn}{Function}{}{\KwRet}
-    %\SetKwFunction{ACFG}{acfg\_bytecode}
-    %\SetKwFunction{EmbeddingACFG}{embedding\_acfg}
-    %\SetKwFunction{GetBatchEmbedding}{get\_batch\_embedding}
-    %\SetKwFunction{Train}{train}
-    %\Fn{\EmbeddingACFG{$g$, $nn$}} {
-        %Algorithm 1 in paper\;
-        %But return the set of vertex embeddings $\mu_g = \{\mu_v| \forall v \in V\}$\;
-    %}
-    %\Fn{\GetBatchEmbedding{$nn$}} {
-        %$batch\_ACFG= $ sample $batch\_size$ binary code files from $D\_ACFG$\;
-        %Pair $g \in batch\_ACFG$ with 1 positive and 1 negative ACFG to obtain
-        %$batch\_pairs = {(g_i, g_j, 1), (g_i, g_j', -1) | g_i \in batch\_ACFG}$\;
-        %\ForEach (// Embed $batch\_pairs$ to $batch\_embeddings$) {$(g_i, g_j, label) \in batch\_pairs$} 
-        %{
-            %$\mu_{g_i}$ = \EmbeddingACFG{$g_i$, $nn$}\;
-            %$\mu_{g_j}$ = \EmbeddingACFG{$g_j$, $nn$}\;
-            %Append $(\mu_{g_i}, \mu_{g_j}, label)$ to $batch\_embeddings$\;
-        %}
-        %\KwRet{$batch\_embeddings$}
-    %}
-    %\Fn{\Train{$D$}} {
-        %Initialize parameters in $nn$\;
-        %Convert all byte code files: $D\_{ACFG} = \{ g | g = $ \ACFG{$bc$} $\forall bc \in D\}$\;
-        %\For (// Train $E$ epochs) {epoch = 1 to 100} {
-            %\For (// Train with batch data) {i = 1 to $\frac{||D||}{batch\_size}$} {
-                %$batch\_embeddings = $ \GetBatchEmbedding{$nn$}\;
-                %$nn$.fit($batch\_embeddings$)\;
-            %}
-        %}
-    %}
-%\caption{End-to-End Traning Algorithm with Embedding}
-%\end{algorithm}
+The ``one-big-switch'' model abstraction only ensures the end-to-end forwarding logic equivalence.
+This is not sufficient for many SDN network designers or operators, who want to run high fidelity simulation to measure target network's performance,
+including but not limited to, end-to-end throughput, end-to-end latency, and end-to-end packet loss rate.
+It is a natural extension to consider these user-interested network performance metrics by introducing end-to-end performance equivalence.
+
+The intrusion detection systems proposed in this thesis are targeting on network traffics from general TCP/IP network environment,
+and executable binaries running on standard operating systems.
+While our approaches are still able to protect the SDN-enabled smart grid in both communication layer and the applicatioin layer,
+they may not achieve required performance due to overgeneralization.
+There are unique chanllenges, most likely related to issues from data,
+we need to identify, and then address in order to improve underfitted machine learning models.
+
