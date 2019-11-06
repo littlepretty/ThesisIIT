@@ -162,7 +162,7 @@ The virtual time interface consists of two extra file entries under \texttt{/pro
 
 We make a distinction between regular processes and virtual-time enabled processes.
 The \texttt{/proc/\$pid/freeze} entry is only valid only if \texttt{/proc/\$pid/dilation} already has a non-zero value.
-The emulator can enable a container with virtual time by writing 1000 to the \texttt{dilation} proc file entry.
+The emulator can enable a container with virtual time by writing 1000 to the \texttt{dilation} Proc file entry.
 This will turn on the freeze/unfreeze capability without unnecessarily modifying the clock speed.
 In this work, we use a process calling system call \texttt{unshare()} with flag \texttt{CLONE\_NEWTIME} to enable virtual time.
 This design is motivated and tailored to be compatible with Mininet's programming interface.
@@ -190,7 +190,7 @@ in order to return the virtual time to system calls like \texttt{gettimeofday} a
 
 
 \paragraphb{Networking-related Kernel Modifications.}
-In this work, we focus on capturing all the related system calls and kernel routings to support virtual time in Linux container with the application of Mininet. 
+In this work, we focus on capturing all the related system calls and kernel routines to support virtual time in Linux container with the application of Mininet. 
 One particular case related to Mininet is the usage of \texttt{tc}, a network quality-of-service control module in Linux~\cite{TrafficControl}. 
 For instance, we can use \texttt{tc} to rate-limit a link to 100 Mbps using Hierarchic Token Bucket (HTB) \texttt{qdisc} in Mininet. If the TDF is set to 8, the link bandwidth would be approximately 800 Mbps from the emulated hosts' viewpoints as we observed from the time-dilated \texttt{iperf3} application.
 
@@ -217,22 +217,22 @@ The two modifications enable the integration of virtual time in Mininet, and als
 
 \paragraphb{Adaptive TDF Scheduling.}
 To optimize the performance of the virtual-time-enabled Mininet, we developed an adaptive TDF scheduler
-through two python modules \texttt{MininetMonitor} and \texttt{DilationAdaptor}
-(refer to Emulation Monitor and Time Dilation Adaptor in Figure~\ref{VT:Fig:ContainerVirtualTime})
+through two python modules \texttt{MininetMonitor} and \texttt{DilationAdapter}
+(refer to Emulation Monitor and Time Dilation Adapter in Figure~\ref{VT:Fig:ContainerVirtualTime})
 to accelerate the experiment speed while preserving high fidelity.
 
 \texttt{MininetMonitor} is responsible to monitor the CPU usage of the entire emulation system,
 consisting of a group of processes including the Mininet emulator, the Open vSwitch module, and emulated nodes (e.g., SDN controllers, hosts and switches). 
 Also, applications are dynamically created, executed and destroyed within containers, in the form of child processes of their parent containers. 
 \texttt{MininetMonitor} utilizes the \texttt{ps} command to collect the group's aggregate CPU percentage
-and periodically computes and passes the average CPU load statistics to \texttt{DilationAdaptor}. 
-The core of \texttt{DilationAdaptor} is an adaptive algorithm to calculate an appropriate \textit{TDF}.
+and periodically computes and passes the average CPU load statistics to \texttt{DilationAdapter}. 
+The core of \texttt{DilationAdapter} is an adaptive algorithm to calculate an appropriate \textit{TDF}.
 %Only after receiving a new \textit{TDF} can Mininet pause the experiment and update its global time dilation factor. Otherwise it enters the next Epoch directly. 
 Global \textit{TDF} updating was achieved by invoking the \texttt{mnexec\ -t\ tdf} program for every running host. 
 
 
-% Algorithm \ref{Alg-AdaptiveTDF} illustrates our adaptive TDF scheduling, and we implemented it as a threshold-based \texttt{DilationAdaptor}. 
-% %From the input fed by \texttt{MininetMonitor}, \texttt{DilationAdaptor} first define current load status. The key idea here is: if emulator is overloaded, we increase TDF with a large value; if it is underloaded, we may consider decrease TDF with a large value. 
+% Algorithm \ref{Alg-AdaptiveTDF} illustrates our adaptive TDF scheduling, and we implemented it as a threshold-based \texttt{DilationAdapter}. 
+% %From the input fed by \texttt{MininetMonitor}, \texttt{DilationAdapter} first define current load status. The key idea here is: if emulator is overloaded, we increase TDF with a large value; if it is underloaded, we may consider decrease TDF with a large value. 
 
 % \algnewcommand\algorithmicswitch{\textbf{switch}}
 % \algnewcommand\algorithmiccase{\textbf{case}}
@@ -285,10 +285,10 @@ Our technique is applied to Linux-container-based network emulation to support s
 and theirs uses virtual routing and executes OpenVZ instances inside Xen. 
 Second, their solution needs be deployed on a cluster to emulate a medium-scale network, which results in much higher communication overhead in two types:
 (1) every VM's monitor needs to report the CPU usage, and
-(2) the adaptor needs to send new TDF to every VM. 
+(2) the adapter needs to send new TDF to every VM. 
 Therefore, the message transmission delay in LAN and the processing delay in protocol stacks contributes to the overall communication delay. 
 In contrast, \texttt{MininetMonitor} runs as a lightweight background thread in Mininet,
-and \texttt{DilationAdaptor} is simply a python object that Mininet has a reference to. 
+and \texttt{DilationAdapter} is simply a python object that Mininet has a reference to. 
 The communication in our system is through synchronized queues and method invocations, which is much faster. 
 
 \Subsection{Virtual Time Support for Network Applications}

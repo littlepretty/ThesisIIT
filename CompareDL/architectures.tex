@@ -2,11 +2,11 @@
 \label{CDL:Sec:Architectures}
 
 We explore a bunch of deep learning models that are promising to the
-network intrusion detection problem, including multilayer perceptron, restricted boltzmann machine, sparse autoencoder, and wide and deep learning with embeddings. We develop a Python library, NetLearner~\cite{NetLearner}, which allows us to build and train those deep learning models using TensorFlow~\cite{TensorFlow}.
+network intrusion detection problem, including multilayer perceptrons, restricted Boltzmann machine, sparse autoencoder, and wide and deep learning with embeddings. We develop a Python library, NetLearner~\cite{NetLearner}, which allows us to build and train those deep learning models using TensorFlow~\cite{TensorFlow}.
 
-\Subsection{Multilayer Perceptron}
+\Subsection{Multilayer Perceptrons}
 \label{CDL:SubSec:MLP}
-Multilayer perceptron (MLP) is a fully connected feed-forward neural network with multiple hidden layers.
+Multilayer perceptrons (MLP) is a fully connected feed-forward neural network with multiple hidden layers.
 Each layer consists of non-linear neural units.
 By introducing non-linear neural units (perceptrons), it can distinguish data that are not linearly separable.
 However, the non-linearity make it challenging to train a deep MLP of more than three layers even with the back-propagation learning algorithm~\cite{Backpropagation}.
@@ -129,7 +129,7 @@ The sparse autoencoder works by placing a sparsity constraint on the activities 
 
 We build a sparse autoencoder and our implementation is different from the
 self-taught learning approaches, which also adopts the sparse autoencoder as the unsupervised feature learner~\cite{STL-NIDS, SparseAE}.
-In those work, the hidden features learned by the sparse autoencoders are used directly by a classifier (e.g., a softmax regressor or an SVM).
+In those work, the hidden features learned by the sparse autoencoders are used directly by a classifier (e.g., a softmax regression or an SVM).
 The functionality of autoencoder resembles a transformation of a raw dataset (e.g., using principal component analysis) with the goal of obtaining a new feature space beneficial to general supervised learning algorithms.
 
 We initialize the first layer weights of an MLP in the same way of using an RBM.
@@ -224,7 +224,7 @@ The sparsity penalty term is integrated into the cost function by adding another
 \Subsection{Generative Adversarial Nets}
 As another generative model, Generative Adversarial Nets (GAN)\cite{GAN} adopts a novel training framework,
 in which two models are trained simultaneously and adversarially.
-The generative model $G(z;\theta_g)$ aims to capture the probability distribution of the available unlabelled dataset,
+The generative model $G(z;\theta_g)$ aims to capture the probability distribution of the available unlabeled dataset,
 where its input is a noise variable $z$ following a prior distribution $p_z$.
 The discriminative model $D(x;\theta_d)$ output the probability distribution that whether the its input source $S$ comes
 from training dataset ($x\sim data$) or the generative model ($x \sim G(z)$):

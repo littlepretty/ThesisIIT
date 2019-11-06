@@ -6,7 +6,7 @@ protocols with the goal of discovering design limitations and implementation fau
 In this section, we present a case study to demonstrate how our virtual-time-enabled Mininet has been utilized to
 reproduce and validate the limitations of the equal-cost multi-path (ECMP) routing strategy in a data center network.
 
-Many modern data center networks employ multi-rooted hierarchical tree topologies,
+Many modern data center networks employ multi-rooted hierarchical tree topology,
 and therefore ECMP-based protocols~\cite{ECMP} are commonly used in data center networks for load-balancing traffic over multiple paths.
 When an ECMP-enabled switch has multiple next-hops on the best paths to a single destination,
 it selects the forwarding path by performing a modulo-N hash over the selected fields of a packet's header to ensure per-flow consistency.
@@ -81,11 +81,11 @@ individual flow throughput in Figure~\ref{VT:Fig:FatTreeIndividualBw10G}.
     \label{VT:Fig:FatTreeAvgBw10G}}
     \subfigure[Throughput of Individual TCP Flow]{\epsfig{file=VirtualTime/figures/FattreeFlowDistBw10G.eps, width=0.45\textwidth}
     \label{VT:Fig:FatTreeIndividualBw10G}}
-    \caption[Emulate ECMP with High Link Bandwdith]{Mininet Emulation Results with Virtual Time: ECMP Limitation in a Fat-tree-based Data Center Network with 10 Gbps Link Bandwidth}
+    \caption[Emulate ECMP with High Link Bandwidth]{Mininet Emulation Results with Virtual Time: ECMP Limitation in a Fat-tree-based Data Center Network with 10 Gbps Link Bandwidth}
 \end{figure}
 
 In the case of stride-1, there were very few collisions among flows.
-Hence, the network performance ought to be close to the ideal throughput, i.e., 160 Gbps biSsection bandwidth and 10 Gbps average bandwidth between each pair.
+Hence, the network performance ought to be close to the ideal throughput, i.e., 160 Gbps bisection bandwidth and 10 Gbps average bandwidth between each pair.
 In the experiments that $TDF=4$, the average throughput is above 9.0 Gbps, which is close to the theoretical value,
 and also match well with the results obtained from the physical testbed built upon 37 machines~\cite{Hedera}.
 In the experiments that $TDF=1$, however, the throughput barely reaches 3.8 Gbps because of the limited system resources that Mininet can utilize.

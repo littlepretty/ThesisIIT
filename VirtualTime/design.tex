@@ -63,11 +63,11 @@ The execution time can be unnecessarily long with an overestimated TDF.
 It is difficult to avoid that with a fixed TDF when the resource demands vary substantially during the emulation. 
 Therefore, we investigate means to adaptively adjust TDF in run-time with the goal of well balancing the execution speed and accuracy. 
 We take a similar epoch-based approach described in~\cite{NtwkEmultAdaptVirtTime}, and develop two modules,
-Emulation Monitor and Time Dilation Adaptor (see Figure~\ref{VT:Fig:ContainerVirtualTime}), to achieve the dynamic TDF adjustment. 
+Emulation Monitor and Time Dilation Adapter (see Figure~\ref{VT:Fig:ContainerVirtualTime}), to achieve the dynamic TDF adjustment. 
 
 Emulation Monitor periodically collects the process-related information (not necessarily coincides with the epoch duration)
 and computes the run-time emulation load statistics, such as CPU utilization, number of waiting processes, or average process waiting time. 
-Time Dilation Adaptor takes the inputs from Emulation Monitor, and adaptively computes the TDF for the next epoch based on a heuristic algorithm,
+Time Dilation Adapter takes the inputs from Emulation Monitor, and adaptively computes the TDF for the next epoch based on a heuristic algorithm,
 whose details are presented in Section~\ref{VT:Sec:Implementation}. 
 Currently we only use the CPU utilization as the feedback control indicator, and will leave the exploration of other control algorithms as future works. 
 

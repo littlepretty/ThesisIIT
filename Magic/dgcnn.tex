@@ -79,7 +79,7 @@ The last two rows (i.e., yellow and red) are discarded from the sorted matrix as
 the authors of the original DGCNN\cite{Dgcnn} append a one-dimension convolution (Conv1D) layer of kernel size $\sum_{1}^{h}c_t$ and stride size $\sum_{1}^{h}c_t$.
 If $F$ is the number of filters in the last one-dimension convolution layer,
 the sort pooling output $\mathbf{Z}^{sp}$ will be reduced to a one-dimension vector of size $k \times F$,
-which is then fed into a fully connected one-layer perceptron for graph classification.
+which is then fed into a fully connected one-layer perceptrons for graph classification.
 
 \begin{figure*}[htbp]
     \centerline{\includegraphics[width=0.90\textwidth]{Magic/figures/ExampleSortpool.eps}}
@@ -107,7 +107,7 @@ Equivalently, Equation~(\ref{MG:Equ:WeightedVertices}) computes $E$, the embeddi
 For our sample graph $g$, its ``embedding" is computed in Figure~\ref{MG:Fig:ExampleWeightedVertice}, where we assume weight vector $\mathbf{W}=[0.4, 0.1, 0.5]$.
 WeightVertices layer aggregates sample graph $g$'s vertex embeddings,
 e.g. the output of sort pooling layer $\mathbf{Z}^{sp}$ in Figure~\ref{MG:Fig:ExampleSortpool}, to graph embedding $E$.
-We choose again RELU as the nonlinear activition function $f$ for simplicity.
+We choose again RELU as the nonlinear activation function $f$ for simplicity.
 In reality, $\mathbf{W}$ is updated by gradient descent during the process of minimizing the classification loss.
 For ease of presentation, in the remainder of the paper we refer to this special Conv1D layer after the sortpooling layer as the \textit{WeightedVertices} layer.
 We replace the original Conv1D layer with the WeightVertices layer, because the WeightVertices layer leverages the graph embedding idea to make the output from the sorting pooling layer compatible with the malware classifier.

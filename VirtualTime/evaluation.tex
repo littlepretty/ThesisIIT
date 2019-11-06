@@ -7,7 +7,7 @@ that the emulation system described in~\ref{VT:Sec:Implementation} can improve f
 
 All the experiments are conducted on a Dell XPS 8700 Desktop with one Intel Core i7-4790 CPU,
 12 GB RAM and one gigabit Ethernet interface. The machine runs a 64-bit Ubuntu 14.04.1 LTS with our customized 3.16.3 Linux kernel.
-The benchmark scores of this machine's CPU and FPU are: 1.52 seconds for Blowfish, 1045.62 MiB/seconds for CryptoHash,
+The benchmark scores of this machine's CPU and FPU are: 1.52 seconds for Blowfish, 1045.62 MB/seconds for CryptoHash,
 0.63 seconds for FFT and 2.56 seconds for Raytracing. Our virtual-time-enabled Mininet was built on the latest version of Mininet (2.1.0),
 also named Mininet-Hifi, at the time of development.
 
@@ -76,7 +76,7 @@ and our approach is to explore the adaptive time dilation scheduling, whose eval
     \centering
     \subfigure[Chain Network Topology]{{\epsfig{file=VirtualTime/figures/TopoChainExample.eps, width=0.45\textwidth}}
     \label{VT:Fig:ChainTopoExample}}
-    \subfigure[Linear Network Topologies]{{\epsfig{file=VirtualTime/figures/TopoLinearExample.eps, width=0.45\textwidth}}
+    \subfigure[Linear Network Topology]{{\epsfig{file=VirtualTime/figures/TopoLinearExample.eps, width=0.45\textwidth}}
     \label{VT:Fig:LinearTopoExample}}
     \caption{Network Topologies Used in Virtual Time Evaluation}
 \end{figure}

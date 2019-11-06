@@ -1,13 +1,13 @@
 
-Under the centre theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct research works in three streams.
+Under the central theme of securing SDN-enabled large-scale network using high-fidelity and scalable testing system, we conduct research works in three streams.
 
 First, we address one of the key issues of Linux-container-based network emulation.
 Even though it combines many desired features of software simulation and physical testbeds,
 Linux container-based network emulation uses the system clock across all the containers even if a container is not being scheduled to run.
 This leads to the issue of both performance and temporal fidelity, especially with high workloads.
 Virtual time sheds the light on this issue by precisely scaling the time of interactions between containers and physical devices.
-We develope a lightweight Linux-container-based virtual time system and integrate it to Mininet.
-Except for enhancing Minint's fidelity and scalability,
+We developed a lightweight Linux-container-based virtual time system and integrate it to Mininet.
+Except for enhancing Mininet's fidelity and scalability,
 our virtual time system also plays a key role for synchronizing clocks in hybrid simulation and emulation testbed.
 
 Second, we rethink how to simulate SDN network by taking advantage of the centralized paradigm.
@@ -36,11 +36,11 @@ When evaluating a HPC application's performance on dragonfly network,
 comparing to the current methodology that runs application as a sequence of discrete events extracted from traces collected when executed previously on possible different network topology,
 directly executing the application running on top of simulated target network topology may obtain more accurate results,
 and may even reveal interactive facts between application layer and network layer that pure simulation fails to capture.
-However, there is an obvious techinical challenge one needs to address in coordination of rollbackable simulation and emulation:
+However, there is an obvious technical challenge one needs to address in coordination of rollbackable simulation and emulation:
 when a rollback happens in optimistic parallel discrete event simulation, in order to maintain the correctness of the evaluation,
 the coordinator may require the emulation to rollback as well.
 The rollback operation for emulation includes both restore state variables and clock.
-Virtual time system could help the cordinator of simulation and emulation easily adjust the time of the emulated containers.
+Virtual time system could help the coordinator of simulation and emulation easily adjust the time of the emulated containers.
 
 The ``one-big-switch'' model abstraction only ensures the end-to-end forwarding logic equivalence.
 This is not sufficient for many SDN network designers or operators, who want to run high fidelity simulation to measure target network's performance,
@@ -49,8 +49,8 @@ It is a natural extension to consider these user-interested network performance 
 
 The intrusion detection systems proposed in this thesis are targeting on network traffics from general TCP/IP network environment,
 and executable binaries running on standard operating systems.
-While our approaches are still able to protect the SDN-enabled smart grid in both communication layer and the applicatioin layer,
-they may not achieve required performance due to overgeneralization.
-There are unique chanllenges, most likely related to issues from data,
+While our approaches are still able to protect the SDN-enabled smart grid in both communication layer and the application layer,
+they may not achieve required performance due to over-generalization.
+There are unique challenges, most likely related to issues from data,
 we need to identify, and then address in order to improve underfitted machine learning models.
 
