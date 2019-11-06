@@ -22,7 +22,7 @@ These efforts have been inspired by the great success of ML in improving the acc
 There is however a dilemma when we investigate an effective ML-based malware classification system.
 On one hand, if we focus too much on finding discriminative malware features to achieve high classification accuracy, the features constructed as such may lose their generality when a different operational environment is encountered.
 For instance, although features extracted from the PE headers of malware files have been shown useful in classifying PE malware variants belonging to different families~\cite{yan2013exploring},
-a malware classification system trained with these features cannot be used to detect those fileless malware that only exist in the memory.
+a malware classification system trained with these features cannot be used to detect fileless malware that only exists in the memory.
 On the other hand, if the features extracted from malware programs are too generic, such as the frequencies of n-gram byte sequences~\cite{NgramMalwareDetect},
 it is difficult to train a malware classifier with high accuracy from them due to their lack of discriminative power~\cite{yan2013exploring}.
 %These efforts are inspired by the status quo that ML and DL algorithms have proven high performance in
@@ -51,7 +51,7 @@ Classifying CFG-represented malware programs needs to address two types of perfo
 classification performance ({\it does the malware classifier achieve high accuracy?}) and execution performance ({\it can the malware classifier work efficiently in practice?}).
 As discussed earlier, reducing CFGs to vectors that contain simple aggregate features such as n-grams and opcodes leads to efficient malware classification but usually with poor classification accuracy.
 Due to the graph nature of CFGs, previous works have studied use of graph similarity measures to train malware classification models~\cite{hu2009large,cesare2010classification,kong2013discriminant}.
-However, some techniques for calculating pairwise graph similarity such as those based on graph matching or isomorphism can be computationally prohibitive,
+However, some techniques for calculating pairwise graph similarities such as those based on graph matching or isomorphism can be computationally prohibitive,
 letting alone that the time needed to compute pairwise graph similarity for a malware dataset scales quadratically with its size.
 
 %and training malware classification models based on pairwise graph similarity data leads to quadratic scalability, making it inappropriate for large malware datasets.
@@ -103,7 +103,7 @@ To demonstrate the applicability of DGCNN for malware classification,
 we have developed a new system called \sysname (an end-to-end \underline{ma}lware defense system that classifies CF\underline{G}-represented malware programs us\underline{i}ng DG\underline{C}NN).
 \sysname improves the effectiveness of malware classification by extending the standard DGCNN with customized techniques tailored for malware classification.
 We use two large malware datasets to evaluate the performance of \sysname and the experimental results show that it can classify CFG-represented malware programs with accuracy comparable to those of the state-of-the-art methods applied on handcrafted malware features.
-Experiment result shows \sysname achieves performance comparable to state-of-the-art methods.
+The experimental results show that \sysname achieves performance comparable to state-of-the-art methods.
 
 %The remainder of the paper is organized as follows.
 %In Section~\ref{MG:Sec:System}, we introduce the overall design of \sysname.

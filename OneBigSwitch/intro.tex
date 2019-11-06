@@ -1,26 +1,26 @@
 \Section{One-Big-Switch Abstraction}
 \label{OBS:Sec:Intro}
 
-Second, we ask not what simulation will do for SDN-enabled network, but ask what the centralized paradigm can do for the methodology that simulates itself.
+Second, we ask not what simulation will do for an SDN-enabled network, but ask what the centralized paradigm can do for the simulation methodology.
 Following this idea, we present a model abstraction technique that effectively transforms
-a SDN-based network model to a ``one-big-switch'' network model.
+a SDN-based network model to an ``one-big-switch'' network model.
 The idea was inspired by the work on rule placement optimization in~\cite{OneBigSwitchAbstraction}.
 With the highly abstracted network, SDN application developers now only need to consider
-simple end-to-end policy when programming a network,
+the simple end-to-end policy when programming a network,
 and are shielded from the details on routing policy, switch memory limits,
-and distributing rules across switches.
+and rules distribution across switches.
 
 Our work applies the idea of one-big-switch abstraction for enhancing the scalability
 of network simulation and emulation, while preserving the end-to-end forwarding behaviors of the original network.
 This technique is useful if users only care about the end-to-end behavior rather than
-the details within the network, such as hop-by-hop routing, or table lookup on each single switch.
-For example, users may want to simulate a large-scale complex network of networks consisted of multiple types of network protocols.
+the details within the network, such as hop-by-hop routing or table lookup on each single switch.
+For example, users may want to simulate a large-scale complex network of networks consisting of multiple types of network protocols.
 While significantly reducing the model execution time, the one-big-switch model also enables the real-time simulation capability,
 which execute the network models no slower than the wall-clock time.
 In addition, the abstracted model can be shared by different parties that do not want to disclose the details
 of their own production network.
 
-We develop a three-step approach to transform an SDN network to a big OpenFlow switch based network,
+We develop a three-step approach to transform an SDN network to a big OpenFlow-switch-based network,
 while still preserving the network forwarding logic equivalence.
 % The high-level idea is illustrated in Figure~\ref{OBS:Fig:BigSimOverview},
 % and the details are discussed in Section~\ref{OBS:Sec:Design}.
@@ -30,5 +30,5 @@ of the OpenFlow rules installed on the switches.
 An equivalence class represents a set of packets of the same network forwarding behavior.
 We then create a graph-based model for each equivalence class to model its packet forwarding behavior.
 Finally, we traverse all the forwarding graph models to generate rules for the big switch,
-and the number of rules is largely reduced but original network's end-to-end forwarding behavior is not affected.
+and the number of rules is largely reduced but the original network's end-to-end forwarding behavior is not affected.
 

@@ -1,10 +1,10 @@
 \Section{Virtual Time Support for Network Emulation}
 \label{VT:Sec:Intro}
 
-Linux-container-based network emulation combines many desired features of software simulators and physical testbeds.
-Therefore, first we ask not what LCNE can do for computer network -- ask what we can do for LCNE.
+Linux-container-based network emulation (LCNE) combines many desired features of software simulators and physical testbeds.
+Therefore, we first ask not what LCNE can do for computer network, but ask what we can do for LCNE.
 Specifically, we address one of the key issues of this attractive methodology.
-An ordinary Linux-container based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
+An ordinary Linux-container-based SDN emulator uses the system clock across all the containers even if a container is not being scheduled to run.
 This leads to the issue of both performance and temporal fidelity, especially when handling high workloads during emulation.
 
 Our approach is to develop the notion of virtual time inside containers to improve fidelity and scalability of the container-based network emulation.
@@ -21,6 +21,6 @@ This way, a 100 Mbps link is scaled to a 1 Gbps link from the emulated host's vi
 Our system transparently provides the virtual time to processes inside the containers,
 while returns the ordinary system time to other processes.
 No change is required in applications, and the integration with network emulators is easy (only slight changes in the initialization routine).
-Benchmark evaluation and data center case study demonstarte that, except for enhanceing Mininet's fidelity and scalability,
-our virtual time system is also an good alternative for the synchronization problem in hybrid simulation and emulation.
+The benchmark evaluation and a data center case study demonstrate that, in addition to enhanceing Mininet's fidelity and scalability,
+our virtual time system is also addresses the synchronization problem in hybrid simulation and emulation.
 
